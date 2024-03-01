@@ -10,6 +10,6 @@ data class Dog(
     val imageUrl: String,
     val lifeExpectancy: String,
     val temperament: String,
-    val weightFemale: Double,
-    val weightMale: Double
+    val weightFemale: String,
+    val weightMale: String
 )
