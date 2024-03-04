@@ -49,6 +49,7 @@ dependencies {
     val android_material = "1.11.0"
     val constrain_layout_version = "2.1.4"
     val junit_version = "4.13.2"
+    val coilVersion = "2.6.0"
     implementation("androidx.core:core-ktx:$android_core_version")
     implementation("androidx.appcompat:appcompat:$android_appcompat_version")
     implementation("com.google.android.material:material:$android_material")
@@ -58,6 +59,8 @@ dependencies {
     //Retrofit
     implementation("com.squareup.retrofit2:retrofit:$retrofit_version")
     implementation("com.squareup.retrofit2:converter-moshi:$retrofit_version")
+    //Coil Images
+    implementation("io.coil-kt:coil:$coilVersion")
     testImplementation("junit:junit:$junit_version")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

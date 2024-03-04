@@ -6,7 +6,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.databinding.ActivityDogListBinding
 import com.juanferdev.appperrona.dogdetail.DogDetailActivity
@@ -17,6 +17,7 @@ class DogListActivity : AppCompatActivity() {
     val adapter = DogAdapter()
     private lateinit var binding: ActivityDogListBinding
     private val dogListViewModel: DogListViewModel by viewModels()
+    private val numberColumns = 3
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -54,7 +55,7 @@ class DogListActivity : AppCompatActivity() {
 
         }
         val recycler = binding.dogRecyclerView
-        recycler.layoutManager = LinearLayoutManager(this)
+        recycler.layoutManager = GridLayoutManager(this, numberColumns)
         recycler.adapter = adapter
     }
 }

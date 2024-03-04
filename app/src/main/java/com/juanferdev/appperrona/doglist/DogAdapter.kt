@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.juanferdev.appperrona.Dog
 import com.juanferdev.appperrona.databinding.DogListItemBinding
 
@@ -41,10 +42,11 @@ class DogAdapter : ListAdapter<Dog, DogAdapter.DogViewHolder>(DiffCallback) {
         RecyclerView.ViewHolder(binding.root) {
 
             fun bind(dog: Dog) {
-                binding.dogName.text = dog.name
-                binding.dogName.setOnClickListener {
+                binding.dogImage.load(dog.imageUrl)
+                binding.dogListItemLayout.setOnClickListener {
                     onItemClickListener?.invoke(dog)
                 }
+
             }
     }
 

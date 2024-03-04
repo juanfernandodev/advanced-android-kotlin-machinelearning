@@ -3,6 +3,7 @@ package com.juanferdev.appperrona.dogdetail
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import coil.load
 import com.juanferdev.appperrona.Dog
 import com.juanferdev.appperrona.R
 import com.juanferdev.appperrona.databinding.ActivityDogDetailBinding
@@ -29,6 +30,10 @@ class DogDetailActivity : AppCompatActivity() {
         binding.lifeExpectancy.text =
             getString(R.string.dog_life_expectancy_format, dog.lifeExpectancy)
         binding.dogIndex.text = getString(R.string.dog_index_format, dog.index)
+        binding.dogImage.load(dog.imageUrl)
+        binding.closeButton.setOnClickListener {
+            finish()
+        }
 
     }
 }
