@@ -1,12 +1,13 @@
 package com.juanferdev.appperrona.doglist
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.juanferdev.appperrona.Dog
-import com.juanferdev.appperrona.R
 import com.juanferdev.appperrona.databinding.ActivityDogListBinding
+import com.juanferdev.appperrona.dogdetail.DogDetailActivity
+import com.juanferdev.appperrona.dogdetail.DogDetailActivity.Companion.DOG_KEY
 
 class DogListActivity : AppCompatActivity() {
 
@@ -28,6 +29,12 @@ class DogListActivity : AppCompatActivity() {
     }
 
     private fun initRecycler() {
+        adapter.setOnItemClickListener { dog ->
+            val intent = Intent(this, DogDetailActivity::class.java)
+            intent.putExtra(DOG_KEY, dog)
+            startActivity(intent)
+
+        }
         val recycler = binding.dogRecyclerView
         recycler.layoutManager = LinearLayoutManager(this)
         recycler.adapter = adapter

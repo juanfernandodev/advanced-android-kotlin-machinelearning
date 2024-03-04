@@ -10,7 +10,7 @@ import com.juanferdev.appperrona.databinding.DogListItemBinding
 
 class DogAdapter : ListAdapter<Dog, DogAdapter.DogViewHolder>(DiffCallback) {
 
-    companion object DiffCallback: DiffUtil.ItemCallback<Dog>() {
+    companion object DiffCallback : DiffUtil.ItemCallback<Dog>() {
         override fun areItemsTheSame(oldItem: Dog, newItem: Dog): Boolean {
             return oldItem === newItem
         }
@@ -19,6 +19,12 @@ class DogAdapter : ListAdapter<Dog, DogAdapter.DogViewHolder>(DiffCallback) {
             return oldItem.id == newItem.id
         }
 
+    }
+
+    private var onItemClickListener: ((Dog) -> Unit)? = null
+
+    fun setOnItemClickListener(onItemClickListener: ((Dog) -> Unit)) {
+        this.onItemClickListener = onItemClickListener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DogViewHolder {
@@ -36,6 +42,9 @@ class DogAdapter : ListAdapter<Dog, DogAdapter.DogViewHolder>(DiffCallback) {
 
             fun bind(dog: Dog) {
                 binding.dogName.text = dog.name
+                binding.dogName.setOnClickListener {
+                    onItemClickListener?.invoke(dog)
+                }
             }
     }
 
