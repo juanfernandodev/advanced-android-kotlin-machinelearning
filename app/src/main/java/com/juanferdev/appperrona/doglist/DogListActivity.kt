@@ -26,31 +26,21 @@ class DogListActivity : AppCompatActivity() {
 
         setContentView(binding.root)
         initRecycler()
-        dogListViewModel.dogList.observe(this) { listDog ->
-            adapter.submitList(listDog)
-        }
+
         dogListViewModel.status.observe(this) { status ->
             when (status) {
-                ApiResponseStatus.LOADING -> {
+                ApiResponseStatus.Loading -> {
                     binding.loadingWheel.visibility = View.VISIBLE
                 }
 
-                ApiResponseStatus.ERROR -> {
+                is ApiResponseStatus.Error -> {
                     binding.loadingWheel.visibility = View.GONE
-                    Toast.makeText(this, "Error downloading data", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, status.messageId, Toast.LENGTH_SHORT).show()
                 }
 
-                ApiResponseStatus.SUCCESS -> {
+                is ApiResponseStatus.Success -> {
+                    adapter.submitList(status.dogList)
                     binding.loadingWheel.visibility = View.GONE
-                }
-
-                else -> {
-                    binding.loadingWheel.visibility = View.GONE
-                    Toast.makeText(
-                        this,
-                        "Error downloading data, unknown status",
-                        Toast.LENGTH_SHORT
-                    ).show()
                 }
             }
         }
