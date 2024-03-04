@@ -15,6 +15,9 @@
         android:theme="@style/Theme.AppPerrona"
         tools:targetApi="31">
         <activity
+            android:name=".dogdetail.DogDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".doglist.DogListActivity"
             android:exported="true">
             <intent-filter>
@@ -25,9 +28,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="false">
-
-        </activity>
+            android:exported="false"></activity>
     </application>
 
 </manifest>
