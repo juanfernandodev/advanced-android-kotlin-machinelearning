@@ -7,8 +7,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 suspend fun <T> makeNetworkCall(
+    dispatcher: CoroutineDispatcher = Dispatchers.IO,
     call: suspend (() -> T),
-    dispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ApiResponseStatus<T> =
     withContext(dispatcher) {
         try {
