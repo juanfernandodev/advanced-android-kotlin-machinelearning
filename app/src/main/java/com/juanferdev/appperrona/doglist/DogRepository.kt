@@ -1,5 +1,6 @@
 package com.juanferdev.appperrona.doglist
 
+import com.juanferdev.appperrona.Dog
 import com.juanferdev.appperrona.R
 import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.api.DogsApi.retrofitService
@@ -10,7 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class DogRepository(private val distpacher: CoroutineDispatcher = Dispatchers.IO) {
-    suspend fun downloadDogs(): ApiResponseStatus {
+    suspend fun downloadDogs(): ApiResponseStatus<List<Dog>> {
         return withContext(distpacher) {
             try {
                 val dogListApiResponse = retrofitService.getAllDogs()

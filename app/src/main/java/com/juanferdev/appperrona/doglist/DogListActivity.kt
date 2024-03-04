@@ -29,7 +29,7 @@ class DogListActivity : AppCompatActivity() {
 
         dogListViewModel.status.observe(this) { status ->
             when (status) {
-                ApiResponseStatus.Loading -> {
+                is ApiResponseStatus.Loading -> {
                     binding.loadingWheel.visibility = View.VISIBLE
                 }
 
@@ -39,7 +39,7 @@ class DogListActivity : AppCompatActivity() {
                 }
 
                 is ApiResponseStatus.Success -> {
-                    adapter.submitList(status.dogList)
+                    adapter.submitList(status.data)
                     binding.loadingWheel.visibility = View.GONE
                 }
             }
