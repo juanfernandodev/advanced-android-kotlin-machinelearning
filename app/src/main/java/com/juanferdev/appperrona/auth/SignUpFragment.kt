@@ -1,5 +1,6 @@
 package com.juanferdev.appperrona.auth
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Patterns
 import android.view.LayoutInflater
@@ -11,6 +12,12 @@ import com.juanferdev.appperrona.databinding.FragmentSignUpBinding
 
 class SignUpFragment : Fragment() {
 
+    fun interface SignUpFragmentActions {
+        fun onSignUpFieldsValidated(email: String, password: String, passwordConfirmation: String)
+
+    }
+
+    private lateinit var signUpFragmentActions: SignUpFragmentActions
     private lateinit var binding: FragmentSignUpBinding
 
     override fun onCreateView(
@@ -20,6 +27,15 @@ class SignUpFragment : Fragment() {
         binding = FragmentSignUpBinding.inflate(inflater)
         setupSignUpButton()
         return binding.root
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        signUpFragmentActions = try {
+            context as SignUpFragmentActions
+        } catch (e: ClassCastException) {
+            throw ClassCastException("$context must implement SignUpFragmentActions")
+        }
     }
 
     private fun setupSignUpButton() {
@@ -54,6 +70,7 @@ class SignUpFragment : Fragment() {
             binding.confirmPasswordInput.error = getString(R.string.password_do_not_match)
             return
         }
+        signUpFragmentActions.onSignUpFieldsValidated(email, password, passwordConfirmation)
     }
 
     private fun isValidEmail(email: String): Boolean {
