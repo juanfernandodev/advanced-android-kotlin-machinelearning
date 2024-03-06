@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
     id("kotlin-parcelize")
+    id("androidx.navigation.safeargs")
 }
 
 android {
@@ -50,12 +51,17 @@ dependencies {
     val constrain_layout_version = "2.1.4"
     val junit_version = "4.13.2"
     val coilVersion = "2.6.0"
+    val navVersion = "2.7.7"
     implementation("androidx.core:core-ktx:$android_core_version")
     implementation("androidx.appcompat:appcompat:$android_appcompat_version")
     implementation("com.google.android.material:material:$android_material")
     implementation("androidx.constraintlayout:constraintlayout:$constrain_layout_version")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
     implementation("androidx.activity:activity-ktx:$activity_version")
+    //Navigation
+    implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
+    implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
+
     //Retrofit
     implementation("com.squareup.retrofit2:retrofit:$retrofit_version")
     implementation("com.squareup.retrofit2:converter-moshi:$retrofit_version")

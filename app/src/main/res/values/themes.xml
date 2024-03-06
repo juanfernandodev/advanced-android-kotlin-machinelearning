@@ -14,6 +14,12 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="ButtonRegister" parent="Theme.AppPerrona">
+        <item name="android:textColorPrimary">@color/text_black</item>
+        <item name="android:textColorSecondary">@color/white</item>
+
+    </style>
+
     <style name="DetailSectionName">
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">sans-serif</item>

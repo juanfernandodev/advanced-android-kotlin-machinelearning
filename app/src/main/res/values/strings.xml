@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Dogedex</string>
+    <string name="app_name">App Perrona</string>
     <string name="female">Female</string>
     <string name="weight">Weight</string>
     <string name="height">Height</string>
@@ -10,4 +10,12 @@
     <string name="dog_life_expectancy_format">%s years</string>
     <string name="error_no_internet">Error: There is no internet connection</string>
     <string name="error_downloading_data">Error downloading data</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="do_not_have_an_account">Do not have an account?</string>
+    <string name="register">Register</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="sign_up">Sign Up</string>
 </resources>
