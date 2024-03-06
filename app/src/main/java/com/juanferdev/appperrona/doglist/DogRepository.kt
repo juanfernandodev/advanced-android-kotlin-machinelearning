@@ -1,10 +1,10 @@
 package com.juanferdev.appperrona.doglist
 
-import com.juanferdev.appperrona.Dog
 import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.api.DogsApi.retrofitService
 import com.juanferdev.appperrona.api.dto.DogDTOMapper
 import com.juanferdev.appperrona.api.makeNetworkCall
+import com.juanferdev.appperrona.models.Dog
 
 class DogRepository {
     suspend fun downloadDogs(): ApiResponseStatus<List<Dog>> =

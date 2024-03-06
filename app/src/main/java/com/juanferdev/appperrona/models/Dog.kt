@@ -1,4 +1,4 @@
-package com.juanferdev.appperrona
+package com.juanferdev.appperrona.models
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

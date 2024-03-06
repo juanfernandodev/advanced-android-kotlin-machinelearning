@@ -6,7 +6,7 @@
 
         <variable
             name="dog"
-            type="com.juanferdev.appperrona.Dog" />
+            type="com.juanferdev.appperrona.models.Dog" />
     </data>
 
     <FrameLayout

@@ -1,6 +1,6 @@
 package com.juanferdev.appperrona.api.dto
 
-import com.juanferdev.appperrona.parcelables.User
+import com.juanferdev.appperrona.models.User
 
 class UserDTOMapper {
 

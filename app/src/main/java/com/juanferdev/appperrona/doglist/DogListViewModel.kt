@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.juanferdev.appperrona.Dog
 import com.juanferdev.appperrona.api.ApiResponseStatus
+import com.juanferdev.appperrona.models.Dog
 import kotlinx.coroutines.launch
 
 class DogListViewModel(private val dogRepository: DogRepository = DogRepository()) : ViewModel() {

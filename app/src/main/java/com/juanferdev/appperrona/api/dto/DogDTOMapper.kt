@@ -1,6 +1,6 @@
 package com.juanferdev.appperrona.api.dto
 
-import com.juanferdev.appperrona.Dog
+import com.juanferdev.appperrona.models.Dog
 
 class DogDTOMapper {
 

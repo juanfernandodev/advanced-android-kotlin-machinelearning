@@ -5,7 +5,7 @@ import com.juanferdev.appperrona.api.DogsApi
 import com.juanferdev.appperrona.api.dto.SignUpDTO
 import com.juanferdev.appperrona.api.dto.UserDTOMapper
 import com.juanferdev.appperrona.api.makeNetworkCall
-import com.juanferdev.appperrona.parcelables.User
+import com.juanferdev.appperrona.models.User
 
 class AuthRepository {
 

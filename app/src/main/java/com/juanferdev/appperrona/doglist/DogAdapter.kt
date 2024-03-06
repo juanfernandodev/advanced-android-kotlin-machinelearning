@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.juanferdev.appperrona.Dog
 import com.juanferdev.appperrona.databinding.DogListItemBinding
+import com.juanferdev.appperrona.models.Dog
 
 class DogAdapter : ListAdapter<Dog, DogAdapter.DogViewHolder>(DiffCallback) {
 

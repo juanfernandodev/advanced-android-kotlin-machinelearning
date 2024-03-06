@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import coil.load
-import com.juanferdev.appperrona.Dog
 import com.juanferdev.appperrona.R
 import com.juanferdev.appperrona.databinding.ActivityDogDetailBinding
+import com.juanferdev.appperrona.models.Dog
 import com.juanferdev.appperrona.utils.parcelable
 
 class DogDetailActivity : AppCompatActivity() {
