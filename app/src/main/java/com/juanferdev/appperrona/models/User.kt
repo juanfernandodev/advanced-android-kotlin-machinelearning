@@ -45,6 +45,17 @@ class User(
                 return user
             }
         }
+
+        fun deleteLoggedInUser(activity: Activity) {
+            with(
+                activity.getSharedPreferences(
+                    AUTH_PREFS, Context.MODE_PRIVATE
+                )
+            ) {
+                this.edit().clear().apply()
+            }
+        }
     }
+
 
 }

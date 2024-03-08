@@ -28,4 +28,8 @@
     <string name="wrong_user_or_password">Wrong user or password</string>
     <string name="error_network">There was an error network</string>
     <string name="user_not_found">User not found</string>
+    <string name="take_photo">Take photo</string>
+    <string name="open_dog_list">Open Dog List</string>
+    <string name="go_to_settings">Go To Settings</string>
+    <string name="log_out">Log out</string>
 </resources>

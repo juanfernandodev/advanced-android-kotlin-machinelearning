@@ -12,14 +12,37 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity">
 
-        <TextView
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/take_photo_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hello World!"
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/baseline_add_a_photo_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:contentDescription="@string/take_photo" />
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/dog_list_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/baseline_list_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/take_photo_fab"
+            app:layout_constraintStart_toStartOf="parent"
+            android:contentDescription="@string/open_dog_list" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/settings_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/baseline_settings_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/take_photo_fab"
+            android:contentDescription="@string/go_to_settings" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
