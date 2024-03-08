@@ -15,14 +15,14 @@ class DogListViewModel(private val dogRepository: DogRepository = DogRepository(
 
 
     init {
-        getUserDogs()
+        getDogs()
     }
 
     @Suppress("UNCHECKED_CAST")
-    private fun downloadDogs() {
+    private fun getDogs() {
         viewModelScope.launch {
             _status.value = ApiResponseStatus.Loading()
-            _status.value = dogRepository.downloadDogs() as ApiResponseStatus<Any>
+            _status.value = dogRepository.getDogCollection() as ApiResponseStatus<Any>
         }
     }
 
@@ -32,16 +32,8 @@ class DogListViewModel(private val dogRepository: DogRepository = DogRepository(
             _status.value = ApiResponseStatus.Loading()
             _status.value = dogRepository.addDogToUser(dogId)
             if (_status.value is ApiResponseStatus.Success) {
-                downloadDogs()
+                getDogs()
             }
-        }
-    }
-
-    @Suppress("UNCHECKED_CAST")
-    fun getUserDogs() {
-        viewModelScope.launch {
-            _status.value = ApiResponseStatus.Loading()
-            _status.value = dogRepository.getUserDogs() as ApiResponseStatus<Any>
         }
     }
 
