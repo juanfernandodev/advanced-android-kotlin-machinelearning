@@ -27,7 +27,7 @@ class DogListViewModel(private val dogRepository: DogRepository = DogRepository(
     }
 
 
-    fun addDogToUser(dogId: String) {
+    fun addDogToUser(dogId: Long) {
         viewModelScope.launch {
             _status.value = ApiResponseStatus.Loading()
             _status.value = dogRepository.addDogToUser(dogId)

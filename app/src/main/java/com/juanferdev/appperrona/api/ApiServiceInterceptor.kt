@@ -18,9 +18,9 @@ object ApiServiceInterceptor : Interceptor {
         val requestBuilder = request.newBuilder()
         if (request.header(NEEDS_AUTH_HEADER_KEY) != null) {
             //needs credentials
-            sessionToken?.let { sessionToken ->
-                requestBuilder.addHeader("AUTH-TOKEN", sessionToken)
-            } ?: run {
+            if (sessionToken != null) {
+                requestBuilder.addHeader("AUTH-TOKEN", sessionToken!!)
+            } else {
                 throw RuntimeException("Need to be authenticated to perform")
             }
         }

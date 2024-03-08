@@ -31,6 +31,7 @@ suspend fun <T> makeNetworkCall(
                 "user_already_exists" -> R.string.user_already_exists
                 "user_not_found" -> R.string.user_not_found
                 "error_adding_dog" -> R.string.error_adding_dog
+                "Dog already belongs to user" -> R.string.dog_already_belongs_to_user
                 else -> R.string.unknown_error
             }
             ApiResponseStatus.Error(errorMessageId)

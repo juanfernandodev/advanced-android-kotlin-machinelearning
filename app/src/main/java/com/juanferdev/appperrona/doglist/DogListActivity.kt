@@ -54,7 +54,10 @@ class DogListActivity : AppCompatActivity() {
             val intent = Intent(this, DogDetailActivity::class.java)
             intent.putExtra(DOG_KEY, dog)
             startActivity(intent)
+        }
 
+        adapter.setOnLongItemClickListener { dog ->
+            dogListViewModel.addDogToUser(dog.id)
         }
         val recycler = binding.dogRecyclerView
         recycler.layoutManager = GridLayoutManager(this, numberColumns)
