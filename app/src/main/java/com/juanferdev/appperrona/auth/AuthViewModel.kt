@@ -24,4 +24,11 @@ class AuthViewModel(private val authRepository: AuthRepository = AuthRepository(
             _status.value = authRepository.signUp(email, password, passwordConfirmation)
         }
     }
+
+    fun login(email: String, password: String) {
+        viewModelScope.launch {
+            _status.value = ApiResponseStatus.Loading()
+            _status.value = authRepository.login(email, password)
+        }
+    }
 }

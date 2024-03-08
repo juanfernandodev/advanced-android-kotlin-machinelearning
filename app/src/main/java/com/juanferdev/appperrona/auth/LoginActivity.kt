@@ -37,6 +37,7 @@ class LoginActivity : AppCompatActivity(), LoginFragment.LoginFragmentActions,
                 is ApiResponseStatus.Success -> {
                     binding.loadingWheel.visibility = View.GONE
                     startActivity(Intent(this, MainActivity::class.java))
+                    finish()
                 }
             }
 
@@ -55,6 +56,10 @@ class LoginActivity : AppCompatActivity(), LoginFragment.LoginFragmentActions,
 
     override fun onRegisterButtonClick() {
         findNavController(R.id.nav_host_fragment).navigate(LoginFragmentDirections.actionLoginFragmentToSignUpFragment())
+    }
+
+    override fun onLoginButtonClick(email: String, password: String) {
+        viewModel.login(email, password)
     }
 
     override fun onSignUpFieldsValidated(

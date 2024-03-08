@@ -2,13 +2,13 @@ package com.juanferdev.appperrona.auth
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.juanferdev.appperrona.R
 import com.juanferdev.appperrona.databinding.FragmentSignUpBinding
+import com.juanferdev.appperrona.utils.isValidEmail
 
 class SignUpFragment : Fragment() {
 
@@ -50,7 +50,7 @@ class SignUpFragment : Fragment() {
         binding.confirmPasswordInput.error = String()
 
         val email = binding.emailEdit.text.toString()
-        if (!isValidEmail(email)) {
+        if (email.isValidEmail().not()) {
             binding.emailInput.error = getString(R.string.email_is_not_valid)
             return
         }
@@ -73,10 +73,6 @@ class SignUpFragment : Fragment() {
         signUpFragmentActions.onSignUpFieldsValidated(email, password, passwordConfirmation)
     }
 
-    private fun isValidEmail(email: String): Boolean {
-        return email.isNotBlank()
-                && Patterns.EMAIL_ADDRESS.matcher(email).matches()
-    }
 
 
 }
