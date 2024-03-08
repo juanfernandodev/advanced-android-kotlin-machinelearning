@@ -11,6 +11,7 @@ import com.juanferdev.appperrona.MainActivity
 import com.juanferdev.appperrona.R
 import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.databinding.ActivityLoginBinding
+import com.juanferdev.appperrona.models.User
 
 class LoginActivity : AppCompatActivity(), LoginFragment.LoginFragmentActions,
     SignUpFragment.SignUpFragmentActions {
@@ -36,6 +37,7 @@ class LoginActivity : AppCompatActivity(), LoginFragment.LoginFragmentActions,
 
                 is ApiResponseStatus.Success -> {
                     binding.loadingWheel.visibility = View.GONE
+                    User.setLoggedInUser(this, status.data)
                     startActivity(Intent(this, MainActivity::class.java))
                     finish()
                 }
@@ -45,13 +47,10 @@ class LoginActivity : AppCompatActivity(), LoginFragment.LoginFragmentActions,
     }
 
     private fun showAlertDialog(messageId: Int) {
-        AlertDialog.Builder(this)
-            .setTitle(R.string.unknown_error)
-            .setMessage(messageId)
+        AlertDialog.Builder(this).setTitle(R.string.unknown_error).setMessage(messageId)
             .setPositiveButton(android.R.string.ok) { dialog, _ ->
                 dialog.dismiss()
-            }.create()
-            .show()
+            }.create().show()
     }
 
     override fun onRegisterButtonClick() {
@@ -63,9 +62,7 @@ class LoginActivity : AppCompatActivity(), LoginFragment.LoginFragmentActions,
     }
 
     override fun onSignUpFieldsValidated(
-        email: String,
-        password: String,
-        passwordConfirmation: String
+        email: String, password: String, passwordConfirmation: String
     ) {
         viewModel.signUp(email, password, passwordConfirmation)
     }
