@@ -3,6 +3,7 @@ package com.juanferdev.appperrona
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.juanferdev.appperrona.api.ApiServiceInterceptor
 import com.juanferdev.appperrona.auth.LoginActivity
 import com.juanferdev.appperrona.databinding.ActivityMainBinding
 import com.juanferdev.appperrona.doglist.DogListActivity
@@ -42,6 +43,8 @@ class MainActivity : AppCompatActivity() {
         if (user == null) {
             openLoginActivity()
             return
+        } else {
+            ApiServiceInterceptor.setSessionToken(user.authenticationToken)
         }
     }
 
