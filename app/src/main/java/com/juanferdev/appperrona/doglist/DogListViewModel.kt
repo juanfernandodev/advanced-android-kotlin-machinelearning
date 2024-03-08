@@ -5,13 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.juanferdev.appperrona.api.ApiResponseStatus
-import com.juanferdev.appperrona.models.Dog
 import kotlinx.coroutines.launch
 
 class DogListViewModel(private val dogRepository: DogRepository = DogRepository()) : ViewModel() {
 
-    private val _status = MutableLiveData<ApiResponseStatus<List<Dog>>>()
-    val status: LiveData<ApiResponseStatus<List<Dog>>>
+    private val _status = MutableLiveData<ApiResponseStatus<Any>>()
+    val status: LiveData<ApiResponseStatus<Any>>
         get() = _status
 
 
@@ -19,10 +18,22 @@ class DogListViewModel(private val dogRepository: DogRepository = DogRepository(
         downloadDogs()
     }
 
+    @Suppress("UNCHECKED_CAST")
     private fun downloadDogs() {
         viewModelScope.launch {
             _status.value = ApiResponseStatus.Loading()
-            _status.value = dogRepository.downloadDogs()
+            _status.value = dogRepository.downloadDogs() as ApiResponseStatus<Any>
+        }
+    }
+
+
+    fun addDogToUser(dogId: String) {
+        viewModelScope.launch {
+            _status.value = ApiResponseStatus.Loading()
+            _status.value = dogRepository.addDogToUser(dogId)
+            if (_status.value is ApiResponseStatus.Success) {
+                downloadDogs()
+            }
         }
     }
 

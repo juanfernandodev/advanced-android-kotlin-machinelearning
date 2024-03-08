@@ -11,6 +11,7 @@ import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.databinding.ActivityDogListBinding
 import com.juanferdev.appperrona.dogdetail.DogDetailActivity
 import com.juanferdev.appperrona.dogdetail.DogDetailActivity.Companion.DOG_KEY
+import com.juanferdev.appperrona.models.Dog
 
 class DogListActivity : AppCompatActivity() {
 
@@ -28,6 +29,7 @@ class DogListActivity : AppCompatActivity() {
         setContentView(binding.root)
         initRecycler()
 
+        @Suppress("UNCHECKED_CAST")
         dogListViewModel.status.observe(this) { status ->
             when (status) {
                 is ApiResponseStatus.Loading -> {
@@ -40,7 +42,7 @@ class DogListActivity : AppCompatActivity() {
                 }
 
                 is ApiResponseStatus.Success -> {
-                    adapter.submitList(status.data)
+                    adapter.submitList(status.data as List<Dog>)
                     binding.loadingWheel.visibility = View.GONE
                 }
             }
