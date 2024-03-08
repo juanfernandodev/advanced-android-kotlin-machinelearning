@@ -3,6 +3,7 @@ package com.juanferdev.appperrona.api
 import com.juanferdev.appperrona.ADD_DOG_TO_USER_URL
 import com.juanferdev.appperrona.BASE_URL
 import com.juanferdev.appperrona.GET_ALL_DOGS_URL
+import com.juanferdev.appperrona.GET_USER_DOGS
 import com.juanferdev.appperrona.SIGN_IN_URL
 import com.juanferdev.appperrona.SIGN_UP_URL
 import com.juanferdev.appperrona.api.dto.AddDogToUserDTO
@@ -43,6 +44,10 @@ interface ApiService {
     @Headers("${ApiServiceInterceptor.NEEDS_AUTH_HEADER_KEY}: true")
     @POST(ADD_DOG_TO_USER_URL)
     suspend fun addDogToUser(@Body addDogToUserDTO: AddDogToUserDTO): DefaultResponse
+
+    @Headers("${ApiServiceInterceptor.NEEDS_AUTH_HEADER_KEY}: true")
+    @GET(GET_USER_DOGS)
+    suspend fun getUserDogs(): DogListApiResponse
 
 }
 
