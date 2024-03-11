@@ -9,14 +9,18 @@ import com.juanferdev.appperrona.api.makeNetworkCall
 import com.juanferdev.appperrona.models.Dog
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 
 class DogRepository(private val dispatcherIO: CoroutineDispatcher = Dispatchers.IO) {
 
     suspend fun getDogCollection(): ApiResponseStatus<List<Dog>> {
         return withContext(dispatcherIO) {
-            val allDogsListResponse = getAllDogs()
-            val userDogsListResponse = getUserDogs()
+            val allDogsListDeferred = async { getAllDogs() }
+            val userDogsListDeferred = async { getUserDogs() }
+
+            val allDogsListResponse = allDogsListDeferred.await()
+            val userDogsListResponse = userDogsListDeferred.await()
 
             when {
                 allDogsListResponse is ApiResponseStatus.Error -> allDogsListResponse
