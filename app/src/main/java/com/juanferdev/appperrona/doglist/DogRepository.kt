@@ -25,8 +25,8 @@ class DogRepository(private val dispatcherIO: CoroutineDispatcher = Dispatchers.
                         userDogsListResponse is ApiResponseStatus.Success -> {
                     ApiResponseStatus.Success(
                         getCollectionList(
-                            userDogList = userDogsListResponse.data,
-                            allDogList = allDogsListResponse.data
+                            allDogsListResponse.data,
+                            userDogsListResponse.data
                         )
                     )
                 }
@@ -40,13 +40,13 @@ class DogRepository(private val dispatcherIO: CoroutineDispatcher = Dispatchers.
     private fun getCollectionList(
         allDogList: List<Dog>,
         userDogList: List<Dog>
-    ): List<Dog> = allDogList.map {
-        if (userDogList.contains(it)) {
-            it
+    ): List<Dog> = allDogList.map { dog ->
+        if (userDogList.any { userDog -> userDog.id == dog.id }) {
+            dog
         } else {
-            Dog(index = it.index)
+            Dog(index = dog.index)
         }
-    }
+    }.sorted()
 
 
     private suspend fun getAllDogs(): ApiResponseStatus<List<Dog>> =
