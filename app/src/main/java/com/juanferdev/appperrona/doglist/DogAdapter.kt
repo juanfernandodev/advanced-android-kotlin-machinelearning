@@ -1,11 +1,14 @@
 package com.juanferdev.appperrona.doglist
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.juanferdev.appperrona.R
 import com.juanferdev.appperrona.databinding.DogListItemBinding
 import com.juanferdev.appperrona.models.Dog
 
@@ -47,7 +50,16 @@ class DogAdapter : ListAdapter<Dog, DogAdapter.DogViewHolder>(DiffCallback) {
     inner class DogViewHolder(private val binding: DogListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-            fun bind(dog: Dog) {
+        fun bind(dog: Dog) {
+            if (dog.inCollection) {
+
+                binding.dogImage.visibility = View.VISIBLE
+                binding.dogIndex.visibility = View.GONE
+                binding.dogListItemLayout.background = ContextCompat.getDrawable(
+                    binding.dogImage.context,
+                    R.drawable.dog_list_item_background
+                )
+
                 binding.dogImage.load(dog.imageUrl)
                 binding.dogListItemLayout.setOnClickListener {
                     onItemClickListener?.invoke(dog)
@@ -56,8 +68,18 @@ class DogAdapter : ListAdapter<Dog, DogAdapter.DogViewHolder>(DiffCallback) {
                     onLongItemClickListener?.invoke(dog)
                     true
                 }
-
+            } else {
+                binding.dogImage.visibility = View.GONE
+                binding.dogListItemLayout.background = ContextCompat.getDrawable(
+                    binding.dogImage.context,
+                    R.drawable.dog_list_item_null_background
+                )
+                binding.dogIndex.visibility = View.VISIBLE
+                binding.dogIndex.text = dog.index.toString()
             }
+
+
+        }
     }
 
 }

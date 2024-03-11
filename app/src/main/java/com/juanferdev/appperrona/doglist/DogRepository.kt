@@ -48,7 +48,7 @@ class DogRepository(private val dispatcherIO: CoroutineDispatcher = Dispatchers.
         if (userDogList.any { userDog -> userDog.id == dog.id }) {
             dog
         } else {
-            Dog(index = dog.index)
+            Dog(index = dog.index, inCollection = false)
         }
     }.sorted()
 
