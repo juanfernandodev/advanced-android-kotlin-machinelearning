@@ -3,6 +3,7 @@ package com.juanferdev.appperrona
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
@@ -78,7 +79,7 @@ class MainActivity : AppCompatActivity() {
 
         preview.setSurfaceProvider(binding.cameraPreview.surfaceProvider)
 
-        var camera = cameraProvider.bindToLifecycle(
+        cameraProvider.bindToLifecycle(
             this as LifecycleOwner,
             cameraSelector,
             preview,
@@ -107,9 +108,19 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                    // insert your code here.
+                    val photoUri = outputFileResults.savedUri
+                    photoUri?.let {
+                        openWholeImageActivity(it)
+                    }
+
                 }
             })
+    }
+
+    private fun openWholeImageActivity(photoUri: Uri) {
+        val intent = Intent(this, WholeImageActivity::class.java)
+        intent.putExtra(WholeImageActivity.PHOTO_URI_KEY, photoUri.toString())
+        startActivity(intent)
     }
 
     private fun getOutputPhotoFile(): File {
