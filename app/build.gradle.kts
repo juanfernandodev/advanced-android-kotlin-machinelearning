@@ -53,6 +53,8 @@ dependencies {
     val coilVersion = "2.6.0"
     val navVersion = "2.7.7"
     val cameraxVersion = "1.4.0-alpha04"
+    val tensorflowLiteVersion = "2.4.0"
+    val tensorflowLiteSupportVersion = "0.1.0"
     implementation("androidx.core:core-ktx:$android_core_version")
     implementation("androidx.appcompat:appcompat:$android_appcompat_version")
     implementation("com.google.android.material:material:$android_material")
@@ -71,6 +73,10 @@ dependencies {
     implementation("androidx.camera:camera-camera2:${cameraxVersion}")
     implementation("androidx.camera:camera-lifecycle:${cameraxVersion}")
     implementation("androidx.camera:camera-view:${cameraxVersion}")
+    //TensorFlow
+    implementation("org.tensorflow:tensorflow-lite:${tensorflowLiteVersion}")
+    implementation("org.tensorflow:tensorflow-lite-support:$tensorflowLiteSupportVersion")
+
     testImplementation("junit:junit:$junit_version")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
