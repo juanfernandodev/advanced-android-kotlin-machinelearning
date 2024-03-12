@@ -11,6 +11,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
+import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
@@ -79,11 +80,22 @@ class MainActivity : AppCompatActivity() {
 
         preview.setSurfaceProvider(binding.cameraPreview.surfaceProvider)
 
+        //ImageAnalysis
+        val imageAnalysis = ImageAnalysis.Builder()
+            .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+            .build()
+        imageAnalysis.setAnalyzer(cameraExecutor) { imageProxy ->
+            val rotationDegrees = imageProxy.imageInfo.rotationDegrees
+
+            imageProxy.close()
+        }
+
         cameraProvider.bindToLifecycle(
             this as LifecycleOwner,
             cameraSelector,
             preview,
-            imageCapture
+            imageCapture,
+            imageAnalysis
         )
     }
 
@@ -92,14 +104,16 @@ class MainActivity : AppCompatActivity() {
             imageCapture = ImageCapture.Builder()
                 .setTargetRotation(binding.cameraPreview.display.rotation)
                 .build()
+            cameraExecutor = Executors.newSingleThreadExecutor()
             isCameraReady = true
             startCamera()
         }
 
     }
 
+
     private fun takePhoto() {
-        cameraExecutor = Executors.newSingleThreadExecutor()
+
         val outputFileOptions = ImageCapture.OutputFileOptions.Builder(getOutputPhotoFile()).build()
         imageCapture.takePicture(outputFileOptions, cameraExecutor,
             object : ImageCapture.OnImageSavedCallback {
