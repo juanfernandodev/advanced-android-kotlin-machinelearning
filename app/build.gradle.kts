@@ -52,6 +52,7 @@ dependencies {
     val junit_version = "4.13.2"
     val coilVersion = "2.6.0"
     val navVersion = "2.7.7"
+    val cameraxVersion = "1.4.0-alpha04"
     implementation("androidx.core:core-ktx:$android_core_version")
     implementation("androidx.appcompat:appcompat:$android_appcompat_version")
     implementation("com.google.android.material:material:$android_material")
@@ -61,12 +62,15 @@ dependencies {
     //Navigation
     implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
     implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
-
     //Retrofit
     implementation("com.squareup.retrofit2:retrofit:$retrofit_version")
     implementation("com.squareup.retrofit2:converter-moshi:$retrofit_version")
     //Coil Images
     implementation("io.coil-kt:coil:$coilVersion")
+    //CameraX
+    implementation("androidx.camera:camera-camera2:${cameraxVersion}")
+    implementation("androidx.camera:camera-lifecycle:${cameraxVersion}")
+    implementation("androidx.camera:camera-view:${cameraxVersion}")
     testImplementation("junit:junit:$junit_version")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

@@ -9,7 +9,12 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.Preview
+import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.LifecycleOwner
+import com.google.common.util.concurrent.ListenableFuture
 import com.juanferdev.appperrona.api.ApiServiceInterceptor
 import com.juanferdev.appperrona.auth.LoginActivity
 import com.juanferdev.appperrona.databinding.ActivityMainBinding
@@ -19,13 +24,14 @@ import com.juanferdev.appperrona.settings.SettingsActivity
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var cameraProviderFuture: ListenableFuture<ProcessCameraProvider>
     private lateinit var binding: ActivityMainBinding
     private val requestPermissionLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestPermission()
         ) { isGranted: Boolean ->
             if (isGranted) {
-                //todo: open camera
+                startCamera()
             } else {
                 Toast.makeText(
                     this,
@@ -37,11 +43,32 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        cameraProviderFuture = ProcessCameraProvider.getInstance(this)
         validateUser()
         binding = ActivityMainBinding.inflate(layoutInflater)
         initClicks()
         requestCameraPermission()
         setContentView(binding.root)
+    }
+
+    private fun startCamera() {
+        cameraProviderFuture.addListener({
+            val cameraProvider = cameraProviderFuture.get()
+            bindPreview(cameraProvider)
+        }, ContextCompat.getMainExecutor(this))
+    }
+
+    private fun bindPreview(cameraProvider: ProcessCameraProvider) {
+        val preview: Preview = Preview.Builder()
+            .build()
+
+        val cameraSelector: CameraSelector = CameraSelector.Builder()
+            .requireLensFacing(CameraSelector.LENS_FACING_BACK)
+            .build()
+
+        preview.setSurfaceProvider(binding.cameraPreview.surfaceProvider)
+
+        var camera = cameraProvider.bindToLifecycle(this as LifecycleOwner, cameraSelector, preview)
     }
 
     private fun initClicks() {
@@ -84,7 +111,7 @@ class MainActivity : AppCompatActivity() {
                     this,
                     Manifest.permission.CAMERA
                 ) == PackageManager.PERMISSION_GRANTED -> {
-                    //todo: open camera
+                    startCamera()
                 }
 
                 shouldShowRequestPermissionRationale(
@@ -113,7 +140,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         } else {
-            //todo: open camera
+            startCamera()
         }
     }
 }
