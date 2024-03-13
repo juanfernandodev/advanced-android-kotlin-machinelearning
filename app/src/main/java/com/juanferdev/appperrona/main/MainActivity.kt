@@ -1,4 +1,4 @@
-package com.juanferdev.appperrona
+package com.juanferdev.appperrona.main
 
 import android.Manifest
 import android.content.Intent
@@ -7,8 +7,10 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
@@ -20,11 +22,19 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import com.google.common.util.concurrent.ListenableFuture
+import com.juanferdev.appperrona.LABEL_PATH
+import com.juanferdev.appperrona.MODEL_PATH
+import com.juanferdev.appperrona.R
+import com.juanferdev.appperrona.WholeImageActivity
+import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.api.ApiServiceInterceptor
 import com.juanferdev.appperrona.auth.LoginActivity
 import com.juanferdev.appperrona.databinding.ActivityMainBinding
+import com.juanferdev.appperrona.dogdetail.DogDetailActivity
+import com.juanferdev.appperrona.dogdetail.DogDetailActivity.Companion.DOG_KEY
 import com.juanferdev.appperrona.doglist.DogListActivity
 import com.juanferdev.appperrona.machinelearning.Classifier
+import com.juanferdev.appperrona.models.Dog
 import com.juanferdev.appperrona.models.User
 import com.juanferdev.appperrona.settings.SettingsActivity
 import java.io.File
@@ -40,6 +50,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var cameraExecutor: ExecutorService
     private lateinit var classifier: Classifier
     private var isCameraReady = false
+    private val viewModel: MainViewModel by viewModels()
 
     private val requestPermissionLauncher =
         registerForActivityResult(
@@ -65,6 +76,7 @@ class MainActivity : AppCompatActivity() {
         initClicks()
         cameraProviderFuture = ProcessCameraProvider.getInstance(this)
         requestCameraPermission()
+        initObservers()
     }
 
     private fun startCamera() {
@@ -143,9 +155,12 @@ class MainActivity : AppCompatActivity() {
                     val photoUri = outputFileResults.savedUri
                     photoUri?.let {
 
-                        val bitmap = BitmapFactory.decodeFile(photoUri?.path)
-                        classifier.recognizeImage(bitmap)
+                        val bitmap = BitmapFactory.decodeFile(photoUri.path)
+                        val dogRecognition = classifier.recognizeImage(bitmap).first()
+                        viewModel.getRecognizedDog(dogRecognition.id)
+                        /**to see the capture in other activity to uncomment
                         openWholeImageActivity(it)
+                         **/
                     }
 
                 }
@@ -243,6 +258,31 @@ class MainActivity : AppCompatActivity() {
         } else {
             setUpCamera()
         }
+    }
+
+    private fun initObservers() {
+        viewModel.status.observe(this) { status ->
+            when (status) {
+                is ApiResponseStatus.Error -> {
+                    binding.progressBar.visibility = View.GONE
+                    Toast.makeText(this, status.messageId, Toast.LENGTH_LONG).show()
+                }
+
+                is ApiResponseStatus.Loading -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+
+                is ApiResponseStatus.Success -> {
+                    openDetailActivity(status.data)
+                }
+            }
+        }
+    }
+
+    private fun openDetailActivity(dogRecognized: Dog) {
+        val intent = Intent(this, DogDetailActivity::class.java)
+        intent.putExtra(DOG_KEY, dogRecognized)
+        startActivity(intent)
     }
 
     override fun onDestroy() {

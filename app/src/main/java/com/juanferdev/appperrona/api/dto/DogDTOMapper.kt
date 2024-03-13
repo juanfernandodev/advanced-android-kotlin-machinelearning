@@ -10,7 +10,7 @@ class DogDTOMapper {
 
         }
 
-    private fun fromDogDTOToDogDomain(dogDTO: DogDTO): Dog {
+    fun fromDogDTOToDogDomain(dogDTO: DogDTO): Dog {
         with(dogDTO) {
             return Dog(
                 id,

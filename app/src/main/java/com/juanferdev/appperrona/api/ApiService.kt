@@ -3,6 +3,7 @@ package com.juanferdev.appperrona.api
 import com.juanferdev.appperrona.ADD_DOG_TO_USER_URL
 import com.juanferdev.appperrona.BASE_URL
 import com.juanferdev.appperrona.GET_ALL_DOGS_URL
+import com.juanferdev.appperrona.GET_DOG_BY_ML_ID
 import com.juanferdev.appperrona.GET_USER_DOGS
 import com.juanferdev.appperrona.SIGN_IN_URL
 import com.juanferdev.appperrona.SIGN_UP_URL
@@ -11,6 +12,7 @@ import com.juanferdev.appperrona.api.dto.SignInDTO
 import com.juanferdev.appperrona.api.dto.SignUpDTO
 import com.juanferdev.appperrona.api.responses.AuthApiResponse
 import com.juanferdev.appperrona.api.responses.DefaultResponse
+import com.juanferdev.appperrona.api.responses.DogApiResponse
 import com.juanferdev.appperrona.api.responses.DogListApiResponse
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -19,6 +21,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 private val okHttpClient = OkHttpClient
     .Builder()
@@ -48,6 +51,9 @@ interface ApiService {
     @Headers("${ApiServiceInterceptor.NEEDS_AUTH_HEADER_KEY}: true")
     @GET(GET_USER_DOGS)
     suspend fun getUserDogs(): DogListApiResponse
+
+    @GET(GET_DOG_BY_ML_ID)
+    suspend fun getRecognizedDog(@Query("ml_id") capturedDogId: String): DogApiResponse
 
 }
 

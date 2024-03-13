@@ -76,5 +76,13 @@ class DogRepository(private val dispatcherIO: CoroutineDispatcher = Dispatchers.
             }
         }
 
+    suspend fun getRecognizedDog(capturedDogId: String): ApiResponseStatus<Dog> =
+        makeNetworkCall {
+            val response = retrofitService.getRecognizedDog(capturedDogId)
+            if (response.isSuccess.not()) {
+                throw Exception(response.message)
+            }
+            DogDTOMapper().fromDogDTOToDogDomain(response.data.dog)
+        }
 
 }

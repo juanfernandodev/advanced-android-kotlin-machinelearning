@@ -7,10 +7,10 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
-import com.juanferdev.appperrona.MainActivity
 import com.juanferdev.appperrona.R
 import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.databinding.ActivityLoginBinding
+import com.juanferdev.appperrona.main.MainActivity
 import com.juanferdev.appperrona.models.User
 
 class LoginActivity : AppCompatActivity(), LoginFragment.LoginFragmentActions,
