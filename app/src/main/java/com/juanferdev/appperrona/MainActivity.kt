@@ -3,6 +3,7 @@ package com.juanferdev.appperrona
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -23,11 +24,13 @@ import com.juanferdev.appperrona.api.ApiServiceInterceptor
 import com.juanferdev.appperrona.auth.LoginActivity
 import com.juanferdev.appperrona.databinding.ActivityMainBinding
 import com.juanferdev.appperrona.doglist.DogListActivity
+import com.juanferdev.appperrona.machinelearning.Classifier
 import com.juanferdev.appperrona.models.User
 import com.juanferdev.appperrona.settings.SettingsActivity
 import java.io.File
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import org.tensorflow.lite.support.common.FileUtil
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,6 +38,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var imageCapture: ImageCapture
     private lateinit var cameraExecutor: ExecutorService
+    private lateinit var classifier: Classifier
     private var isCameraReady = false
 
     private val requestPermissionLauncher =
@@ -85,7 +89,7 @@ class MainActivity : AppCompatActivity() {
             .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
             .build()
         imageAnalysis.setAnalyzer(cameraExecutor) { imageProxy ->
-            val rotationDegrees = imageProxy.imageInfo.rotationDegrees
+            imageProxy.imageInfo.rotationDegrees
 
             imageProxy.close()
         }
@@ -96,6 +100,20 @@ class MainActivity : AppCompatActivity() {
             preview,
             imageCapture,
             imageAnalysis
+        )
+    }
+
+    override fun onStart() {
+        super.onStart()
+        classifier = Classifier(
+            FileUtil.loadMappedFile(
+                this@MainActivity,
+                MODEL_PATH
+            ),
+            FileUtil.loadLabels(
+                this@MainActivity,
+                LABEL_PATH
+            )
         )
     }
 
@@ -124,6 +142,9 @@ class MainActivity : AppCompatActivity() {
                 override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
                     val photoUri = outputFileResults.savedUri
                     photoUri?.let {
+
+                        val bitmap = BitmapFactory.decodeFile(photoUri?.path)
+                        classifier.recognizeImage(bitmap)
                         openWholeImageActivity(it)
                     }
 
