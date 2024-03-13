@@ -26,6 +26,8 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import com.google.common.util.concurrent.ListenableFuture
+import com.juanferdev.appperrona.DOG_KEY
+import com.juanferdev.appperrona.IS_RECOGNITION_KEY
 import com.juanferdev.appperrona.LABEL_PATH
 import com.juanferdev.appperrona.MODEL_PATH
 import com.juanferdev.appperrona.api.ApiResponseStatus
@@ -33,7 +35,6 @@ import com.juanferdev.appperrona.api.ApiServiceInterceptor
 import com.juanferdev.appperrona.auth.LoginActivity
 import com.juanferdev.appperrona.databinding.ActivityMainBinding
 import com.juanferdev.appperrona.dogdetail.DogDetailActivity
-import com.juanferdev.appperrona.dogdetail.DogDetailActivity.Companion.DOG_KEY
 import com.juanferdev.appperrona.doglist.DogListActivity
 import com.juanferdev.appperrona.machinelearning.Classifier
 import com.juanferdev.appperrona.machinelearning.DogRecognition
@@ -107,7 +108,7 @@ class MainActivity : AppCompatActivity() {
             imageProxy.imageInfo.rotationDegrees
             val bitmap = convertImageProxyToBitmap(imageProxy)
             if (bitmap != null) {
-                val dogRecognition = classifier.recognizeImage(bitmap).first()
+                val dogRecognition = classifier.recognizeImage(bitmap)[3]
                 enabledTakePhotoButton(dogRecognition)
             }
             imageProxy.close()
@@ -322,6 +323,7 @@ class MainActivity : AppCompatActivity() {
     private fun openDetailActivity(dogRecognized: Dog) {
         val intent = Intent(this, DogDetailActivity::class.java)
         intent.putExtra(DOG_KEY, dogRecognized)
+        intent.putExtra(IS_RECOGNITION_KEY, true)
         startActivity(intent)
     }
 

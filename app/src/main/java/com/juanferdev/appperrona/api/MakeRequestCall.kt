@@ -15,7 +15,8 @@ suspend fun <T> makeNetworkCall(
 ): ApiResponseStatus<T> =
     withContext(dispatcher) {
         try {
-            ApiResponseStatus.Success(call())
+            val call = call()
+            ApiResponseStatus.Success(call)
         } catch (e: UnknownHostException) {
             ApiResponseStatus.Error(R.string.error_no_internet)
         } catch (e: HttpException) {

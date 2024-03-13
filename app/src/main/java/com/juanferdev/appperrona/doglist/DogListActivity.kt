@@ -7,10 +7,10 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import com.juanferdev.appperrona.DOG_KEY
 import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.databinding.ActivityDogListBinding
 import com.juanferdev.appperrona.dogdetail.DogDetailActivity
-import com.juanferdev.appperrona.dogdetail.DogDetailActivity.Companion.DOG_KEY
 import com.juanferdev.appperrona.models.Dog
 
 class DogListActivity : AppCompatActivity() {
@@ -56,9 +56,6 @@ class DogListActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        adapter.setOnLongItemClickListener { dog ->
-            dogListViewModel.addDogToUser(dog.id)
-        }
         val recycler = binding.dogRecyclerView
         recycler.layoutManager = GridLayoutManager(this, numberColumns)
         recycler.adapter = adapter
