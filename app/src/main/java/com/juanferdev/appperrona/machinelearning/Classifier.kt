@@ -88,9 +88,7 @@ class Classifier(
             TensorLabel(labels, tensorProcessor.process(outputProbabilityBuffer)).mapWithFloatValue
 
         // Gets top-k results.
-
-        val list = getTopKProbability(labeledProbability)
-        return list
+        return getTopKProbability(labeledProbability)
     }
 
     /**

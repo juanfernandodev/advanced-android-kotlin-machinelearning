@@ -1,14 +1,8 @@
 package com.juanferdev.appperrona.main
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.ImageFormat
-import android.graphics.Rect
-import android.graphics.YuvImage
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -20,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageCapture
-import androidx.camera.core.ImageProxy
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
@@ -41,7 +34,6 @@ import com.juanferdev.appperrona.machinelearning.DogRecognition
 import com.juanferdev.appperrona.models.Dog
 import com.juanferdev.appperrona.models.User
 import com.juanferdev.appperrona.settings.SettingsActivity
-import java.io.ByteArrayOutputStream
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import org.tensorflow.lite.support.common.FileUtil
@@ -105,13 +97,7 @@ class MainActivity : AppCompatActivity() {
             .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
             .build()
         imageAnalysis.setAnalyzer(cameraExecutor) { imageProxy ->
-            imageProxy.imageInfo.rotationDegrees
-            val bitmap = convertImageProxyToBitmap(imageProxy)
-            if (bitmap != null) {
-                val dogRecognition = classifier.recognizeImage(bitmap)[3]
-                enabledTakePhotoButton(dogRecognition)
-            }
-            imageProxy.close()
+            viewModel.recognizedImage(imageProxy)
         }
 
         cameraProvider.bindToLifecycle(
@@ -137,7 +123,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        classifier = Classifier(
+        viewModel.setupClassifier(
             FileUtil.loadMappedFile(
                 this@MainActivity,
                 MODEL_PATH
@@ -147,6 +133,7 @@ class MainActivity : AppCompatActivity() {
                 LABEL_PATH
             )
         )
+
     }
 
     private fun setUpCamera() {
@@ -233,36 +220,6 @@ class MainActivity : AppCompatActivity() {
         finish()
     }
 
-    @SuppressLint("UnsafeOptInUsageError")
-    private fun convertImageProxyToBitmap(imageProxy: ImageProxy): Bitmap? {
-        val image = imageProxy.image ?: return null
-
-        val yBuffer = image.planes[0].buffer // Y
-        val uBuffer = image.planes[1].buffer // U
-        val vBuffer = image.planes[2].buffer // V
-
-        val ySize = yBuffer.remaining()
-        val uSize = uBuffer.remaining()
-        val vSize = vBuffer.remaining()
-
-        val nv21 = ByteArray(ySize + uSize + vSize)
-
-        //U and V are swapped
-        yBuffer.get(nv21, 0, ySize)
-        vBuffer.get(nv21, ySize, vSize)
-        uBuffer.get(nv21, ySize + vSize, uSize)
-
-        val yuvImage = YuvImage(nv21, ImageFormat.NV21, image.width, image.height, null)
-        val out = ByteArrayOutputStream()
-        yuvImage.compressToJpeg(
-            Rect(0, 0, yuvImage.width, yuvImage.height), 100,
-            out
-        )
-        val imageBytes = out.toByteArray()
-
-        return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
-    }
-
     private fun requestCameraPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             when {
@@ -317,6 +274,10 @@ class MainActivity : AppCompatActivity() {
                     openDetailActivity(status.data)
                 }
             }
+        }
+
+        viewModel.statusDogRecognized.observe(this) {
+            enabledTakePhotoButton(it)
         }
     }
 
