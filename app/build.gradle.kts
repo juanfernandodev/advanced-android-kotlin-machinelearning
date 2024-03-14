@@ -38,7 +38,12 @@ android {
     }
     buildFeatures {
         dataBinding = true
+        compose = true
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.10"
+    }
+
 }
 
 dependencies {
@@ -76,8 +81,26 @@ dependencies {
     //TensorFlow
     implementation("org.tensorflow:tensorflow-lite:${tensorflowLiteVersion}")
     implementation("org.tensorflow:tensorflow-lite-support:$tensorflowLiteSupportVersion")
+    //Compose
+    val activityComposeVersion = "1.8.2"
+    val viewModelComposeVersion = "2.7.0"
+    val composeBom = platform("androidx.compose:compose-bom:2024.02.02")
+    implementation(composeBom)
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.material:material-icons-core")
+    implementation("androidx.compose.material:material-icons-extended")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    implementation("androidx.compose.foundation:foundation")
+    implementation("androidx.activity:activity-compose:$activityComposeVersion")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$viewModelComposeVersion")
+    implementation("androidx.compose.runtime:runtime-livedata")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+    androidTestImplementation(composeBom)
+    debugImplementation("androidx.compose.ui:ui-tooling")
+    debugImplementation("androidx.compose.ui:ui-test-manifest")
 
     testImplementation("junit:junit:$junit_version")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
 }
