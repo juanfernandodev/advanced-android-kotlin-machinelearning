@@ -18,6 +18,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary = true
+        }
     }
 
     buildTypes {
@@ -42,6 +45,11 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.10"
+    }
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
     }
 
 }
@@ -84,6 +92,7 @@ dependencies {
     //Compose
     val activityComposeVersion = "1.8.2"
     val viewModelComposeVersion = "2.7.0"
+    val lifecycleRuntimeVersion = "2.7.0"
     val composeBom = platform("androidx.compose:compose-bom:2024.02.02")
     implementation(composeBom)
     implementation("androidx.compose.ui:ui")
@@ -94,6 +103,11 @@ dependencies {
     implementation("androidx.activity:activity-compose:$activityComposeVersion")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$viewModelComposeVersion")
     implementation("androidx.compose.runtime:runtime-livedata")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleRuntimeVersion")
+    implementation(platform("androidx.compose:compose-bom:2023.08.00"))
+    implementation("androidx.compose.ui:ui-graphics")
+    implementation("androidx.compose.material3:material3")
+    androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     androidTestImplementation(composeBom)
     debugImplementation("androidx.compose.ui:ui-tooling")
