@@ -36,7 +36,7 @@ import com.juanferdev.appperrona.models.Dog
 
 
 @Composable
-fun DogDetailScreen(dog: Dog) {
+fun DogDetailScreen(dog: Dog, onClickButtonDetailActivity: () -> Unit) {
     Box(
         modifier = Modifier
             .background(
@@ -59,13 +59,12 @@ fun DogDetailScreen(dog: Dog) {
         FloatingActionButton(
             modifier = Modifier
                 .align(alignment = Alignment.BottomCenter),
-            onClick = { /*TODO*/ }) {
+            onClick = { onClickButtonDetailActivity() }) {
             Icon(
                 imageVector = Icons.Filled.Check,
                 contentDescription = null
             )
         }
-        LoadingWheel()
     }
 }
 
@@ -310,5 +309,5 @@ fun Preview() {
         "6"
     )
 
-    DogDetailScreen(dog)
+    DogDetailScreen(dog) { }
 }

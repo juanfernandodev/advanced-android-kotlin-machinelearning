@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import com.juanferdev.appperrona.DOG_KEY
 import com.juanferdev.appperrona.IS_RECOGNITION_KEY
 import com.juanferdev.appperrona.R
@@ -31,24 +32,48 @@ class DogDetailComposeActivity : ComponentActivity() {
         if (dog == null) {
             Toast.makeText(this, R.string.error_showing_dog_not_found, Toast.LENGTH_LONG).show()
             finish()
-            return
-        }
-        setContent {
-            val status = viewModel.status.value
-            DogDetailScreen(dog = dog)
-            AppPerronaTheme {
-                when (status) {
-                    is ApiResponseStatus.Error -> TODO()
+        } else {
+            setContent {
+                when (val status = viewModel.status.value) {
+                    is ApiResponseStatus.Error -> {
+                        Toast.makeText(this, status.messageId, Toast.LENGTH_LONG)
+                            .show()
+                    }
+
                     is ApiResponseStatus.Loading -> {
                         LoadingWheel()
                     }
 
                     is ApiResponseStatus.Success -> {
+                        Toast.makeText(this, stringResource(R.string.dog_saved), Toast.LENGTH_LONG)
+                            .show()
+                        finish()
+                    }
 
+                    null -> {
+                        AppPerronaTheme {
+                            DogDetailScreen(
+                                dog = dog,
+                                onClickButtonDetailActivity = {
+                                    onClickButtonDetailActivity(
+                                        isRecognition,
+                                        dog.id
+                                    )
+                                }
+                            )
+                        }
                     }
                 }
-
             }
+        }
+
+    }
+
+    private fun onClickButtonDetailActivity(isRecognition: Boolean, dogId: Long) {
+        if (isRecognition) {
+            viewModel.addDogToUser(dogId)
+        } else {
+            finish()
         }
     }
 }
@@ -65,4 +90,6 @@ fun LoadingWheel() {
         )
     }
 }
+
+
 

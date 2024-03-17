@@ -36,4 +36,5 @@
     <string name="dog_already_belongs_to_user">Dog already belongs to User</string>
     <string name="title_activity_dog_detail_compose">DogDetailComposeActivity</string>
     <string name="dog_image">Dog Image</string>
+    <string name="dog_saved">Dog saved!</string>
 </resources>

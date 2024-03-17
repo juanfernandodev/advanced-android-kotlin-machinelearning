@@ -11,7 +11,7 @@ class DogDetailViewModel(
     private val dogRepository: DogRepository = DogRepository()
 ) : ViewModel() {
 
-    var status = mutableStateOf<ApiResponseStatus<Any>>(ApiResponseStatus.Loading())
+    var status = mutableStateOf<ApiResponseStatus<Any>?>(null)
         private set
 
 
