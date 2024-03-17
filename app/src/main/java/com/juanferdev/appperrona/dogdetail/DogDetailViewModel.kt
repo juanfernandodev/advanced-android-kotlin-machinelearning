@@ -1,7 +1,6 @@
 package com.juanferdev.appperrona.dogdetail
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.juanferdev.appperrona.api.ApiResponseStatus
@@ -12,15 +11,14 @@ class DogDetailViewModel(
     private val dogRepository: DogRepository = DogRepository()
 ) : ViewModel() {
 
-    private val _status = MutableLiveData<ApiResponseStatus<Any>>()
-    val status: LiveData<ApiResponseStatus<Any>>
-        get() = _status
+    var status = mutableStateOf<ApiResponseStatus<Any>>(ApiResponseStatus.Loading())
+        private set
 
 
     fun addDogToUser(dogId: Long) {
         viewModelScope.launch {
-            _status.value = ApiResponseStatus.Loading()
-            _status.value = dogRepository.addDogToUser(dogId)
+            status.value = ApiResponseStatus.Loading()
+            status.value = dogRepository.addDogToUser(dogId)
         }
     }
 }

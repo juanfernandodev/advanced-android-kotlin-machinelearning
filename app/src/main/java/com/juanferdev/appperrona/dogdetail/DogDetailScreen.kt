@@ -34,9 +34,9 @@ import coil.compose.AsyncImage
 import com.juanferdev.appperrona.R
 import com.juanferdev.appperrona.models.Dog
 
-@Preview(showBackground = true)
+
 @Composable
-fun DogDetailScreen() {
+fun DogDetailScreen(dog: Dog) {
     Box(
         modifier = Modifier
             .background(
@@ -44,29 +44,17 @@ fun DogDetailScreen() {
                     id = R.color.secondary_background
                 )
             )
-            .padding(start = 8.dp, end = 8.dp, top = 8.dp, bottom = 16.dp),
+            .padding(start = 8.dp, end = 8.dp, top = 8.dp, bottom = 16.dp)
+            .fillMaxSize(),
         contentAlignment = Alignment.TopCenter
     ) {
-        val dog = Dog(
-            1L,
-            78,
-            "Pug",
-            "Herding",
-            "70",
-            "75",
-            "",
-            lifeExpectancy = "10 - 12",
-            "Friendly, playful",
-            "5",
-            "6"
-        )
         DogInformation(dog)
         AsyncImage(
             model = dog.imageUrl,
             contentDescription = dog.name,
             modifier = Modifier
                 .width(270.dp)
-                .padding(80.dp)
+                .padding(top = 80.dp)
         )
         FloatingActionButton(
             modifier = Modifier
@@ -77,6 +65,7 @@ fun DogDetailScreen() {
                 contentDescription = null
             )
         }
+        LoadingWheel()
     }
 }
 
@@ -302,4 +291,24 @@ private fun LifeIcon() {
         }
 
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun Preview() {
+    val dog = Dog(
+        1L,
+        78,
+        "Pug",
+        "Herding",
+        "70",
+        "75",
+        "",
+        lifeExpectancy = "10 - 12",
+        "Friendly, playful",
+        "5",
+        "6"
+    )
+
+    DogDetailScreen(dog)
 }

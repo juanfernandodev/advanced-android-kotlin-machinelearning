@@ -27,7 +27,7 @@ import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.api.ApiServiceInterceptor
 import com.juanferdev.appperrona.auth.LoginActivity
 import com.juanferdev.appperrona.databinding.ActivityMainBinding
-import com.juanferdev.appperrona.dogdetail.DogDetailActivity
+import com.juanferdev.appperrona.dogdetail.DogDetailComposeActivity
 import com.juanferdev.appperrona.doglist.DogListActivity
 import com.juanferdev.appperrona.machinelearning.Classifier
 import com.juanferdev.appperrona.machinelearning.DogRecognition
@@ -282,7 +282,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openDetailActivity(dogRecognized: Dog) {
-        val intent = Intent(this, DogDetailActivity::class.java)
+        val intent = Intent(this, DogDetailComposeActivity::class.java)
         intent.putExtra(DOG_KEY, dogRecognized)
         intent.putExtra(IS_RECOGNITION_KEY, true)
         startActivity(intent)

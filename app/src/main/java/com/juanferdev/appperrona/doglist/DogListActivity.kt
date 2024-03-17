@@ -10,12 +10,12 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.juanferdev.appperrona.DOG_KEY
 import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.databinding.ActivityDogListBinding
-import com.juanferdev.appperrona.dogdetail.DogDetailActivity
+import com.juanferdev.appperrona.dogdetail.DogDetailComposeActivity
 import com.juanferdev.appperrona.models.Dog
 
 class DogListActivity : AppCompatActivity() {
 
-    val adapter = DogAdapter()
+    private val adapter = DogAdapter()
     private lateinit var binding: ActivityDogListBinding
     private val dogListViewModel: DogListViewModel by viewModels()
     private val numberColumns = 3
@@ -51,7 +51,7 @@ class DogListActivity : AppCompatActivity() {
 
     private fun initRecycler() {
         adapter.setOnItemClickListener { dog ->
-            val intent = Intent(this, DogDetailActivity::class.java)
+            val intent = Intent(this, DogDetailComposeActivity::class.java)
             intent.putExtra(DOG_KEY, dog)
             startActivity(intent)
         }
