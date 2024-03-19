@@ -7,7 +7,10 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,8 +39,7 @@ class DogDetailComposeActivity : ComponentActivity() {
             setContent {
                 when (val status = viewModel.status.value) {
                     is ApiResponseStatus.Error -> {
-                        Toast.makeText(this, status.messageId, Toast.LENGTH_LONG)
-                            .show()
+                        ErrorDialog(status.messageId, onDialogDismiss = ::resetApiResponseStatus)
                     }
 
                     is ApiResponseStatus.Loading -> {
@@ -76,6 +78,10 @@ class DogDetailComposeActivity : ComponentActivity() {
             finish()
         }
     }
+
+    private fun resetApiResponseStatus() {
+        viewModel.resetApiResponseStatus()
+    }
 }
 
 @Composable
@@ -89,6 +95,31 @@ fun LoadingWheel() {
             color = Color.Red
         )
     }
+}
+
+@Composable
+fun ErrorDialog(
+    errorMessageId: Int,
+    onDialogDismiss: () -> Unit
+) {
+    AlertDialog(
+        title = {
+            Text(text = stringResource(id = R.string.oops_something_happend))
+        },
+        text = {
+            Text(text = stringResource(id = errorMessageId))
+        },
+        onDismissRequest = {
+
+        },
+        confirmButton = {
+            Button(
+                onClick = { onDialogDismiss() }
+            ) {
+                Text(stringResource(id = R.string.try_again))
+            }
+        }
+    )
 }
 
 

@@ -37,4 +37,6 @@
     <string name="title_activity_dog_detail_compose">DogDetailComposeActivity</string>
     <string name="dog_image">Dog Image</string>
     <string name="dog_saved">Dog saved!</string>
+    <string name="oops_something_happend">Oops, something happend!</string>
+    <string name="try_again">Try again</string>
 </resources>

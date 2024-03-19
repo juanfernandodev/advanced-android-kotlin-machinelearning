@@ -21,4 +21,8 @@ class DogDetailViewModel(
             status.value = dogRepository.addDogToUser(dogId)
         }
     }
+
+    fun resetApiResponseStatus() {
+        status.value = null
+    }
 }
