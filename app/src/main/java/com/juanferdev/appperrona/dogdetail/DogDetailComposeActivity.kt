@@ -5,21 +5,13 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import com.juanferdev.appperrona.DOG_KEY
 import com.juanferdev.appperrona.IS_RECOGNITION_KEY
 import com.juanferdev.appperrona.R
 import com.juanferdev.appperrona.api.ApiResponseStatus
+import com.juanferdev.appperrona.composables.ErrorDialog
+import com.juanferdev.appperrona.composables.LoadingWheel
 import com.juanferdev.appperrona.dogdetail.ui.theme.AppPerronaTheme
 import com.juanferdev.appperrona.models.Dog
 import com.juanferdev.appperrona.utils.parcelable
@@ -83,44 +75,3 @@ class DogDetailComposeActivity : ComponentActivity() {
         viewModel.resetApiResponseStatus()
     }
 }
-
-@Composable
-fun LoadingWheel() {
-    Box(
-        modifier = Modifier
-            .fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        CircularProgressIndicator(
-            color = Color.Red
-        )
-    }
-}
-
-@Composable
-fun ErrorDialog(
-    errorMessageId: Int,
-    onDialogDismiss: () -> Unit
-) {
-    AlertDialog(
-        title = {
-            Text(text = stringResource(id = R.string.oops_something_happend))
-        },
-        text = {
-            Text(text = stringResource(id = errorMessageId))
-        },
-        onDismissRequest = {
-
-        },
-        confirmButton = {
-            Button(
-                onClick = { onDialogDismiss() }
-            ) {
-                Text(stringResource(id = R.string.try_again))
-            }
-        }
-    )
-}
-
-
-

@@ -2,19 +2,13 @@ package com.juanferdev.appperrona.doglist
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import com.juanferdev.appperrona.DOG_KEY
 import com.juanferdev.appperrona.api.ApiResponseStatus
+import com.juanferdev.appperrona.composables.ErrorDialog
+import com.juanferdev.appperrona.composables.LoadingWheel
 import com.juanferdev.appperrona.dogdetail.DogDetailComposeActivity
 import com.juanferdev.appperrona.dogdetail.ui.theme.AppPerronaTheme
 import com.juanferdev.appperrona.models.Dog
@@ -35,13 +29,16 @@ class DogListActivity : ComponentActivity() {
                     }
 
                     is ApiResponseStatus.Error -> {
-                        Toast.makeText(this, status.messageId, Toast.LENGTH_SHORT).show()
+                        ErrorDialog(status.messageId) {
+                            finish()
+                        }
                     }
 
                     is ApiResponseStatus.Success -> {
                         DogListScreen(
                             dogList = status.data as List<Dog>,
-                            onDogClicked = ::openDogDetailActivity
+                            onDogClicked = ::openDogDetailActivity,
+                            onNavigationIconClick = ::onNavigationIconClick
                         )
                     }
                 }
@@ -56,18 +53,8 @@ class DogListActivity : ComponentActivity() {
         intent.putExtra(DOG_KEY, dog)
         startActivity(intent)
     }
-}
 
-
-@Composable
-fun LoadingWheel() {
-    Box(
-        modifier = Modifier
-            .fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        CircularProgressIndicator(
-            color = Color.Red
-        )
+    private fun onNavigationIconClick() {
+        finish()
     }
 }
