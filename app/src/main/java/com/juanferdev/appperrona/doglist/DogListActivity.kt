@@ -2,62 +2,72 @@ package com.juanferdev.appperrona.doglist
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import com.juanferdev.appperrona.DOG_KEY
 import com.juanferdev.appperrona.api.ApiResponseStatus
-import com.juanferdev.appperrona.databinding.ActivityDogListBinding
 import com.juanferdev.appperrona.dogdetail.DogDetailComposeActivity
+import com.juanferdev.appperrona.dogdetail.ui.theme.AppPerronaTheme
 import com.juanferdev.appperrona.models.Dog
 
-class DogListActivity : AppCompatActivity() {
+class DogListActivity : ComponentActivity() {
 
-    private val adapter = DogAdapter()
-    private lateinit var binding: ActivityDogListBinding
-    private val dogListViewModel: DogListViewModel by viewModels()
-    private val numberColumns = 3
+    private val viewModel: DogListViewModel by viewModels()
+
+    @Suppress("UNCHECKED_CAST")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContent {
+            AppPerronaTheme {
+                val status = viewModel.status.value
+                when (status) {
+                    is ApiResponseStatus.Loading -> {
+                        LoadingWheel()
+                    }
 
-        binding = ActivityDogListBinding.inflate(
-            layoutInflater
-        )
+                    is ApiResponseStatus.Error -> {
+                        Toast.makeText(this, status.messageId, Toast.LENGTH_SHORT).show()
+                    }
 
-        setContentView(binding.root)
-        initRecycler()
-
-        @Suppress("UNCHECKED_CAST")
-        dogListViewModel.status.observe(this) { status ->
-            when (status) {
-                is ApiResponseStatus.Loading -> {
-                    binding.loadingWheel.visibility = View.VISIBLE
+                    is ApiResponseStatus.Success -> {
+                        DogListScreen(
+                            dogList = status.data as List<Dog>,
+                            onDogClicked = ::openDogDetailActivity
+                        )
+                    }
                 }
 
-                is ApiResponseStatus.Error -> {
-                    binding.loadingWheel.visibility = View.GONE
-                    Toast.makeText(this, status.messageId, Toast.LENGTH_SHORT).show()
-                }
-
-                is ApiResponseStatus.Success -> {
-                    adapter.submitList(status.data as List<Dog>)
-                    binding.loadingWheel.visibility = View.GONE
-                }
             }
         }
+
     }
 
-    private fun initRecycler() {
-        adapter.setOnItemClickListener { dog ->
-            val intent = Intent(this, DogDetailComposeActivity::class.java)
-            intent.putExtra(DOG_KEY, dog)
-            startActivity(intent)
-        }
+    private fun openDogDetailActivity(dog: Dog) {
+        val intent = Intent(this, DogDetailComposeActivity::class.java)
+        intent.putExtra(DOG_KEY, dog)
+        startActivity(intent)
+    }
+}
 
-        val recycler = binding.dogRecyclerView
-        recycler.layoutManager = GridLayoutManager(this, numberColumns)
-        recycler.adapter = adapter
+
+@Composable
+fun LoadingWheel() {
+    Box(
+        modifier = Modifier
+            .fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        CircularProgressIndicator(
+            color = Color.Red
+        )
     }
 }
