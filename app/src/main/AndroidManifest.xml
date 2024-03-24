@@ -20,12 +20,12 @@
         android:theme="@style/Theme.AppPerrona"
         tools:targetApi="31">
         <activity
-            android:name=".auth.LoginComposeActivity"
+            android:name=".auth.LoginActivity"
             android:exported="false"
             android:label="@string/title_activity_login_compose"
             android:theme="@style/Theme.AppPerrona" />
         <activity
-            android:name=".dogdetail.DogDetailComposeActivity"
+            android:name=".dogdetail.DogDetailActivity"
             android:exported="false"
             android:label="@string/title_activity_dog_detail_compose"
             android:theme="@style/Theme.AppPerrona" />

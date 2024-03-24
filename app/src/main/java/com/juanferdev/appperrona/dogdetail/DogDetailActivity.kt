@@ -16,7 +16,7 @@ import com.juanferdev.appperrona.dogdetail.ui.theme.AppPerronaTheme
 import com.juanferdev.appperrona.models.Dog
 import com.juanferdev.appperrona.utils.parcelable
 
-class DogDetailComposeActivity : ComponentActivity() {
+class DogDetailActivity : ComponentActivity() {
 
     private val viewModel: DogDetailViewModel by viewModels()
 
