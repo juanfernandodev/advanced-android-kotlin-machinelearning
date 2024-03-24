@@ -10,8 +10,7 @@ class LoginComposeActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AppPerronaTheme {
-                SignUpScreen()
-                // LoginScreen(onClickRegister = ::goToRegister)
+                AuthScreen()
             }
         }
     }

@@ -6,7 +6,6 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
 import com.juanferdev.appperrona.R
 import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.databinding.ActivityLoginBinding
@@ -54,7 +53,7 @@ class LoginActivity : AppCompatActivity(), LoginFragment.LoginFragmentActions,
     }
 
     override fun onRegisterButtonClick() {
-        findNavController(R.id.nav_host_fragment).navigate(LoginFragmentDirections.actionLoginFragmentToSignUpFragment())
+
     }
 
     override fun onLoginButtonClick(email: String, password: String) {

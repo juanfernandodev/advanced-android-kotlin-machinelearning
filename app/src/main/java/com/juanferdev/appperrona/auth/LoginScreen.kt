@@ -18,13 +18,11 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.juanferdev.appperrona.R
-import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.composables.AuthField
 import com.juanferdev.appperrona.composables.TopAppBar
 
 @Composable
 fun LoginScreen(
-    status: ApiResponseStatus<Any>? = null,
     onClickRegister: (() -> Unit)
 ) {
     Scaffold(
@@ -85,7 +83,7 @@ fun Content(modifier: Modifier, onClickRegister: (() -> Unit)) {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp),
-            onClick = { }
+            onClick = { onClickRegister() }
         ) {
             Text(
                 text = stringResource(id = R.string.login),

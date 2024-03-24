@@ -21,16 +21,15 @@ import com.juanferdev.appperrona.composables.BackTopAppBar
 
 @Composable
 fun SignUpScreen(
-
+    onBackClick: (() -> Unit)
 ) {
-    val onClick: (() -> Unit) = {}
     Scaffold(
         topBar = {
             BackTopAppBar(
                 title = stringResource(
                     id = R.string.sign_up
                 ),
-                onClick = onClick
+                onClick = onBackClick
             )
         }
     ) {

@@ -75,8 +75,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
     implementation("androidx.activity:activity-ktx:$activity_version")
     //Navigation
-    implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
-    implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
+    implementation("androidx.navigation:navigation-compose:$navVersion")
     //Retrofit
     implementation("com.squareup.retrofit2:retrofit:$retrofit_version")
     implementation("com.squareup.retrofit2:converter-moshi:$retrofit_version")
