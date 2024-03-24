@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
-
 package com.juanferdev.appperrona.doglist
 
 import androidx.compose.foundation.background
@@ -11,7 +9,6 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -23,35 +20,54 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.juanferdev.appperrona.R
+import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.composables.BackTopAppBar
+import com.juanferdev.appperrona.composables.ErrorDialog
+import com.juanferdev.appperrona.composables.LoadingWheel
 import com.juanferdev.appperrona.models.Dog
 
 private const val GRID_SPAN_COUNT = 3
 
+@Suppress("UNCHECKED_CAST")
 @Composable
 fun DogListScreen(
     onNavigationIconClick: () -> Unit,
-    dogList: List<Dog>,
-    onDogClicked: (Dog) -> Unit
+    onDogClicked: (Dog) -> Unit,
+    viewModel: DogListViewModel = hiltViewModel()
 ) {
     Scaffold(
         topBar = { DogListScreenTopBar(onNavigationIconClick) }
     ) { paddingValues ->
-        LazyVerticalGrid(
-            modifier = Modifier
-                .padding(paddingValues)
-                .padding(top = 20.dp, bottom = 40.dp),
-            columns = GridCells.Fixed(GRID_SPAN_COUNT)
-        ) {
-            items(dogList) {
-                DogGridItem(dog = it, onDogClicked)
+
+        when (val status = viewModel.status.value) {
+            is ApiResponseStatus.Loading -> {
+                LoadingWheel()
+            }
+
+            is ApiResponseStatus.Error -> {
+                ErrorDialog(status.messageId) {
+                    onNavigationIconClick()
+                }
+            }
+
+            is ApiResponseStatus.Success -> {
+                val listDog = status.data as List<Dog>
+                LazyVerticalGrid(
+                    modifier = Modifier
+                        .padding(paddingValues)
+                        .padding(top = 20.dp, bottom = 40.dp),
+                    columns = GridCells.Fixed(GRID_SPAN_COUNT)
+                ) {
+                    items(listDog) {
+                        DogGridItem(dog = it, onDogClicked)
+                    }
+                }
             }
         }
     }
-
-
 }
 
 @Composable

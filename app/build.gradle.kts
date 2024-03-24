@@ -111,8 +111,10 @@ dependencies {
     implementation("androidx.compose.material3:material3")
 
     //Hilt dependency injection
-    val hiltVersion = 2.50
+    val hiltVersion = "2.50"
+    val hiltNavigation = "1.2.0"
     implementation("com.google.dagger:hilt-android:${hiltVersion}")
+    implementation("androidx.hilt:hilt-navigation-compose:${hiltNavigation}")
     kapt("com.google.dagger:hilt-android-compiler:${hiltVersion}")
 
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))

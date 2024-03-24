@@ -5,10 +5,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.models.Dog
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.launch
 
-class DogListViewModel(private val dogRepository: DogRepository = DogRepository()) : ViewModel() {
-
+@HiltViewModel
+class DogListViewModel @Inject constructor() : ViewModel() {
+    private val dogRepository: DogRepository = DogRepository()
     val status = mutableStateOf<ApiResponseStatus<Any>>(ApiResponseStatus.Success(emptyList<Dog>()))
 
     init {
