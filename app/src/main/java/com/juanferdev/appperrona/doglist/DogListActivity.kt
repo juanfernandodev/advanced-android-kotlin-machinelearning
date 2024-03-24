@@ -22,8 +22,7 @@ class DogListActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AppPerronaTheme {
-                val status = viewModel.status.value
-                when (status) {
+                when (val status = viewModel.status.value) {
                     is ApiResponseStatus.Loading -> {
                         LoadingWheel()
                     }

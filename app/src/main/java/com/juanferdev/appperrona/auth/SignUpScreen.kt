@@ -21,7 +21,9 @@ import com.juanferdev.appperrona.composables.BackTopAppBar
 
 @Composable
 fun SignUpScreen(
-    onBackClick: (() -> Unit)
+    onBackClick: () -> Unit,
+    onSignUpButtonClick: (email: String, password: String, passwordConfirmation: String) -> Unit,
+    viewModel: AuthViewModel
 ) {
     Scaffold(
         topBar = {
@@ -33,12 +35,19 @@ fun SignUpScreen(
             )
         }
     ) {
-        Content(modifier = Modifier.padding(it))
+        Content(
+            modifier = Modifier.padding(it), onSignUpButtonClick,
+            viewModel = viewModel
+        )
     }
 }
 
 @Composable
-fun Content(modifier: Modifier) {
+fun Content(
+    modifier: Modifier,
+    onSignUpButtonClick: (email: String, password: String, passwordConfirmation: String) -> Unit,
+    viewModel: AuthViewModel
+) {
     val email = remember { mutableStateOf(String()) }
     val password = remember { mutableStateOf(String()) }
     val confirmPassword = remember { mutableStateOf(String()) }
@@ -60,8 +69,15 @@ fun Content(modifier: Modifier) {
             email.value,
             onTextChanged = { newValue ->
                 email.value = newValue
+                viewModel.resetAuthFieldStatus()
             },
-            label = stringResource(id = R.string.email)
+            label = stringResource(id = R.string.email),
+            errorMessageId =
+            if (viewModel.authFieldStatus.value is AuthFieldStatus.Email) {
+                (viewModel.authFieldStatus.value as AuthFieldStatus.Email).messageId
+            } else {
+                null
+            }
         )
         AuthField(
             modifier = Modifier
@@ -70,9 +86,16 @@ fun Content(modifier: Modifier) {
             password.value,
             onTextChanged = { newValue ->
                 password.value = newValue
+                viewModel.resetAuthFieldStatus()
             },
             label = stringResource(id = R.string.password),
-            visualTransformation = PasswordVisualTransformation()
+            visualTransformation = PasswordVisualTransformation(),
+            errorMessageId =
+            if (viewModel.authFieldStatus.value is AuthFieldStatus.Password) {
+                (viewModel.authFieldStatus.value as AuthFieldStatus.Password).messageId
+            } else {
+                null
+            }
         )
         AuthField(
             modifier = Modifier
@@ -81,15 +104,22 @@ fun Content(modifier: Modifier) {
             confirmPassword.value,
             onTextChanged = { newValue ->
                 confirmPassword.value = newValue
+                viewModel.resetAuthFieldStatus()
             },
             label = stringResource(id = R.string.confirm_password),
-            visualTransformation = PasswordVisualTransformation()
+            visualTransformation = PasswordVisualTransformation(),
+            errorMessageId =
+            if (viewModel.authFieldStatus.value is AuthFieldStatus.ConfirmPassword) {
+                (viewModel.authFieldStatus.value as AuthFieldStatus.ConfirmPassword).messageId
+            } else {
+                null
+            }
         )
         Button(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp),
-            onClick = { }
+            onClick = { onSignUpButtonClick(email.value, password.value, confirmPassword.value) }
         ) {
             Text(
                 text = stringResource(id = R.string.sign_up),
