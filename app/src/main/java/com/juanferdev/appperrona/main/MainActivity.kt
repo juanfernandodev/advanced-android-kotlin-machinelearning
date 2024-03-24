@@ -148,46 +148,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    /** THIS CODE TAKE A PHOTO AND SAVE IN THE PHONE, ALSO SHOW THE PHOTO IN A NEW ACTIVITY
-     * private fun takePhoto() {
-     *
-     *         val outputFileOptions = ImageCapture.OutputFileOptions.Builder(getOutputPhotoFile()).build()
-     *         imageCapture.takePicture(outputFileOptions, cameraExecutor,
-     *             object : ImageCapture.OnImageSavedCallback {
-     *                 override fun onError(error: ImageCaptureException) {
-     *                     Toast.makeText(this@MainActivity, error.message, Toast.LENGTH_LONG).show()
-     *                 }
-     *
-     *                 override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-     *                     val photoUri = outputFileResults.savedUri
-     *                     photoUri?.let {
-     *                         openWholeImageActivity(it)
-     *                     }
-     *
-     *                 }
-     *             })
-     *     }
-     *
-     *     private fun openWholeImageActivity(photoUri: Uri) {
-     *         val intent = Intent(this, WholeImageActivity::class.java)
-     *         intent.putExtra(WholeImageActivity.PHOTO_URI_KEY, photoUri.toString())
-     *         startActivity(intent)
-     *     }
-     *
-     *     private fun getOutputPhotoFile(): File {
-     *         val mediaDir = externalMediaDirs.firstOrNull()?.let {
-     *             File(it, "${resources.getString(R.string.app_name)}.jpg").apply { mkdirs() }
-     *         }
-     *         return if (mediaDir != null && mediaDir.exists()) {
-     *             mediaDir
-     *         } else {
-     *             filesDir
-     *         }
-     *     }
-     *
-     */
-
-
     private fun initClicks() {
         binding.settingsFab.setOnClickListener {
             openSettingsActivity()

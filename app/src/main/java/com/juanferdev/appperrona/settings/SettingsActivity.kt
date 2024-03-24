@@ -2,21 +2,23 @@ package com.juanferdev.appperrona.settings
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import com.juanferdev.appperrona.auth.LoginActivity
-import com.juanferdev.appperrona.databinding.ActivitySettingsBinding
+import com.juanferdev.appperrona.dogdetail.ui.theme.AppPerronaTheme
 import com.juanferdev.appperrona.models.User
 
-class SettingsActivity : AppCompatActivity() {
+class SettingsActivity : ComponentActivity() {
 
-    private lateinit var binding: ActivitySettingsBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySettingsBinding.inflate(layoutInflater)
-        binding.logoutButton.setOnClickListener {
-            logout()
+        setContent {
+            AppPerronaTheme {
+                SettingsScreen {
+                    logout()
+                }
+            }
         }
-        setContentView(binding.root)
     }
 
     private fun logout() {
