@@ -30,9 +30,6 @@
             android:label="@string/title_activity_dog_detail_compose"
             android:theme="@style/Theme.AppPerrona" />
         <activity
-            android:name=".WholeImageActivity"
-            android:exported="false" />
-        <activity
             android:name=".settings.SettingsActivity"
             android:exported="false"
             android:parentActivityName=".main.MainActivity" />
