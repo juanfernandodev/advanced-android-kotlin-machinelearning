@@ -10,8 +10,9 @@ import javax.inject.Inject
 import kotlinx.coroutines.launch
 
 @HiltViewModel
-class DogListViewModel @Inject constructor() : ViewModel() {
-    private val dogRepository: DogRepository = DogRepository()
+class DogListViewModel @Inject constructor(
+    private val dogRepository: DogRepository
+) : ViewModel() {
     val status = mutableStateOf<ApiResponseStatus<Any>>(ApiResponseStatus.Success(emptyList<Dog>()))
 
     init {

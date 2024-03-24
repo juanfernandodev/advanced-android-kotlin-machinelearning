@@ -7,12 +7,15 @@ import com.juanferdev.appperrona.api.dto.AddDogToUserDTO
 import com.juanferdev.appperrona.api.dto.DogDTOMapper
 import com.juanferdev.appperrona.api.makeNetworkCall
 import com.juanferdev.appperrona.models.Dog
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 
-class DogRepository(private val dispatcherIO: CoroutineDispatcher = Dispatchers.IO) {
+class DogRepository @Inject constructor() {
+
+    private val dispatcherIO: CoroutineDispatcher = Dispatchers.IO
 
     suspend fun getDogCollection(): ApiResponseStatus<List<Dog>> {
         return withContext(dispatcherIO) {
