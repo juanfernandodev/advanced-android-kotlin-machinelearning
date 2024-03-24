@@ -2,7 +2,9 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
+    kotlin("kapt")
     id("kotlin-parcelize")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -107,6 +109,12 @@ dependencies {
     implementation(platform("androidx.compose:compose-bom:2023.08.00"))
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.material3:material3")
+
+    //Hilt dependency injection
+    val hiltVersion = 2.50
+    implementation("com.google.dagger:hilt-android:${hiltVersion}")
+    kapt("com.google.dagger:hilt-android-compiler:${hiltVersion}")
+
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     androidTestImplementation(composeBom)
@@ -117,4 +125,9 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
+}
+
+// Allow references to generated code
+kapt {
+    correctErrorTypes = true
 }
