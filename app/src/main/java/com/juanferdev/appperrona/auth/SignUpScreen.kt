@@ -1,6 +1,5 @@
 package com.juanferdev.appperrona.auth
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -10,7 +9,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -18,37 +16,34 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.juanferdev.appperrona.R
-import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.composables.AuthField
-import com.juanferdev.appperrona.composables.TopAppBar
+import com.juanferdev.appperrona.composables.BackTopAppBar
 
 @Composable
-fun LoginScreen(
-    status: ApiResponseStatus<Any>? = null,
-    onClickRegister: (() -> Unit)
+fun SignUpScreen(
+
 ) {
+    val onClick: (() -> Unit) = {}
     Scaffold(
         topBar = {
-            TopAppBar(
+            BackTopAppBar(
                 title = stringResource(
-                    id = R.string.app_name
-                )
+                    id = R.string.sign_up
+                ),
+                onClick = onClick
             )
         }
     ) {
-        Content(
-            modifier = Modifier.padding(paddingValues = it),
-            onClickRegister = onClickRegister
-        )
+        Content(modifier = Modifier.padding(it))
     }
-
 }
 
-
 @Composable
-fun Content(modifier: Modifier, onClickRegister: (() -> Unit)) {
+fun Content(modifier: Modifier) {
     val email = remember { mutableStateOf(String()) }
     val password = remember { mutableStateOf(String()) }
+    val confirmPassword = remember { mutableStateOf(String()) }
+
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -57,8 +52,7 @@ fun Content(modifier: Modifier, onClickRegister: (() -> Unit)) {
                 start = 16.dp,
                 end = 16.dp,
                 bottom = 16.dp
-            ),
-        horizontalAlignment = Alignment.CenterHorizontally
+            )
     ) {
         AuthField(
             modifier = Modifier
@@ -81,6 +75,17 @@ fun Content(modifier: Modifier, onClickRegister: (() -> Unit)) {
             label = stringResource(id = R.string.password),
             visualTransformation = PasswordVisualTransformation()
         )
+        AuthField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp),
+            confirmPassword.value,
+            onTextChanged = { newValue ->
+                confirmPassword.value = newValue
+            },
+            label = stringResource(id = R.string.confirm_password),
+            visualTransformation = PasswordVisualTransformation()
+        )
         Button(
             modifier = Modifier
                 .fillMaxWidth()
@@ -88,27 +93,11 @@ fun Content(modifier: Modifier, onClickRegister: (() -> Unit)) {
             onClick = { }
         ) {
             Text(
-                text = stringResource(id = R.string.login),
+                text = stringResource(id = R.string.sign_up),
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Medium
             )
         }
-        Text(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            textAlign = TextAlign.Center,
-            text = stringResource(id = R.string.do_not_have_an_account)
-        )
-        Text(
-            modifier = Modifier
-                .clickable(true, onClick = { onClickRegister() })
-                .fillMaxWidth()
-                .padding(16.dp),
-            text = stringResource(id = R.string.register),
-            textAlign = TextAlign.Center,
-            fontWeight = FontWeight.Medium
-        )
     }
 
 }

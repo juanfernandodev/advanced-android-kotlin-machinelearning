@@ -11,20 +11,13 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.sharp.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -32,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.juanferdev.appperrona.R
+import com.juanferdev.appperrona.composables.BackTopAppBar
 import com.juanferdev.appperrona.models.Dog
 
 private const val GRID_SPAN_COUNT = 3
@@ -62,24 +56,11 @@ fun DogListScreen(
 
 @Composable
 fun DogListScreenTopBar(onClick: () -> Unit) {
-    TopAppBar(
-        modifier = Modifier.background(Color.White),
-        title = { Text(stringResource(R.string.my_dog_collection)) },
-        navigationIcon = { BackNavigationIcon(onClick) },
-        colors = TopAppBarDefaults.topAppBarColors()
+    BackTopAppBar(
+        title = stringResource(R.string.my_dog_collection),
+        onClick = onClick
     )
 }
-
-@Composable
-fun BackNavigationIcon(onClick: () -> Unit) {
-    IconButton(onClick = { onClick() }) {
-        Icon(
-            painter = rememberVectorPainter(image = Icons.AutoMirrored.Sharp.ArrowBack),
-            contentDescription = null
-        )
-    }
-}
-
 
 @Composable
 fun DogGridItem(dog: Dog, onDogClicked: (Dog) -> Unit) {
