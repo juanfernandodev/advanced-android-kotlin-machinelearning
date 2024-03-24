@@ -20,6 +20,11 @@
         android:theme="@style/Theme.AppPerrona"
         tools:targetApi="31">
         <activity
+            android:name=".auth.LoginComposeActivity"
+            android:exported="false"
+            android:label="@string/title_activity_login_compose"
+            android:theme="@style/Theme.AppPerrona" />
+        <activity
             android:name=".dogdetail.DogDetailComposeActivity"
             android:exported="false"
             android:label="@string/title_activity_dog_detail_compose"
@@ -33,9 +38,6 @@
             android:parentActivityName=".main.MainActivity" />
         <activity
             android:name=".auth.LoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".dogdetail.DogDetailActivity"
             android:exported="false" />
         <activity
             android:name=".doglist.DogListActivity"

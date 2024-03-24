@@ -3,7 +3,7 @@ package com.juanferdev.appperrona.settings
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.juanferdev.appperrona.auth.LoginActivity
+import com.juanferdev.appperrona.auth.LoginComposeActivity
 import com.juanferdev.appperrona.databinding.ActivitySettingsBinding
 import com.juanferdev.appperrona.models.User
 
@@ -21,7 +21,7 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun logout() {
         User.deleteLoggedInUser(this)
-        val intent = Intent(this, LoginActivity::class.java)
+        val intent = Intent(this, LoginComposeActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
     }

@@ -25,7 +25,7 @@ import com.juanferdev.appperrona.LABEL_PATH
 import com.juanferdev.appperrona.MODEL_PATH
 import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.api.ApiServiceInterceptor
-import com.juanferdev.appperrona.auth.LoginActivity
+import com.juanferdev.appperrona.auth.LoginComposeActivity
 import com.juanferdev.appperrona.databinding.ActivityMainBinding
 import com.juanferdev.appperrona.dogdetail.DogDetailComposeActivity
 import com.juanferdev.appperrona.doglist.DogListActivity
@@ -216,7 +216,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openLoginActivity() {
-        startActivity(Intent(this, LoginActivity::class.java))
+        startActivity(Intent(this, LoginComposeActivity::class.java))
         finish()
     }
 
