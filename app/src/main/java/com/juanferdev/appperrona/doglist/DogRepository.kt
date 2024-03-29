@@ -13,11 +13,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 
-class DogRepository @Inject constructor() {
+class DogRepository @Inject constructor() : DogRepositoryContract {
 
     private val dispatcherIO: CoroutineDispatcher = Dispatchers.IO
 
-    suspend fun getDogCollection(): ApiResponseStatus<List<Dog>> {
+    override suspend fun getDogCollection(): ApiResponseStatus<List<Dog>> {
         return withContext(dispatcherIO) {
             val allDogsListDeferred = async { getAllDogs() }
             val userDogsListDeferred = async { getUserDogs() }
@@ -70,7 +70,7 @@ class DogRepository @Inject constructor() {
             DogDTOMapper().fromDogDTOListToDogDomainList(dogDTOList)
         }
 
-    suspend fun addDogToUser(dogId: Long): ApiResponseStatus<Any> =
+    override suspend fun addDogToUser(dogId: Long): ApiResponseStatus<Any> =
         makeNetworkCall {
             val addDogToUserDTO = AddDogToUserDTO(dogId)
             val defaultResponse = retrofitService.addDogToUser(addDogToUserDTO)
@@ -79,7 +79,7 @@ class DogRepository @Inject constructor() {
             }
         }
 
-    suspend fun getRecognizedDog(capturedDogId: String): ApiResponseStatus<Dog> =
+    override suspend fun getRecognizedDog(capturedDogId: String): ApiResponseStatus<Dog> =
         makeNetworkCall {
             val response = retrofitService.getRecognizedDog(capturedDogId)
             if (response.isSuccess.not()) {

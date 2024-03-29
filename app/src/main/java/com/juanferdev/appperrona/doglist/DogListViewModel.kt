@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class DogListViewModel @Inject constructor(
-    private val dogRepository: DogRepository
+    private val dogRepository: DogRepositoryContract
 ) : ViewModel() {
     val status = mutableStateOf<ApiResponseStatus<Any>>(ApiResponseStatus.Success(emptyList<Dog>()))
 
