@@ -2,7 +2,7 @@ package com.juanferdev.appperrona.doglist
 
 import com.juanferdev.appperrona.R
 import com.juanferdev.appperrona.api.ApiResponseStatus
-import com.juanferdev.appperrona.api.DogsApi.retrofitService
+import com.juanferdev.appperrona.api.ApiService
 import com.juanferdev.appperrona.api.dto.AddDogToUserDTO
 import com.juanferdev.appperrona.api.dto.DogDTOMapper
 import com.juanferdev.appperrona.api.makeNetworkCall
@@ -13,7 +13,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 
-class DogRepository @Inject constructor() : DogRepositoryContract {
+class DogRepository @Inject constructor(
+    private val apiService: ApiService
+) : DogRepositoryContract {
 
     private val dispatcherIO: CoroutineDispatcher = Dispatchers.IO
 
@@ -58,14 +60,14 @@ class DogRepository @Inject constructor() : DogRepositoryContract {
 
     private suspend fun getAllDogs(): ApiResponseStatus<List<Dog>> =
         makeNetworkCall {
-            val dogListApiResponse = retrofitService.getAllDogs()
+            val dogListApiResponse = apiService.getAllDogs()
             val dogDTOList = dogListApiResponse.data.dogs
             DogDTOMapper().fromDogDTOListToDogDomainList(dogDTOList)
         }
 
     private suspend fun getUserDogs(): ApiResponseStatus<List<Dog>> =
         makeNetworkCall {
-            val dogListApiResponse = retrofitService.getUserDogs()
+            val dogListApiResponse = apiService.getUserDogs()
             val dogDTOList = dogListApiResponse.data.dogs
             DogDTOMapper().fromDogDTOListToDogDomainList(dogDTOList)
         }
@@ -73,7 +75,7 @@ class DogRepository @Inject constructor() : DogRepositoryContract {
     override suspend fun addDogToUser(dogId: Long): ApiResponseStatus<Any> =
         makeNetworkCall {
             val addDogToUserDTO = AddDogToUserDTO(dogId)
-            val defaultResponse = retrofitService.addDogToUser(addDogToUserDTO)
+            val defaultResponse = apiService.addDogToUser(addDogToUserDTO)
             if (defaultResponse.isSuccess.not()) {
                 throw Exception(defaultResponse.message)
             }
@@ -81,7 +83,7 @@ class DogRepository @Inject constructor() : DogRepositoryContract {
 
     override suspend fun getRecognizedDog(capturedDogId: String): ApiResponseStatus<Dog> =
         makeNetworkCall {
-            val response = retrofitService.getRecognizedDog(capturedDogId)
+            val response = apiService.getRecognizedDog(capturedDogId)
             if (response.isSuccess.not()) {
                 throw Exception(response.message)
             }
