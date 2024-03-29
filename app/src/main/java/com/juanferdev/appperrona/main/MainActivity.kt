@@ -23,28 +23,29 @@ import com.juanferdev.appperrona.DOG_KEY
 import com.juanferdev.appperrona.IS_RECOGNITION_KEY
 import com.juanferdev.appperrona.LABEL_PATH
 import com.juanferdev.appperrona.MODEL_PATH
+import com.juanferdev.appperrona.R
 import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.api.ApiServiceInterceptor
 import com.juanferdev.appperrona.auth.LoginActivity
 import com.juanferdev.appperrona.databinding.ActivityMainBinding
 import com.juanferdev.appperrona.dogdetail.DogDetailActivity
 import com.juanferdev.appperrona.doglist.DogListActivity
-import com.juanferdev.appperrona.machinelearning.Classifier
 import com.juanferdev.appperrona.machinelearning.DogRecognition
 import com.juanferdev.appperrona.models.Dog
 import com.juanferdev.appperrona.models.User
 import com.juanferdev.appperrona.settings.SettingsActivity
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import org.tensorflow.lite.support.common.FileUtil
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var cameraProviderFuture: ListenableFuture<ProcessCameraProvider>
     private lateinit var binding: ActivityMainBinding
     private lateinit var imageCapture: ImageCapture
     private lateinit var cameraExecutor: ExecutorService
-    private lateinit var classifier: Classifier
     private var isCameraReady = false
     private val viewModel: MainViewModel by viewModels()
 
@@ -57,7 +58,7 @@ class MainActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(
                     this,
-                    "You need to accept the camera permission to use the camera",
+                    getString(R.string.you_need_to_accept_the_camera_permission_to_use_the_camera),
                     Toast.LENGTH_LONG
                 ).show()
             }
@@ -195,14 +196,14 @@ class MainActivity : AppCompatActivity() {
                 ) -> {
                     AlertDialog
                         .Builder(this)
-                        .setTitle("Accept me please :(")
-                        .setMessage("You need to accept the camera permission in order to access to the camera")
-                        .setPositiveButton("Aceptar") { _, _ ->
+                        .setTitle(getString(R.string.accept_me_please))
+                        .setMessage(getString(R.string.you_need_to_accept_the_camera_permission_in_order_to_access_to_the_camera))
+                        .setPositiveButton(getString(R.string.aceptar)) { _, _ ->
                             requestPermissionLauncher.launch(
                                 Manifest.permission.CAMERA
                             )
                         }
-                        .setNegativeButton("Cancelar") { dialog, _ ->
+                        .setNegativeButton(getString(R.string.cancelar)) { dialog, _ ->
                             dialog.dismiss()
                         }.show()
                 }

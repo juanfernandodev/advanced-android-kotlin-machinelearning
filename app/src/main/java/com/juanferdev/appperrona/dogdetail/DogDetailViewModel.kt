@@ -4,15 +4,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.juanferdev.appperrona.api.ApiResponseStatus
-import com.juanferdev.appperrona.doglist.DogRepository
+import com.juanferdev.appperrona.doglist.DogRepositoryContract
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.launch
 
-class DogDetailViewModel(
-    private val dogRepository: DogRepository = DogRepository()
+@HiltViewModel
+class DogDetailViewModel @Inject constructor(
+    private val dogRepository: DogRepositoryContract
 ) : ViewModel() {
 
     val status = mutableStateOf<ApiResponseStatus<Any>?>(null)
-
 
     fun addDogToUser(dogId: Long) {
         viewModelScope.launch {

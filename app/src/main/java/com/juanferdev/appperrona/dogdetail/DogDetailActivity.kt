@@ -15,7 +15,9 @@ import com.juanferdev.appperrona.composables.LoadingWheel
 import com.juanferdev.appperrona.dogdetail.ui.theme.AppPerronaTheme
 import com.juanferdev.appperrona.models.Dog
 import com.juanferdev.appperrona.utils.parcelable
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DogDetailActivity : ComponentActivity() {
 
     private val viewModel: DogDetailViewModel by viewModels()

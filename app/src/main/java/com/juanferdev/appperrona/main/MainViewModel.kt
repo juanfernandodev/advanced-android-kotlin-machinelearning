@@ -6,15 +6,20 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.juanferdev.appperrona.api.ApiResponseStatus
-import com.juanferdev.appperrona.doglist.DogRepository
+import com.juanferdev.appperrona.doglist.DogRepositoryContract
 import com.juanferdev.appperrona.machinelearning.Classifier
 import com.juanferdev.appperrona.machinelearning.ClassifierRepository
 import com.juanferdev.appperrona.machinelearning.DogRecognition
 import com.juanferdev.appperrona.models.Dog
+import dagger.hilt.android.lifecycle.HiltViewModel
 import java.nio.MappedByteBuffer
+import javax.inject.Inject
 import kotlinx.coroutines.launch
 
-class MainViewModel(private val dogRepository: DogRepository = DogRepository()) : ViewModel() {
+@HiltViewModel
+class MainViewModel @Inject constructor(
+    private val dogRepository: DogRepositoryContract
+) : ViewModel() {
 
     private val _status = MutableLiveData<ApiResponseStatus<Dog>>()
     val status: LiveData<ApiResponseStatus<Dog>>

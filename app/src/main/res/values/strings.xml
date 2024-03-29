@@ -42,4 +42,9 @@
     <string name="try_again">Try again</string>
     <string name="my_dog_collection">My dog collection</string>
     <string name="title_activity_login_compose">LoginComposeActivity</string>
+    <string name="you_need_to_accept_the_camera_permission_to_use_the_camera">You need to accept the camera permission to use the camera</string>
+    <string name="accept_me_please">Accept me please :(</string>
+    <string name="you_need_to_accept_the_camera_permission_in_order_to_access_to_the_camera">You need to accept the camera permission in order to access to the camera</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="cancelar">Cancelar</string>
 </resources>
