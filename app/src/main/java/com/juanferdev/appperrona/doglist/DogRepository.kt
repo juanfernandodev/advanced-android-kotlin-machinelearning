@@ -9,15 +9,13 @@ import com.juanferdev.appperrona.api.makeNetworkCall
 import com.juanferdev.appperrona.models.Dog
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 
 class DogRepository @Inject constructor(
-    private val apiService: ApiService
+    private val apiService: ApiService,
+    private val dispatcherIO: CoroutineDispatcher
 ) : DogRepositoryContract {
-
-    private val dispatcherIO: CoroutineDispatcher = Dispatchers.IO
 
     override suspend fun getDogCollection(): ApiResponseStatus<List<Dog>> {
         return withContext(dispatcherIO) {
@@ -59,21 +57,21 @@ class DogRepository @Inject constructor(
 
 
     private suspend fun getAllDogs(): ApiResponseStatus<List<Dog>> =
-        makeNetworkCall {
+        makeNetworkCall(dispatcherIO) {
             val dogListApiResponse = apiService.getAllDogs()
             val dogDTOList = dogListApiResponse.data.dogs
             DogDTOMapper().fromDogDTOListToDogDomainList(dogDTOList)
         }
 
     private suspend fun getUserDogs(): ApiResponseStatus<List<Dog>> =
-        makeNetworkCall {
+        makeNetworkCall(dispatcherIO) {
             val dogListApiResponse = apiService.getUserDogs()
             val dogDTOList = dogListApiResponse.data.dogs
             DogDTOMapper().fromDogDTOListToDogDomainList(dogDTOList)
         }
 
     override suspend fun addDogToUser(dogId: Long): ApiResponseStatus<Any> =
-        makeNetworkCall {
+        makeNetworkCall(dispatcherIO) {
             val addDogToUserDTO = AddDogToUserDTO(dogId)
             val defaultResponse = apiService.addDogToUser(addDogToUserDTO)
             if (defaultResponse.isSuccess.not()) {
@@ -82,7 +80,7 @@ class DogRepository @Inject constructor(
         }
 
     override suspend fun getRecognizedDog(capturedDogId: String): ApiResponseStatus<Dog> =
-        makeNetworkCall {
+        makeNetworkCall(dispatcherIO) {
             val response = apiService.getRecognizedDog(capturedDogId)
             if (response.isSuccess.not()) {
                 throw Exception(response.message)

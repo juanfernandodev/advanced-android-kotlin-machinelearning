@@ -10,13 +10,12 @@ import retrofit2.HttpException
 private const val UNAUTHORIZED_ERROR_CODE = 401
 
 suspend fun <T> makeNetworkCall(
-    dispatcher: CoroutineDispatcher = Dispatchers.IO,
+    dispatcherIO: CoroutineDispatcher = Dispatchers.IO,
     call: suspend (() -> T),
 ): ApiResponseStatus<T> =
-    withContext(dispatcher) {
+    withContext(dispatcherIO) {
         try {
-            val call = call()
-            ApiResponseStatus.Success(call)
+            ApiResponseStatus.Success(call())
         } catch (e: UnknownHostException) {
             ApiResponseStatus.Error(R.string.error_no_internet)
         } catch (e: HttpException) {
