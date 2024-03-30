@@ -5,10 +5,10 @@ import com.juanferdev.appperrona.auth.AuthRepositoryContract
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import dagger.hilt.android.components.ViewModelComponent
 
 @Module
-@InstallIn(SingletonComponent::class)
+@InstallIn(ViewModelComponent::class)
 fun interface AuthRepositoryModule {
 
     @Binds

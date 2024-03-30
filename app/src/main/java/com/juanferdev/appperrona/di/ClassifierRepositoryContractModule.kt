@@ -5,11 +5,11 @@ import com.juanferdev.appperrona.machinelearning.ClassifierRepositoryContract
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import dagger.hilt.android.components.ViewModelComponent
 
 @Module
-@InstallIn(SingletonComponent::class)
-interface ClassifierRepositoryContractModule {
+@InstallIn(ViewModelComponent::class)
+fun interface ClassifierRepositoryContractModule {
 
     @Binds
     fun provideClassifierRepositoryContract(classifierRepository: ClassifierRepository): ClassifierRepositoryContract

@@ -5,14 +5,14 @@ import com.juanferdev.appperrona.doglist.DogRepositoryContract
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import dagger.hilt.android.components.ViewModelComponent
 
 @Module
-@InstallIn(SingletonComponent::class)
-abstract class DogRepositoryModule {
+@InstallIn(ViewModelComponent::class)
+fun interface DogRepositoryModule {
 
     @Binds
-    abstract fun bindDogRepository(
+    fun bindDogRepository(
         dogRepository: DogRepository
     ): DogRepositoryContract
 }
