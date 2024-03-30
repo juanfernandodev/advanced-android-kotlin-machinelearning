@@ -8,7 +8,9 @@ import androidx.activity.viewModels
 import com.juanferdev.appperrona.auth.ui.theme.AppPerronaTheme
 import com.juanferdev.appperrona.main.MainActivity
 import com.juanferdev.appperrona.models.User
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginActivity : ComponentActivity() {
 
     private val viewModel: AuthViewModel by viewModels()

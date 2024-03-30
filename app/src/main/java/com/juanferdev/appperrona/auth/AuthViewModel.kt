@@ -7,9 +7,14 @@ import com.juanferdev.appperrona.R
 import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.models.User
 import com.juanferdev.appperrona.utils.isValidEmail
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.launch
 
-class AuthViewModel(private val authRepository: AuthRepository = AuthRepository()) : ViewModel() {
+@HiltViewModel
+class AuthViewModel @Inject constructor(
+    private val authRepository: AuthRepositoryContract
+) : ViewModel() {
     private val minimumLength = 8
 
     var status = mutableStateOf<ApiResponseStatus<User>?>(null)

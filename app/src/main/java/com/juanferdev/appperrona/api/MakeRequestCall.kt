@@ -3,14 +3,13 @@ package com.juanferdev.appperrona.api
 import com.juanferdev.appperrona.R
 import java.net.UnknownHostException
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 
 private const val UNAUTHORIZED_ERROR_CODE = 401
 
 suspend fun <T> makeNetworkCall(
-    dispatcherIO: CoroutineDispatcher = Dispatchers.IO,
+    dispatcherIO: CoroutineDispatcher,
     call: suspend (() -> T),
 ): ApiResponseStatus<T> =
     withContext(dispatcherIO) {
