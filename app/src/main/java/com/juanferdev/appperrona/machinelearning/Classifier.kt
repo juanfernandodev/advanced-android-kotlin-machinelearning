@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import com.juanferdev.appperrona.MAX_RECOGNITION_DOG_RESULTS
 import java.nio.MappedByteBuffer
 import java.util.PriorityQueue
+import javax.inject.Inject
 import org.tensorflow.lite.Interpreter
 import org.tensorflow.lite.support.common.TensorProcessor
 import org.tensorflow.lite.support.common.ops.DequantizeOp
@@ -13,7 +14,7 @@ import org.tensorflow.lite.support.image.ops.ResizeOp
 import org.tensorflow.lite.support.label.TensorLabel
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
 
-class Classifier(
+class Classifier @Inject constructor(
     tfLiteModel: MappedByteBuffer,
     private val labels: List<String>
 ) {

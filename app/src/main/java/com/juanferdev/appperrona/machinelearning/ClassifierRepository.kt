@@ -8,16 +8,16 @@ import android.graphics.Rect
 import android.graphics.YuvImage
 import androidx.camera.core.ImageProxy
 import java.io.ByteArrayOutputStream
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class ClassifierRepository(
-    private val dispatcherIO: CoroutineDispatcher = Dispatchers.IO,
+class ClassifierRepository @Inject constructor(
+    private val dispatcherIO: CoroutineDispatcher,
     private val classifier: Classifier
-) {
+) : ClassifierRepositoryContract {
 
-    suspend fun recognizedImage(imageProxy: ImageProxy) =
+    override suspend fun recognizedImage(imageProxy: ImageProxy) =
         withContext(dispatcherIO) {
             val bitmap = convertImageProxyToBitmap(imageProxy)
             if (bitmap == null) {

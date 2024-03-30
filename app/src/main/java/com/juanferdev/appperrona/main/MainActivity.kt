@@ -21,8 +21,6 @@ import androidx.lifecycle.LifecycleOwner
 import com.google.common.util.concurrent.ListenableFuture
 import com.juanferdev.appperrona.DOG_KEY
 import com.juanferdev.appperrona.IS_RECOGNITION_KEY
-import com.juanferdev.appperrona.LABEL_PATH
-import com.juanferdev.appperrona.MODEL_PATH
 import com.juanferdev.appperrona.R
 import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.api.ApiServiceInterceptor
@@ -37,7 +35,6 @@ import com.juanferdev.appperrona.settings.SettingsActivity
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
-import org.tensorflow.lite.support.common.FileUtil
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -120,21 +117,6 @@ class MainActivity : AppCompatActivity() {
             binding.takePhotoFab.alpha = 0.2f
             binding.takePhotoFab.setOnClickListener(null)
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        viewModel.setupClassifier(
-            FileUtil.loadMappedFile(
-                this@MainActivity,
-                MODEL_PATH
-            ),
-            FileUtil.loadLabels(
-                this@MainActivity,
-                LABEL_PATH
-            )
-        )
-
     }
 
     private fun setUpCamera() {
