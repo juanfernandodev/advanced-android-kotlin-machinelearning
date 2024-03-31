@@ -1,5 +1,6 @@
-package com.juanferdev.appperrona
+package com.juanferdev.appperrona.viewmodels
 
+import com.juanferdev.appperrona.MainDispatcherRule
 import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.doglist.DogListViewModel
 import com.juanferdev.appperrona.repositories.FakeDogRepository
