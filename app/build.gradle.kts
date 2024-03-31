@@ -127,6 +127,14 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
+    //Test Coroutines
+    val kotlinxCoroutines = "1.7.3"
+    val testng = "6.9.6"
+    val coreTesting = "2.2.0"
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinxCoroutines")
+    testImplementation("org.testng:testng:$testng")
+    testImplementation("androidx.arch.core:core-testing:$coreTesting")
+
 }
 
 // Allow references to generated code
