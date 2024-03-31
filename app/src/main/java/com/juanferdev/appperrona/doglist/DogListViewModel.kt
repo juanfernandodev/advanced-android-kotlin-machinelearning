@@ -13,17 +13,17 @@ import kotlinx.coroutines.launch
 class DogListViewModel @Inject constructor(
     private val dogRepository: DogRepositoryContract
 ) : ViewModel() {
-    val status = mutableStateOf<ApiResponseStatus<Any>>(ApiResponseStatus.Success(emptyList<Dog>()))
+    val status =
+        mutableStateOf<ApiResponseStatus<List<Dog>>>(ApiResponseStatus.Success(emptyList()))
 
     init {
         getDogs()
     }
 
-    @Suppress("UNCHECKED_CAST")
     private fun getDogs() {
         viewModelScope.launch {
             status.value = ApiResponseStatus.Loading()
-            status.value = dogRepository.getDogCollection() as ApiResponseStatus<Any>
+            status.value = dogRepository.getDogCollection()
         }
     }
 
