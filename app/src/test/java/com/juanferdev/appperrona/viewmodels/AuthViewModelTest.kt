@@ -5,8 +5,10 @@ import com.juanferdev.appperrona.R
 import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.auth.AuthFieldStatus
 import com.juanferdev.appperrona.auth.AuthViewModel
+import com.juanferdev.appperrona.repositories.FakeAuthRepositoriesError
 import com.juanferdev.appperrona.repositories.FakeAuthRepositoriesSuccess
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertNull
 import org.junit.Rule
 import org.junit.Test
@@ -72,6 +74,20 @@ class AuthViewModelTest {
     }
 
     @Test
+    fun signUpWhenApiResponseHasErrorThenMessageIdHasAnErrorMessage() {
+        //Give
+        val email = "test@example.com"
+        val password = "12345678"
+        val confirmationPassword = "12345678"
+        val viewModel = AuthViewModel(FakeAuthRepositoriesError())
+        //When
+        viewModel.signUp(email, password, confirmationPassword)
+        //Then
+        val status = viewModel.status.value as ApiResponseStatus.Error
+        assertNotEquals(0, status.messageId)
+    }
+
+    @Test
     fun loginWhenEmailIsNotValidThenMessageIdIsNotValidEmail() {
         //Given
         val email = "ThisEmailIsNotValid"
@@ -119,6 +135,19 @@ class AuthViewModelTest {
         viewModel.login(email, password)
         //Then
         assert(viewModel.authFieldStatus.value is AuthFieldStatus.NoError)
+    }
+
+    @Test
+    fun loginWhenApiResponseHasErrorThenMessageIdHasAnErrorMessage() {
+        //Give
+        val email = "test@example.com"
+        val password = "12345678"
+        val viewModel = AuthViewModel(FakeAuthRepositoriesError())
+        //When
+        viewModel.login(email, password)
+        //Then
+        val status = viewModel.status.value as ApiResponseStatus.Error
+        assertNotEquals(0, status.messageId)
     }
 
     @Test
