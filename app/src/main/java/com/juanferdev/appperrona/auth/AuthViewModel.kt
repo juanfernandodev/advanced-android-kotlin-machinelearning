@@ -72,8 +72,6 @@ class AuthViewModel @Inject constructor(
                 }
             }
         }
-
-
     }
 
     fun resetApiResponseStatus() {

@@ -1,8 +1,8 @@
 package com.juanferdev.appperrona.utils
 
-import android.util.Patterns
+import androidx.core.util.PatternsCompat
 
 fun String.isValidEmail(): Boolean {
     return this.isNotBlank()
-            && Patterns.EMAIL_ADDRESS.matcher(this).matches()
+            && PatternsCompat.EMAIL_ADDRESS.matcher(this).matches()
 }

@@ -2,8 +2,8 @@ package com.juanferdev.appperrona
 
 import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.doglist.DogListViewModel
-import com.juanferdev.appperrona.dogrepositories.FakeDogRepository
-import com.juanferdev.appperrona.dogrepositories.FakeDogRepositoryError
+import com.juanferdev.appperrona.repositories.FakeDogRepository
+import com.juanferdev.appperrona.repositories.FakeDogRepositoryError
 import org.junit.Assert.assertNotEquals
 import org.junit.Rule
 import org.junit.Test

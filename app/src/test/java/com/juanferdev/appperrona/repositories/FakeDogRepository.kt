@@ -1,4 +1,4 @@
-package com.juanferdev.appperrona.dogrepositories
+package com.juanferdev.appperrona.repositories
 
 import com.juanferdev.appperrona.R
 import com.juanferdev.appperrona.api.ApiResponseStatus
