@@ -16,17 +16,23 @@ class DogListViewModelTest {
 
     @Test
     fun downloadDogListStatusIsSuccess() {
+        //Give
         val viewModel = DogListViewModel(
             dogRepository = FakeSuccessDogRepository()
         )
+        //When: Obtained dog list in ViewModel init method
+        //Then
         assert(viewModel.status.value is ApiResponseStatus.Success)
     }
 
     @Test
     fun downloadDogListIsNotEmpty() {
+        //Give
         val viewModel = DogListViewModel(
             dogRepository = FakeSuccessDogRepository()
         )
+        //When: Obtained dog list in ViewModel init method
+        //Then
         val status = viewModel.status.value as ApiResponseStatus.Success
         assert((status.data as List<*>).isNotEmpty())
 
@@ -34,17 +40,23 @@ class DogListViewModelTest {
 
     @Test
     fun downloadDogListStatusIsError() {
+        //Give
         val viewModel = DogListViewModel(
             dogRepository = FakeErrorDogRepository()
         )
+        //When: Obtained dog list in ViewModel init method
+        //Then
         assert(viewModel.status.value is ApiResponseStatus.Error)
     }
 
     @Test
     fun downloadDogListMessageIdIsNotZero() {
+        //Give
         val viewModel = DogListViewModel(
             dogRepository = FakeErrorDogRepository()
         )
+        //When: Obtained dog list in ViewModel init method
+        //Then
         val status = viewModel.status.value as ApiResponseStatus.Error
         assertNotEquals(0, status.messageId)
     }
