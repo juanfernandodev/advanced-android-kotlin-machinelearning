@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.juanferdev.appperrona.MainDispatcherRule
 import com.juanferdev.appperrona.R
 import com.juanferdev.appperrona.api.ApiResponseStatus
+import com.juanferdev.appperrona.imageproxy.FakeImageProxy
 import com.juanferdev.appperrona.main.MainViewModel
 import com.juanferdev.appperrona.repositories.FakeErrorDogRepository
 import com.juanferdev.appperrona.repositories.FakeSuccessClassifierRepository
@@ -42,6 +43,21 @@ class MainViewModelTest {
         mainViewModel.getRecognizedDog("1")
         val statusValue = mainViewModel.status.value as ApiResponseStatus.Error
         assertEquals(R.string.unknown_error, statusValue.messageId)
+    }
+
+    @Test
+    fun recognizedImageWhenRepositoriesIsSuccessThenStatusGetDogRecognition() {
+        //Give
+        val mainViewModel = MainViewModel(
+            dogRepository = FakeSuccessDogRepository(),
+            classifierRepository = FakeSuccessClassifierRepository()
+        )
+        val fakeImageProxy = FakeImageProxy()
+        //When
+        mainViewModel.recognizedImage(fakeImageProxy)
+        //Then
+        val dogRecognition = mainViewModel.statusDogRecognized.value
+        assert(dogRecognition?.id?.isNotEmpty() ?: false)
     }
 
 
