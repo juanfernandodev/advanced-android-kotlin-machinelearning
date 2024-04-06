@@ -5,7 +5,7 @@ import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.auth.AuthRepositoryContract
 import com.juanferdev.appperrona.models.User
 
-class FakeAuthRepositoriesSuccess : AuthRepositoryContract {
+class FakeSuccessAuthRepositories : AuthRepositoryContract {
 
     private val user = User(
         id = 121212L,
@@ -26,7 +26,7 @@ class FakeAuthRepositoriesSuccess : AuthRepositoryContract {
     }
 }
 
-class FakeAuthRepositoriesError : AuthRepositoryContract {
+class FakeErrorAuthRepositories : AuthRepositoryContract {
     override suspend fun signUp(
         email: String,
         password: String,

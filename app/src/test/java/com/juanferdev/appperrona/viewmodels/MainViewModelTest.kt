@@ -5,9 +5,9 @@ import com.juanferdev.appperrona.MainDispatcherRule
 import com.juanferdev.appperrona.R
 import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.main.MainViewModel
-import com.juanferdev.appperrona.repositories.FakeDogRepositoryError
-import com.juanferdev.appperrona.repositories.FakeDogRepositorySuccess
+import com.juanferdev.appperrona.repositories.FakeErrorDogRepository
 import com.juanferdev.appperrona.repositories.FakeSuccessClassifierRepository
+import com.juanferdev.appperrona.repositories.FakeSuccessDogRepository
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -24,7 +24,7 @@ class MainViewModelTest {
     @Test
     fun getRecognizedDogWhenRepositoriesIsSuccessThenStatusGetDog() {
         val mainViewModel = MainViewModel(
-            dogRepository = FakeDogRepositorySuccess(),
+            dogRepository = FakeSuccessDogRepository(),
             classifierRepository = FakeSuccessClassifierRepository()
         )
         mainViewModel.getRecognizedDog("1")
@@ -36,7 +36,7 @@ class MainViewModelTest {
     @Test
     fun getRecognizedDogWhenDogRepositoryIsWrongThenStatusGetError() {
         val mainViewModel = MainViewModel(
-            dogRepository = FakeDogRepositoryError(),
+            dogRepository = FakeErrorDogRepository(),
             classifierRepository = FakeSuccessClassifierRepository()
         )
         mainViewModel.getRecognizedDog("1")

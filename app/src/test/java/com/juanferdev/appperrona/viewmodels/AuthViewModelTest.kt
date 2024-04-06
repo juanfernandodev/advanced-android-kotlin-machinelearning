@@ -5,8 +5,8 @@ import com.juanferdev.appperrona.R
 import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.auth.AuthFieldStatus
 import com.juanferdev.appperrona.auth.AuthViewModel
-import com.juanferdev.appperrona.repositories.FakeAuthRepositoriesError
-import com.juanferdev.appperrona.repositories.FakeAuthRepositoriesSuccess
+import com.juanferdev.appperrona.repositories.FakeErrorAuthRepositories
+import com.juanferdev.appperrona.repositories.FakeSuccessAuthRepositories
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertNull
@@ -24,7 +24,7 @@ class AuthViewModelTest {
         val email = "ThisIsNotAnEmail"
         val password = "kdjfkajsdkjf"
         val confirmationPassword = "kdjfkajsdkjf"
-        val viewModel = AuthViewModel(FakeAuthRepositoriesSuccess())
+        val viewModel = AuthViewModel(FakeSuccessAuthRepositories())
         //When
         viewModel.signUp(email, password, confirmationPassword)
         //Then
@@ -38,7 +38,7 @@ class AuthViewModelTest {
         val email = "test@example.com"
         val password = "1234567"
         val confirmationPassword = "kdjfkajsdkjf"
-        val viewModel = AuthViewModel(FakeAuthRepositoriesSuccess())
+        val viewModel = AuthViewModel(FakeSuccessAuthRepositories())
         //When
         viewModel.signUp(email, password, confirmationPassword)
         //Then
@@ -52,7 +52,7 @@ class AuthViewModelTest {
         val email = "test@example.com"
         val password = "12345678"
         val confirmationPassword = "abcdefghi"
-        val viewModel = AuthViewModel(FakeAuthRepositoriesSuccess())
+        val viewModel = AuthViewModel(FakeSuccessAuthRepositories())
         //When
         viewModel.signUp(email, password, confirmationPassword)
         //Then
@@ -66,7 +66,7 @@ class AuthViewModelTest {
         val email = "test@example.com"
         val password = "12345678"
         val confirmationPassword = "12345678"
-        val viewModel = AuthViewModel(FakeAuthRepositoriesSuccess())
+        val viewModel = AuthViewModel(FakeSuccessAuthRepositories())
         //When
         viewModel.signUp(email, password, confirmationPassword)
         //Then
@@ -79,7 +79,7 @@ class AuthViewModelTest {
         val email = "test@example.com"
         val password = "12345678"
         val confirmationPassword = "12345678"
-        val viewModel = AuthViewModel(FakeAuthRepositoriesError())
+        val viewModel = AuthViewModel(FakeErrorAuthRepositories())
         //When
         viewModel.signUp(email, password, confirmationPassword)
         //Then
@@ -92,7 +92,7 @@ class AuthViewModelTest {
         //Given
         val email = "ThisEmailIsNotValid"
         val password = "ksjdfkjdf"
-        val viewModel = AuthViewModel(FakeAuthRepositoriesSuccess())
+        val viewModel = AuthViewModel(FakeSuccessAuthRepositories())
         //When
         viewModel.login(email, password)
         //Then
@@ -105,7 +105,7 @@ class AuthViewModelTest {
         //Given
         val email = "example@example.com"
         val password = "1234"
-        val viewModel = AuthViewModel(FakeAuthRepositoriesSuccess())
+        val viewModel = AuthViewModel(FakeSuccessAuthRepositories())
         //When
         viewModel.login(email, password)
         //Then
@@ -118,7 +118,7 @@ class AuthViewModelTest {
         //Give
         val email = "test@example.com"
         val password = "12345678"
-        val viewModel = AuthViewModel(FakeAuthRepositoriesSuccess())
+        val viewModel = AuthViewModel(FakeSuccessAuthRepositories())
         //When
         viewModel.login(email, password)
         //Then
@@ -130,7 +130,7 @@ class AuthViewModelTest {
         //Give
         val email = "test@example.com"
         val password = "12345678"
-        val viewModel = AuthViewModel(FakeAuthRepositoriesSuccess())
+        val viewModel = AuthViewModel(FakeSuccessAuthRepositories())
         //When
         viewModel.login(email, password)
         //Then
@@ -142,7 +142,7 @@ class AuthViewModelTest {
         //Give
         val email = "test@example.com"
         val password = "12345678"
-        val viewModel = AuthViewModel(FakeAuthRepositoriesError())
+        val viewModel = AuthViewModel(FakeErrorAuthRepositories())
         //When
         viewModel.login(email, password)
         //Then
@@ -153,7 +153,7 @@ class AuthViewModelTest {
     @Test
     fun resetApiResponseStatusWhenAllIsRightThenApiResponseStatusIsNull() {
         //Give
-        val viewModel = AuthViewModel(FakeAuthRepositoriesSuccess())
+        val viewModel = AuthViewModel(FakeSuccessAuthRepositories())
         //When
         viewModel.resetApiResponseStatus()
         //Then
@@ -163,7 +163,7 @@ class AuthViewModelTest {
     @Test
     fun resetAuthFieldStatusWhenAllIsRightThenAuthFieldStatusIsNoError() {
         //Give
-        val viewModel = AuthViewModel(FakeAuthRepositoriesSuccess())
+        val viewModel = AuthViewModel(FakeSuccessAuthRepositories())
         //When
         viewModel.resetAuthFieldStatus()
         //Then

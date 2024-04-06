@@ -4,8 +4,8 @@ import com.juanferdev.appperrona.MainDispatcherRule
 import com.juanferdev.appperrona.R
 import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.dogdetail.DogDetailViewModel
-import com.juanferdev.appperrona.repositories.FakeDogRepositoryError
-import com.juanferdev.appperrona.repositories.FakeDogRepositorySuccess
+import com.juanferdev.appperrona.repositories.FakeErrorDogRepository
+import com.juanferdev.appperrona.repositories.FakeSuccessDogRepository
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Rule
@@ -19,7 +19,7 @@ class DogDetailViewModelTest {
     @Test
     fun addDogToUserWhenRepositoryIsSuccessThenStatusIsSuccess() {
         //Give
-        val dogDetailViewModel = DogDetailViewModel(dogRepository = FakeDogRepositorySuccess())
+        val dogDetailViewModel = DogDetailViewModel(dogRepository = FakeSuccessDogRepository())
         //When
         dogDetailViewModel.addDogToUser(dogId = 1L)
         //Then
@@ -30,7 +30,7 @@ class DogDetailViewModelTest {
     @Test
     fun resetApiResponseStatusWhenRepositoryIsSuccessThenStatusIsNull() {
         //Give
-        val dogDetailViewModel = DogDetailViewModel(dogRepository = FakeDogRepositorySuccess())
+        val dogDetailViewModel = DogDetailViewModel(dogRepository = FakeSuccessDogRepository())
         //When
         dogDetailViewModel.resetApiResponseStatus()
         //Then
@@ -41,7 +41,7 @@ class DogDetailViewModelTest {
     @Test
     fun addDogToUserWhenRepositoryIsErrorThenStatusIsError() {
         //Give
-        val dogDetailViewModel = DogDetailViewModel(dogRepository = FakeDogRepositoryError())
+        val dogDetailViewModel = DogDetailViewModel(dogRepository = FakeErrorDogRepository())
         //When
         dogDetailViewModel.addDogToUser(dogId = 1L)
         //Then

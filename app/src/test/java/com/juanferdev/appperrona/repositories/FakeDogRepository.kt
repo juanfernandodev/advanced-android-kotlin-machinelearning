@@ -5,7 +5,7 @@ import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.doglist.DogRepositoryContract
 import com.juanferdev.appperrona.models.Dog
 
-class FakeDogRepositorySuccess : DogRepositoryContract {
+class FakeSuccessDogRepository : DogRepositoryContract {
     override suspend fun getDogCollection(): ApiResponseStatus<List<Dog>> {
         return ApiResponseStatus.Success(
             listOf(
@@ -26,7 +26,7 @@ class FakeDogRepositorySuccess : DogRepositoryContract {
 }
 
 
-class FakeDogRepositoryError : DogRepositoryContract {
+class FakeErrorDogRepository : DogRepositoryContract {
     override suspend fun getDogCollection(): ApiResponseStatus<List<Dog>> {
         return ApiResponseStatus.Error(messageId = R.string.unknown_error)
     }
