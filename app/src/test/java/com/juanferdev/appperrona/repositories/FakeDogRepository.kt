@@ -21,7 +21,7 @@ class FakeDogRepositorySuccess : DogRepositoryContract {
     }
 
     override suspend fun getRecognizedDog(capturedDogId: String): ApiResponseStatus<Dog> {
-        return ApiResponseStatus.Success(Dog())
+        return ApiResponseStatus.Success(Dog(id = capturedDogId.toLong()))
     }
 }
 
