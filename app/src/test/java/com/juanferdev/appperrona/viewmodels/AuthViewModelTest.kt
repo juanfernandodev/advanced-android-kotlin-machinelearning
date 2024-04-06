@@ -5,8 +5,8 @@ import com.juanferdev.appperrona.R
 import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.auth.AuthFieldStatus
 import com.juanferdev.appperrona.auth.AuthViewModel
-import com.juanferdev.appperrona.repositories.FakeErrorAuthRepositories
-import com.juanferdev.appperrona.repositories.FakeSuccessAuthRepositories
+import com.juanferdev.appperrona.viewmodels.fakerepositories.FakeErrorAuthRepositories
+import com.juanferdev.appperrona.viewmodels.fakerepositories.FakeSuccessAuthRepositories
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertNull

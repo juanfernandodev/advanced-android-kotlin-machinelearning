@@ -1,4 +1,4 @@
-package com.juanferdev.appperrona.repositories
+package com.juanferdev.appperrona.viewmodels.fakerepositories
 
 import androidx.camera.core.ImageProxy
 import com.juanferdev.appperrona.machinelearning.ClassifierRepositoryContract

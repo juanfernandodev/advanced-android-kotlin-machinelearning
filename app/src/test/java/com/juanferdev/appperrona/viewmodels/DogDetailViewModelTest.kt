@@ -4,8 +4,8 @@ import com.juanferdev.appperrona.MainDispatcherRule
 import com.juanferdev.appperrona.R
 import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.dogdetail.DogDetailViewModel
-import com.juanferdev.appperrona.repositories.FakeErrorDogRepository
-import com.juanferdev.appperrona.repositories.FakeSuccessDogRepository
+import com.juanferdev.appperrona.viewmodels.fakerepositories.FakeErrorDogRepository
+import com.juanferdev.appperrona.viewmodels.fakerepositories.FakeSuccessDogRepository
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Rule

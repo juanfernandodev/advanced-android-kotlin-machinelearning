@@ -1,4 +1,4 @@
-package com.juanferdev.appperrona.repositories
+package com.juanferdev.appperrona.viewmodels.fakerepositories
 
 import com.juanferdev.appperrona.R
 import com.juanferdev.appperrona.api.ApiResponseStatus

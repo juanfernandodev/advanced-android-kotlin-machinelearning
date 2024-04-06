@@ -1,4 +1,4 @@
-package com.juanferdev.appperrona.imageproxy
+package com.juanferdev.appperrona.viewmodels.fakeimageproxy
 
 import android.graphics.Rect
 import android.util.Pair
