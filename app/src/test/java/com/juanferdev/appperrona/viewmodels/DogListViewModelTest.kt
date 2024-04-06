@@ -3,8 +3,8 @@ package com.juanferdev.appperrona.viewmodels
 import com.juanferdev.appperrona.MainDispatcherRule
 import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.doglist.DogListViewModel
-import com.juanferdev.appperrona.repositories.FakeDogRepository
 import com.juanferdev.appperrona.repositories.FakeDogRepositoryError
+import com.juanferdev.appperrona.repositories.FakeDogRepositorySuccess
 import org.junit.Assert.assertNotEquals
 import org.junit.Rule
 import org.junit.Test
@@ -17,7 +17,7 @@ class DogListViewModelTest {
     @Test
     fun downloadDogListStatusIsSuccess() {
         val viewModel = DogListViewModel(
-            dogRepository = FakeDogRepository()
+            dogRepository = FakeDogRepositorySuccess()
         )
         assert(viewModel.status.value is ApiResponseStatus.Success)
     }
@@ -25,7 +25,7 @@ class DogListViewModelTest {
     @Test
     fun downloadDogListIsNotEmpty() {
         val viewModel = DogListViewModel(
-            dogRepository = FakeDogRepository()
+            dogRepository = FakeDogRepositorySuccess()
         )
         val status = viewModel.status.value as ApiResponseStatus.Success
         assert((status.data as List<*>).isNotEmpty())
