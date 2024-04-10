@@ -135,6 +135,10 @@ dependencies {
     testImplementation("org.testng:testng:$testng")
     testImplementation("androidx.arch.core:core-testing:$coreTesting")
 
+    //Mockito
+    val mockitoCoreVersion = "4.8.0"
+    testImplementation("org.mockito:mockito-core:$mockitoCoreVersion")
+
 }
 
 // Allow references to generated code
