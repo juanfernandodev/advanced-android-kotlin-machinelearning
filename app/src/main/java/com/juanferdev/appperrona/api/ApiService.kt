@@ -1,7 +1,6 @@
 package com.juanferdev.appperrona.api
 
 import com.juanferdev.appperrona.ADD_DOG_TO_USER_URL
-import com.juanferdev.appperrona.BASE_URL
 import com.juanferdev.appperrona.GET_ALL_DOGS_URL
 import com.juanferdev.appperrona.GET_DOG_BY_ML_ID
 import com.juanferdev.appperrona.GET_USER_DOGS
@@ -14,25 +13,11 @@ import com.juanferdev.appperrona.api.responses.AuthApiResponse
 import com.juanferdev.appperrona.api.responses.DefaultResponse
 import com.juanferdev.appperrona.api.responses.DogApiResponse
 import com.juanferdev.appperrona.api.responses.DogListApiResponse
-import okhttp3.OkHttpClient
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.Query
-
-private val okHttpClient = OkHttpClient
-    .Builder()
-    .addInterceptor(ApiServiceInterceptor)
-    .build()
-
-private val retrofit = Retrofit.Builder()
-    .client(okHttpClient)
-    .baseUrl(BASE_URL)
-    .addConverterFactory(MoshiConverterFactory.create())
-    .build()
 
 interface ApiService {
     @GET(GET_ALL_DOGS_URL)
@@ -55,10 +40,4 @@ interface ApiService {
     @GET(GET_DOG_BY_ML_ID)
     suspend fun getRecognizedDog(@Query("ml_id") capturedDogId: String): DogApiResponse
 
-}
-
-object DogsApi {
-    val retrofitService: ApiService by lazy {
-        retrofit.create(ApiService::class.java)
-    }
 }
