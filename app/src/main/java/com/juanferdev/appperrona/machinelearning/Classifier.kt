@@ -24,7 +24,7 @@ import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
 class Classifier @Inject constructor(
     tfLiteModel: MappedByteBuffer,
     private val labels: List<String>
-) {
+) : ClassifierContract {
     /**
      * Image size along the x axis.
      */
@@ -87,7 +87,7 @@ class Classifier @Inject constructor(
     /**
      * Runs inference and returns the classification results.
      */
-    fun recognizeImage(bitmap: Bitmap): List<DogRecognition> {
+    override fun recognizeImage(bitmap: Bitmap): List<DogRecognition> {
         inputImageBuffer = loadImage(bitmap)
         val rewoundOutputBuffer = outputProbabilityBuffer.buffer.rewind()
         tfLite.run(inputImageBuffer.buffer, rewoundOutputBuffer)
@@ -137,7 +137,7 @@ class Classifier @Inject constructor(
     }
 
     @SuppressLint("UnsafeOptInUsageError")
-    fun convertImageProxyToBitmap(imageProxy: ImageProxy): Bitmap? {
+    override fun convertImageProxyToBitmap(imageProxy: ImageProxy): Bitmap? {
         val image = imageProxy.image ?: return null
 
         val yBuffer = image.planes[0].buffer // Y

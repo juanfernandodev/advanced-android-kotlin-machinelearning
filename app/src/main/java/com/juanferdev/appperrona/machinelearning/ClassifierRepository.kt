@@ -7,7 +7,7 @@ import kotlinx.coroutines.withContext
 
 class ClassifierRepository @Inject constructor(
     private val dispatcherIO: CoroutineDispatcher,
-    private val classifier: Classifier
+    private val classifier: ClassifierContract
 ) : ClassifierRepositoryContract {
 
     override suspend fun recognizedImage(imageProxy: ImageProxy) =
