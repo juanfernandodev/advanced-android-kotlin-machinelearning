@@ -16,7 +16,12 @@ class ClassifierRepository @Inject constructor(
             if (bitmap == null) {
                 DogRecognition()
             } else {
-                classifier.recognizeImage(bitmap).first()
+                val listDogRecognition = classifier.recognizeImage(bitmap)
+                if (listDogRecognition.isNotEmpty()) {
+                    listDogRecognition.first()
+                } else {
+                    DogRecognition()
+                }
             }
         }
 }
