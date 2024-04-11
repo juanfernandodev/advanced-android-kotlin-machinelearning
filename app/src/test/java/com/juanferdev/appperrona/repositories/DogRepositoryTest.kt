@@ -11,7 +11,6 @@ import com.juanferdev.appperrona.api.responses.DogListApiResponse
 import com.juanferdev.appperrona.api.responses.DogListResponse
 import com.juanferdev.appperrona.api.responses.DogResponse
 import com.juanferdev.appperrona.doglist.DogRepository
-import com.juanferdev.appperrona.repositories.FakeDogs.dogInBothCollections
 import java.net.UnknownHostException
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
@@ -33,6 +32,32 @@ class DogRepositoryTest {
 
     private val apiServiceMock = mock(ApiService::class.java)
     private val httpException = mock(HttpException::class.java)
+    private val dogInBothCollections = DogDTO(
+        id = 1L,
+        index = 1,
+        name = "Peluche"
+    )
+    private val allDogListResponse = DogListResponse(
+        dogs = listOf(
+            dogInBothCollections,
+            DogDTO(
+                id = 2L,
+                index = 2,
+                name = "Mona"
+            ),
+            DogDTO(
+                id = 3L,
+                index = 3,
+                name = "Tarzan"
+            )
+        )
+    )
+
+    private val userDogListResponse = DogListResponse(
+        dogs = listOf(
+            dogInBothCollections
+        )
+    )
 
     @Test
     fun getDogCollectionWhenAllIsSuccessThenGetDogList(): Unit = runBlocking {
@@ -41,14 +66,14 @@ class DogRepositoryTest {
             DogListApiResponse(
                 message = String(),
                 isSuccess = true,
-                data = FakeDogs.allDogListResponse
+                data = allDogListResponse
             )
         )
         `when`(apiServiceMock.getUserDogs()).thenReturn(
             DogListApiResponse(
                 message = String(),
                 isSuccess = true,
-                data = FakeDogs.userDogListResponse
+                data = userDogListResponse
             )
         )
         val dogRepository = DogRepository(
@@ -99,7 +124,7 @@ class DogRepositoryTest {
                 DogListApiResponse(
                     message = String(),
                     isSuccess = true,
-                    data = FakeDogs.allDogListResponse
+                    data = allDogListResponse
                 )
             )
             `when`(httpException.code()).thenReturn(
@@ -123,14 +148,14 @@ class DogRepositoryTest {
             DogListApiResponse(
                 message = String(),
                 isSuccess = true,
-                data = FakeDogs.allDogListResponse
+                data = allDogListResponse
             )
         )
         `when`(apiServiceMock.getUserDogs()).thenReturn(
             DogListApiResponse(
                 message = String(),
                 isSuccess = true,
-                data = FakeDogs.userDogListResponse
+                data = userDogListResponse
             )
         )
         val dogRepository = DogRepository(
@@ -149,14 +174,14 @@ class DogRepositoryTest {
             DogListApiResponse(
                 message = String(),
                 isSuccess = true,
-                data = FakeDogs.allDogListResponse
+                data = allDogListResponse
             )
         )
         `when`(apiServiceMock.getUserDogs()).thenReturn(
             DogListApiResponse(
                 message = String(),
                 isSuccess = true,
-                data = FakeDogs.userDogListResponse
+                data = userDogListResponse
             )
         )
         val dogRepository = DogRepository(
@@ -250,35 +275,4 @@ class DogRepositoryTest {
         assertEquals(R.string.unknown_error, apiResponseStatus.messageId)
     }
 
-}
-
-object FakeDogs {
-
-    val dogInBothCollections = DogDTO(
-        id = 1L,
-        index = 1,
-        name = "Peluche"
-    )
-
-    val allDogListResponse = DogListResponse(
-        dogs = listOf(
-            dogInBothCollections,
-            DogDTO(
-                id = 2L,
-                index = 2,
-                name = "Mona"
-            ),
-            DogDTO(
-                id = 3L,
-                index = 3,
-                name = "Tarzan"
-            )
-        )
-    )
-
-    val userDogListResponse = DogListResponse(
-        dogs = listOf(
-            dogInBothCollections
-        )
-    )
 }
