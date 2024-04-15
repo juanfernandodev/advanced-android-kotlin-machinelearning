@@ -82,6 +82,8 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        // Replace com.example.android.dagger with your class path.
+        testInstrumentationRunner = "com.juanferdev.appperrona.CustomTestRunner"
     }
 
     buildTypes {
@@ -203,6 +205,13 @@ dependencies {
     val mockitoVersion = "5.10.0"
     testImplementation("org.mockito:mockito-core:$mockitoVersion")
     androidTestImplementation("org.mockito:mockito-android:$mockitoVersion")
+
+    // For instrumented tests.
+    val hiltAndroidTesting = "2.44"
+    androidTestImplementation("com.google.dagger:hilt-android-testing:$hiltAndroidTesting")
+    // ...with Kotlin.
+    val hiltAndroidCompiler = "2.50"
+    kaptAndroidTest("com.google.dagger:hilt-android-compiler:$hiltAndroidCompiler")
 
 }
 
