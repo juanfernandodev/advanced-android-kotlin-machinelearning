@@ -170,7 +170,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$viewModelComposeVersion")
     implementation("androidx.compose.runtime:runtime-livedata")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleRuntimeVersion")
-    implementation(platform("androidx.compose:compose-bom:2023.08.00"))
+    implementation(platform("androidx.compose:compose-bom:2024.04.00"))
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.material3:material3")
 
@@ -181,7 +181,7 @@ dependencies {
     implementation("androidx.hilt:hilt-navigation-compose:${hiltNavigation}")
     kapt("com.google.dagger:hilt-android-compiler:${hiltVersion}")
 
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))
+    androidTestImplementation(platform("androidx.compose:compose-bom:2024.04.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     androidTestImplementation(composeBom)
     debugImplementation("androidx.compose.ui:ui-tooling")
@@ -193,15 +193,16 @@ dependencies {
 
     //Test Coroutines
     val kotlinxCoroutines = "1.7.3"
-    val testng = "6.9.6"
+    val testng = "7.3.0"
     val coreTesting = "2.2.0"
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinxCoroutines")
     testImplementation("org.testng:testng:$testng")
     testImplementation("androidx.arch.core:core-testing:$coreTesting")
 
     //Mockito
-    val mockitoCoreVersion = "4.8.0"
-    testImplementation("org.mockito:mockito-core:$mockitoCoreVersion")
+    val mockitoVersion = "5.10.0"
+    testImplementation("org.mockito:mockito-core:$mockitoVersion")
+    androidTestImplementation("org.mockito:mockito-android:$mockitoVersion")
 
 }
 
