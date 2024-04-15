@@ -1,8 +1,8 @@
 package com.juanferdev.appperrona.di
 
 import android.content.Context
-import com.juanferdev.appperrona.LABEL_PATH
-import com.juanferdev.appperrona.MODEL_PATH
+import com.juanferdev.appperrona.constants.LABEL_PATH
+import com.juanferdev.appperrona.constants.MODEL_PATH
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

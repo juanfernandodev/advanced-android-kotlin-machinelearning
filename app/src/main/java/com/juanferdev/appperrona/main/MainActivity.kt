@@ -19,12 +19,12 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import com.google.common.util.concurrent.ListenableFuture
-import com.juanferdev.appperrona.DOG_KEY
-import com.juanferdev.appperrona.IS_RECOGNITION_KEY
 import com.juanferdev.appperrona.R
 import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.api.ApiServiceInterceptor
 import com.juanferdev.appperrona.auth.LoginActivity
+import com.juanferdev.appperrona.constants.DOG_KEY
+import com.juanferdev.appperrona.constants.IS_RECOGNITION_KEY
 import com.juanferdev.appperrona.databinding.ActivityMainBinding
 import com.juanferdev.appperrona.dogdetail.DogDetailActivity
 import com.juanferdev.appperrona.doglist.DogListActivity

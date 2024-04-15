@@ -6,12 +6,12 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.ui.res.stringResource
-import com.juanferdev.appperrona.DOG_KEY
-import com.juanferdev.appperrona.IS_RECOGNITION_KEY
 import com.juanferdev.appperrona.R
 import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.composables.ErrorDialog
 import com.juanferdev.appperrona.composables.LoadingWheel
+import com.juanferdev.appperrona.constants.DOG_KEY
+import com.juanferdev.appperrona.constants.IS_RECOGNITION_KEY
 import com.juanferdev.appperrona.dogdetail.ui.theme.AppPerronaTheme
 import com.juanferdev.appperrona.models.Dog
 import com.juanferdev.appperrona.utils.parcelable

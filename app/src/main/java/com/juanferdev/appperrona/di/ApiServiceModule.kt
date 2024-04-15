@@ -1,8 +1,8 @@
 package com.juanferdev.appperrona.di
 
-import com.juanferdev.appperrona.BASE_URL
 import com.juanferdev.appperrona.api.ApiService
 import com.juanferdev.appperrona.api.ApiServiceInterceptor
+import com.juanferdev.appperrona.constants.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

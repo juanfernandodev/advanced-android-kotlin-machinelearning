@@ -1,11 +1,5 @@
 package com.juanferdev.appperrona.api
 
-import com.juanferdev.appperrona.ADD_DOG_TO_USER_URL
-import com.juanferdev.appperrona.GET_ALL_DOGS_URL
-import com.juanferdev.appperrona.GET_DOG_BY_ML_ID
-import com.juanferdev.appperrona.GET_USER_DOGS
-import com.juanferdev.appperrona.SIGN_IN_URL
-import com.juanferdev.appperrona.SIGN_UP_URL
 import com.juanferdev.appperrona.api.dto.AddDogToUserDTO
 import com.juanferdev.appperrona.api.dto.SignInDTO
 import com.juanferdev.appperrona.api.dto.SignUpDTO
@@ -13,6 +7,12 @@ import com.juanferdev.appperrona.api.responses.AuthApiResponse
 import com.juanferdev.appperrona.api.responses.DefaultResponse
 import com.juanferdev.appperrona.api.responses.DogApiResponse
 import com.juanferdev.appperrona.api.responses.DogListApiResponse
+import com.juanferdev.appperrona.constants.ADD_DOG_TO_USER_URL
+import com.juanferdev.appperrona.constants.GET_ALL_DOGS_URL
+import com.juanferdev.appperrona.constants.GET_DOG_BY_ML_ID
+import com.juanferdev.appperrona.constants.GET_USER_DOGS
+import com.juanferdev.appperrona.constants.SIGN_IN_URL
+import com.juanferdev.appperrona.constants.SIGN_UP_URL
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Headers

@@ -7,7 +7,7 @@ import android.graphics.ImageFormat
 import android.graphics.Rect
 import android.graphics.YuvImage
 import androidx.camera.core.ImageProxy
-import com.juanferdev.appperrona.MAX_RECOGNITION_DOG_RESULTS
+import com.juanferdev.appperrona.constants.MAX_RECOGNITION_DOG_RESULTS
 import java.io.ByteArrayOutputStream
 import java.nio.MappedByteBuffer
 import java.util.PriorityQueue
