@@ -13,6 +13,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
@@ -20,6 +22,12 @@ import androidx.compose.ui.unit.dp
 import com.juanferdev.appperrona.R
 import com.juanferdev.appperrona.composables.AuthField
 import com.juanferdev.appperrona.composables.TopAppBar
+import com.juanferdev.appperrona.constants.SemanticConstants.SEMANTIC_EMAIL_FIELD
+import com.juanferdev.appperrona.constants.SemanticConstants.SEMANTIC_ERROR_TEXT_EMAIL_FIELD
+import com.juanferdev.appperrona.constants.SemanticConstants.SEMANTIC_ERROR_TEXT_PASSWORD_FIELD
+import com.juanferdev.appperrona.constants.SemanticConstants.SEMANTIC_LOGIN_BUTTON
+import com.juanferdev.appperrona.constants.SemanticConstants.SEMANTIC_LOGIN_SCREEN_REGISTER_BUTTON
+import com.juanferdev.appperrona.constants.SemanticConstants.SEMANTIC_PASSWORD_FIELD
 
 @Composable
 fun LoginScreen(
@@ -77,6 +85,8 @@ fun Content(
                 viewModel.resetAuthFieldStatus()
             },
             label = stringResource(id = R.string.email),
+            errorSemantic = SEMANTIC_ERROR_TEXT_EMAIL_FIELD,
+            fieldSemantic = SEMANTIC_EMAIL_FIELD,
             errorMessageId =
             if (viewModel.authFieldStatus.value is AuthFieldStatus.Email) {
                 (viewModel.authFieldStatus.value as AuthFieldStatus.Email).messageId
@@ -95,6 +105,8 @@ fun Content(
             },
             label = stringResource(id = R.string.password),
             visualTransformation = PasswordVisualTransformation(),
+            errorSemantic = SEMANTIC_ERROR_TEXT_PASSWORD_FIELD,
+            fieldSemantic = SEMANTIC_PASSWORD_FIELD,
             errorMessageId =
             if (viewModel.authFieldStatus.value is AuthFieldStatus.Password) {
                 (viewModel.authFieldStatus.value as AuthFieldStatus.Password).messageId
@@ -105,7 +117,10 @@ fun Content(
         Button(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 16.dp),
+                .padding(top = 16.dp)
+                .semantics {
+                    testTag = SEMANTIC_LOGIN_BUTTON
+                },
             onClick = { onLoginButtonClick(email.value, password.value) }
         ) {
             Text(
@@ -125,7 +140,10 @@ fun Content(
             modifier = Modifier
                 .clickable(true, onClick = { onClickRegister() })
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(16.dp)
+                .semantics {
+                    testTag = SEMANTIC_LOGIN_SCREEN_REGISTER_BUTTON
+                },
             text = stringResource(id = R.string.register),
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.Medium

@@ -11,6 +11,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
@@ -18,6 +20,9 @@ import androidx.compose.ui.unit.dp
 import com.juanferdev.appperrona.R
 import com.juanferdev.appperrona.composables.AuthField
 import com.juanferdev.appperrona.composables.BackTopAppBar
+import com.juanferdev.appperrona.constants.SemanticConstants
+import com.juanferdev.appperrona.constants.SemanticConstants.SEMANTIC_ERROR_TEXT_CONFIRMATION_PASSWORD_FIELD
+import com.juanferdev.appperrona.constants.SemanticConstants.SEMANTIC_SIGN_UP_BUTTON
 
 @Composable
 fun SignUpScreen(
@@ -72,6 +77,8 @@ fun Content(
                 viewModel.resetAuthFieldStatus()
             },
             label = stringResource(id = R.string.email),
+            errorSemantic = SemanticConstants.SEMANTIC_ERROR_TEXT_EMAIL_FIELD,
+            fieldSemantic = SemanticConstants.SEMANTIC_EMAIL_FIELD,
             errorMessageId =
             if (viewModel.authFieldStatus.value is AuthFieldStatus.Email) {
                 (viewModel.authFieldStatus.value as AuthFieldStatus.Email).messageId
@@ -90,6 +97,8 @@ fun Content(
             },
             label = stringResource(id = R.string.password),
             visualTransformation = PasswordVisualTransformation(),
+            errorSemantic = SemanticConstants.SEMANTIC_ERROR_TEXT_PASSWORD_FIELD,
+            fieldSemantic = SemanticConstants.SEMANTIC_PASSWORD_FIELD,
             errorMessageId =
             if (viewModel.authFieldStatus.value is AuthFieldStatus.Password) {
                 (viewModel.authFieldStatus.value as AuthFieldStatus.Password).messageId
@@ -108,6 +117,8 @@ fun Content(
             },
             label = stringResource(id = R.string.confirm_password),
             visualTransformation = PasswordVisualTransformation(),
+            errorSemantic = SEMANTIC_ERROR_TEXT_CONFIRMATION_PASSWORD_FIELD,
+            fieldSemantic = SemanticConstants.SEMANTIC_CONFIRMATION_PASSWORD_FIELD,
             errorMessageId =
             if (viewModel.authFieldStatus.value is AuthFieldStatus.ConfirmPassword) {
                 (viewModel.authFieldStatus.value as AuthFieldStatus.ConfirmPassword).messageId
@@ -118,7 +129,10 @@ fun Content(
         Button(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 16.dp),
+                .padding(top = 16.dp)
+                .semantics {
+                    testTag = SEMANTIC_SIGN_UP_BUTTON
+                },
             onClick = { onSignUpButtonClick(email.value, password.value, confirmPassword.value) }
         ) {
             Text(
