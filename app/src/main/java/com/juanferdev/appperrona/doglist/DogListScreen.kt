@@ -16,6 +16,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -31,7 +33,6 @@ import com.juanferdev.appperrona.models.Dog
 
 private const val GRID_SPAN_COUNT = 3
 
-@Suppress("UNCHECKED_CAST")
 @Composable
 fun DogListScreen(
     onNavigationIconClick: () -> Unit,
@@ -54,7 +55,7 @@ fun DogListScreen(
             }
 
             is ApiResponseStatus.Success -> {
-                val listDog = status.data as List<Dog>
+                val listDog = status.data
                 LazyVerticalGrid(
                     modifier = Modifier
                         .padding(paddingValues)
@@ -92,7 +93,11 @@ fun DogGridItem(dog: Dog, onDogClicked: (Dog) -> Unit) {
             AsyncImage(
                 model = dog.imageUrl,
                 contentDescription = dog.name,
-                modifier = Modifier.background(Color.White)
+                modifier = Modifier
+                    .background(Color.White)
+                    .semantics {
+                        testTag = "dog-${dog.name}"
+                    }
             )
         }
     } else {
@@ -109,7 +114,10 @@ fun DogGridItem(dog: Dog, onDogClicked: (Dog) -> Unit) {
                 color = Color.White,
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(16.dp),
+                    .padding(16.dp)
+                    .semantics {
+                        testTag = "dog-${dog.index}"
+                    },
                 textAlign = TextAlign.Center,
                 fontSize = 42.sp,
                 fontWeight = FontWeight.Black
