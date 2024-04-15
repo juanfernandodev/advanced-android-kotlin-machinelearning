@@ -1,6 +1,7 @@
 package com.juanferdev.appperrona.auth
 
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -14,17 +15,20 @@ import com.juanferdev.appperrona.models.User
 
 @Composable
 fun AuthScreen(
-    onLoginButtonClick: ((String, String) -> Unit),
-    onSignUpButtonClick: (email: String, password: String, passwordConfirmation: String) -> Unit,
-    viewModel: AuthViewModel,
-    onResetApiResponse: (() -> Unit),
+    viewModel: AuthViewModel = hiltViewModel(),
     onUserLogin: (User) -> Unit
 ) {
     val navController = rememberNavController()
     AuthNavHost(
         navController,
-        onLoginButtonClick,
-        onSignUpButtonClick,
+        onLoginButtonClick = { email, password -> viewModel.login(email, password) },
+        onSignUpButtonClick = { email, password, passwordConfirmation ->
+            viewModel.signUp(
+                email,
+                password,
+                passwordConfirmation
+            )
+        },
         viewModel = viewModel
     )
 
@@ -43,9 +47,10 @@ fun AuthScreen(
 
         is ApiResponseStatus.Error -> {
             ErrorDialog(
-                errorMessageId = status.messageId,
-                onResetApiResponse
-            )
+                errorMessageId = status.messageId
+            ) {
+                viewModel.resetApiResponseStatus()
+            }
         }
     }
 }
