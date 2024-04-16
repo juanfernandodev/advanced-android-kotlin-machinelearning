@@ -13,6 +13,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material3.Button
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -20,6 +21,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
@@ -33,13 +36,32 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.hackaprende.dogedex.core.dogdetail.MostProbableDogsDialog
+import com.hackaprende.dogedex.core.dogdetail.getFakeDogs
 import com.juanferdev.appperrona.R
 import com.juanferdev.appperrona.constants.SemanticConstants.SEMANTIC_DETAIL_DOG_BUTTON
 import com.juanferdev.appperrona.models.Dog
 
 
 @Composable
-fun DogDetailScreen(dog: Dog, onClickButtonDetailActivity: () -> Unit) {
+fun DogDetailScreen(
+    dog: Dog,
+    isRecognition: Boolean,
+    probableDogsIds: List<String>,
+    onClickButtonDetailActivity: () -> Unit
+) {
+    val probableDogsDialogEnabled = remember { mutableStateOf(false) }
+
+    if (probableDogsDialogEnabled.value) {
+        MostProbableDogsDialog(
+            mostProbableDogs = getFakeDogs(),
+            onShowMostProbableDogsDialogDismiss = {
+                probableDogsDialogEnabled.value = false
+            },
+            onItemClicked = {}
+        )
+    }
+
     Box(
         modifier = Modifier
             .background(
@@ -51,7 +73,12 @@ fun DogDetailScreen(dog: Dog, onClickButtonDetailActivity: () -> Unit) {
             .fillMaxSize(),
         contentAlignment = Alignment.TopCenter
     ) {
-        DogInformation(dog)
+        DogInformation(
+            dog = dog,
+            isRecognition = isRecognition
+        ) {
+            probableDogsDialogEnabled.value = true
+        }
         AsyncImage(
             model = dog.imageUrl,
             contentDescription = dog.name,
@@ -76,7 +103,11 @@ fun DogDetailScreen(dog: Dog, onClickButtonDetailActivity: () -> Unit) {
 
 
 @Composable
-private fun DogInformation(dog: Dog) {
+private fun DogInformation(
+    dog: Dog,
+    isRecognition: Boolean,
+    onProbableDogsButtonClick: () -> Unit
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -139,6 +170,19 @@ private fun DogInformation(dog: Dog) {
                     fontWeight = FontWeight.Medium,
                     modifier = Modifier.padding(top = 8.dp)
                 )
+                if (isRecognition) {
+                    Button(
+                        modifier = Modifier.padding(16.dp),
+                        onClick = { onProbableDogsButtonClick() }
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.not_your_dog),
+                            textAlign = TextAlign.Center,
+                            fontSize = 18.sp
+                        )
+                    }
+                }
+
                 HorizontalDivider(
                     modifier = Modifier
                         .padding(
@@ -315,5 +359,9 @@ fun Preview() {
         "6"
     )
 
-    DogDetailScreen(dog) { }
+    DogDetailScreen(
+        dog = dog,
+        probableDogsIds = emptyList(),
+        isRecognition = false
+    ) { }
 }

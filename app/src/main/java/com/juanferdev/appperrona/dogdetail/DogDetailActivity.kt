@@ -51,7 +51,9 @@ class DogDetailActivity : ComponentActivity() {
                     null -> {
                         AppPerronaTheme {
                             DogDetailScreen(
+                                isRecognition = isRecognition,
                                 dog = dog,
+                                probableDogsIds = probablesDogIds,
                                 onClickButtonDetailActivity = {
                                     onClickButtonDetailActivity(
                                         isRecognition,

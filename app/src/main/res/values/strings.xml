@@ -46,4 +46,7 @@
     <string name="you_need_to_accept_the_camera_permission_in_order_to_access_to_the_camera">You need to accept the camera permission in order to access to the camera</string>
     <string name="aceptar">Aceptar</string>
     <string name="cancelar">Cancelar</string>
+    <string name="not_your_dog">Not your dog? Tap to see other probable dogs</string>
+    <string name="other_probable_dogs">Other probable dogs</string>
+    <string name="dismiss">Dismiss</string>
 </resources>

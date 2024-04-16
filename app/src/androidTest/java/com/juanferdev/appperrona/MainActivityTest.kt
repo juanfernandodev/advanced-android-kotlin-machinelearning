@@ -121,8 +121,8 @@ class MainActivityTest {
     }
 
     class FakeSuccessClassifierRepository @Inject constructor() : ClassifierRepositoryContract {
-        override suspend fun recognizedImage(imageProxy: ImageProxy) =
-            DogRecognition(id = "1", confidence = 70.0F)
+        override suspend fun recognizedImage(imageProxy: ImageProxy): List<DogRecognition> =
+            listOf(DogRecognition(id = "1", confidence = 70.0F))
     }
 
     @Module
