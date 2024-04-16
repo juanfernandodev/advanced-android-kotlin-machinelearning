@@ -2,12 +2,16 @@ package com.juanferdev.appperrona
 
 import android.Manifest
 import androidx.camera.core.ImageProxy
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithText
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
+import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.GrantPermissionRule
 import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.di.ClassifierRepositoryContractModule
@@ -32,6 +36,7 @@ import org.junit.Test
 @HiltAndroidTest
 class MainActivityTest {
 
+    //Always the first one
     @get:Rule(order = 0)
     var hiltRule = HiltAndroidRule(this)
 
@@ -40,6 +45,10 @@ class MainActivityTest {
         GrantPermissionRule.grant(Manifest.permission.CAMERA)
 
     @get:Rule(order = 2)
+    val composeTestRule = createComposeRule()
+
+    //Always the last one
+    @get:Rule(order = 3)
     val activityScenarioRule = ActivityScenarioRule(MainActivity::class.java)
 
     @Test
@@ -55,6 +64,14 @@ class MainActivityTest {
     @Test
     fun dogListOpensWhenClickingButton() {
         onView(withId(R.id.dog_list_fab)).perform(click())
+        val context =
+            InstrumentationRegistry.getInstrumentation().targetContext // <-- Getting the context
+
+        val string = context.getString(R.string.my_dog_collection)
+
+        composeTestRule.onNodeWithText(
+            text = string
+        ).assertIsDisplayed()
     }
 
 
