@@ -38,11 +38,11 @@ class LoginActivityTest {
     @get:Rule(order = 0)
     var hiltRule = HiltAndroidRule(this)
 
-    @get:Rule
+    @get:Rule(order = 1)
     val runtimePermissionRule: GrantPermissionRule =
         GrantPermissionRule.grant(Manifest.permission.CAMERA)
 
-    @get:Rule(order = 1)
+    @get:Rule(order = 2)
     val composeTestRule = createAndroidComposeRule<LoginActivity>()
 
 
