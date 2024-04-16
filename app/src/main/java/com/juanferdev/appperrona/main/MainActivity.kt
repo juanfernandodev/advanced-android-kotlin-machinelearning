@@ -26,6 +26,7 @@ import com.juanferdev.appperrona.api.ApiServiceInterceptor
 import com.juanferdev.appperrona.auth.LoginActivity
 import com.juanferdev.appperrona.constants.DOG_KEY
 import com.juanferdev.appperrona.constants.IS_RECOGNITION_KEY
+import com.juanferdev.appperrona.constants.PROBABLES_DOG_ID_KEY
 import com.juanferdev.appperrona.databinding.ActivityMainBinding
 import com.juanferdev.appperrona.dogdetail.DogDetailActivity
 import com.juanferdev.appperrona.doglist.DogListActivity
@@ -230,6 +231,7 @@ class MainActivity : AppCompatActivity() {
     private fun openDetailActivity(dogRecognized: Dog) {
         val intent = Intent(this, DogDetailActivity::class.java)
         intent.putExtra(DOG_KEY, dogRecognized)
+        intent.putExtra(PROBABLES_DOG_ID_KEY, viewModel.probableDogIds)
         intent.putExtra(IS_RECOGNITION_KEY, true)
         startActivity(intent)
     }

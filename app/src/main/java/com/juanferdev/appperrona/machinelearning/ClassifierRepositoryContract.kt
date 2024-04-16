@@ -4,5 +4,5 @@ import androidx.camera.core.ImageProxy
 
 fun interface ClassifierRepositoryContract {
 
-    suspend fun recognizedImage(imageProxy: ImageProxy): DogRecognition
+    suspend fun recognizedImage(imageProxy: ImageProxy): List<DogRecognition>
 }

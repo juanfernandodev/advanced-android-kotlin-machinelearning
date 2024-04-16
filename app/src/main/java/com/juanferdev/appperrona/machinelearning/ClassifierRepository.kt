@@ -10,17 +10,17 @@ class ClassifierRepository @Inject constructor(
     private val classifier: ClassifierContract
 ) : ClassifierRepositoryContract {
 
-    override suspend fun recognizedImage(imageProxy: ImageProxy) =
+    override suspend fun recognizedImage(imageProxy: ImageProxy): List<DogRecognition> =
         withContext(dispatcherIO) {
             val bitmap = classifier.convertImageProxyToBitmap(imageProxy)
             if (bitmap == null) {
-                DogRecognition()
+                listOf(DogRecognition())
             } else {
                 val listDogRecognition = classifier.recognizeImage(bitmap)
-                if (listDogRecognition.isNotEmpty()) {
-                    listDogRecognition.first()
+                if (listDogRecognition.size >= 5) {
+                    listDogRecognition.subList(0, 5)
                 } else {
-                    DogRecognition()
+                    listDogRecognition
                 }
             }
         }
