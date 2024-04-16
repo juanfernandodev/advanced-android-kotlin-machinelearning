@@ -3,6 +3,7 @@ package com.juanferdev.appperrona
 import android.Manifest
 import androidx.camera.core.ImageProxy
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
@@ -49,6 +50,11 @@ class MainActivityTest {
             .check(matches(isDisplayed()))
         onView(withId(R.id.settings_fab))
             .check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun dogListOpensWhenClickingButton() {
+        onView(withId(R.id.dog_list_fab)).perform(click())
     }
 
 
