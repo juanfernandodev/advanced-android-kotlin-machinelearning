@@ -25,6 +25,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.juanferdev.appperrona.R
+import com.juanferdev.appperrona.constants.SemanticConstants.SEMANTIC_DETAIL_DOG_BUTTON
 import com.juanferdev.appperrona.models.Dog
 
 
@@ -58,7 +61,10 @@ fun DogDetailScreen(dog: Dog, onClickButtonDetailActivity: () -> Unit) {
         )
         FloatingActionButton(
             modifier = Modifier
-                .align(alignment = Alignment.BottomCenter),
+                .align(alignment = Alignment.BottomCenter)
+                .semantics {
+                    testTag = SEMANTIC_DETAIL_DOG_BUTTON
+                },
             onClick = { onClickButtonDetailActivity() }) {
             Icon(
                 imageVector = Icons.Filled.Check,

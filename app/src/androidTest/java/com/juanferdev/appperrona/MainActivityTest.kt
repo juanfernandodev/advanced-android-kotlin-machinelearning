@@ -4,8 +4,10 @@ import android.Manifest
 import androidx.camera.core.ImageProxy
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
@@ -14,6 +16,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.GrantPermissionRule
 import com.juanferdev.appperrona.api.ApiResponseStatus
+import com.juanferdev.appperrona.constants.SemanticConstants.SEMANTIC_DETAIL_DOG_BUTTON
 import com.juanferdev.appperrona.di.ClassifierRepositoryContractModule
 import com.juanferdev.appperrona.di.DogRepositoryModule
 import com.juanferdev.appperrona.doglist.DogRepositoryContract
@@ -29,6 +32,8 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
 import javax.inject.Inject
+import org.junit.After
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
@@ -50,6 +55,16 @@ class MainActivityTest {
     //Always the last one
     @get:Rule(order = 3)
     val activityScenarioRule = ActivityScenarioRule(MainActivity::class.java)
+
+    @Before
+    fun registerIdlingResource() {
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.idlingResource)
+    }
+
+    @After
+    fun unregisterIdlingResource() {
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.idlingResource)
+    }
 
     @Test
     fun showAllFab() {
@@ -74,6 +89,16 @@ class MainActivityTest {
         ).assertIsDisplayed()
     }
 
+    @Test
+    fun whenRecognizingDogDetailsScreenOpens() {
+        onView(withId(R.id.take_photo_fab)).perform(click())
+        composeTestRule.onNodeWithTag(
+            testTag = SEMANTIC_DETAIL_DOG_BUTTON
+        ).assertIsDisplayed()
+    }
+
+
+
 
     class FakeSuccessDogRepository @Inject constructor() : DogRepositoryContract {
         override suspend fun getDogCollection(): ApiResponseStatus<List<Dog>> {
@@ -97,7 +122,7 @@ class MainActivityTest {
 
     class FakeSuccessClassifierRepository @Inject constructor() : ClassifierRepositoryContract {
         override suspend fun recognizedImage(imageProxy: ImageProxy) =
-            DogRecognition(id = "1", confidence = 0.7F)
+            DogRecognition(id = "1", confidence = 70.0F)
     }
 
     @Module

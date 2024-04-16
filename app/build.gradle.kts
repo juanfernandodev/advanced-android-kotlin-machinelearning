@@ -191,7 +191,7 @@ dependencies {
 
     testImplementation("junit:junit:$junit_version")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
 
     //Test Coroutines
     val kotlinxCoroutines = "1.7.3"
@@ -214,6 +214,11 @@ dependencies {
     kaptAndroidTest("com.google.dagger:hilt-android-compiler:$hiltAndroidCompiler")
     val testRules = "1.5.0"
     implementation("androidx.test:rules:${testRules}")
+
+    //Espresso
+    val espresso = "3.5.1"
+    androidTestImplementation("androidx.test.espresso:espresso-core:$espresso")
+    implementation("androidx.test.espresso:espresso-idling-resource:$espresso")
 }
 
 // Allow references to generated code

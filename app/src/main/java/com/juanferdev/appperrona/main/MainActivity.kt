@@ -19,6 +19,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import com.google.common.util.concurrent.ListenableFuture
+import com.juanferdev.appperrona.EspressoIdlingResource
 import com.juanferdev.appperrona.R
 import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.api.ApiServiceInterceptor
@@ -74,6 +75,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startCamera() {
+        EspressoIdlingResource.increment() //This is just for test
         cameraProviderFuture.addListener({
             val cameraProvider = cameraProviderFuture.get()
             bindPreview(cameraProvider)
@@ -95,6 +97,7 @@ class MainActivity : AppCompatActivity() {
             .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
             .build()
         imageAnalysis.setAnalyzer(cameraExecutor) { imageProxy ->
+            EspressoIdlingResource.decrement() //This is just for test
             viewModel.recognizedImage(imageProxy)
         }
 
