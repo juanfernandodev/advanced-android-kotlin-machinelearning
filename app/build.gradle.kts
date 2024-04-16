@@ -212,7 +212,8 @@ dependencies {
     // ...with Kotlin.
     val hiltAndroidCompiler = "2.50"
     kaptAndroidTest("com.google.dagger:hilt-android-compiler:$hiltAndroidCompiler")
-
+    val testRules = "1.5.0"
+    implementation("androidx.test:rules:${testRules}")
 }
 
 // Allow references to generated code

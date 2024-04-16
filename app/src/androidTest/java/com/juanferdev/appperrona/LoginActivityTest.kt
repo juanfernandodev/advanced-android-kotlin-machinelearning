@@ -1,5 +1,6 @@
 package com.juanferdev.appperrona
 
+import android.Manifest
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
@@ -10,6 +11,7 @@ import androidx.test.espresso.Espresso
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.rule.GrantPermissionRule
 import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.auth.AuthRepositoryContract
 import com.juanferdev.appperrona.auth.LoginActivity
@@ -35,6 +37,10 @@ class LoginActivityTest {
 
     @get:Rule(order = 0)
     var hiltRule = HiltAndroidRule(this)
+
+    @get:Rule
+    val runtimePermissionRule: GrantPermissionRule =
+        GrantPermissionRule.grant(Manifest.permission.CAMERA)
 
     @get:Rule(order = 1)
     val composeTestRule = createAndroidComposeRule<LoginActivity>()
