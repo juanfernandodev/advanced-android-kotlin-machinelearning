@@ -162,6 +162,7 @@ dependencies {
     val viewModelComposeVersion = "2.7.0"
     val lifecycleRuntimeVersion = "2.7.0"
     val composeBom = platform("androidx.compose:compose-bom:2024.02.02")
+    val lifecycleCompose = "2.7.0"
     implementation(composeBom)
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.material:material-icons-core")
@@ -175,6 +176,7 @@ dependencies {
     implementation(platform("androidx.compose:compose-bom:2024.04.00"))
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.material3:material3")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:$lifecycleCompose")
 
     //Hilt dependency injection
     val hiltVersion = "2.50"

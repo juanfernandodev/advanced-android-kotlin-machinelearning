@@ -21,7 +21,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -37,6 +36,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.hackaprende.dogedex.core.dogdetail.MostProbableDogsDialog
 import com.juanferdev.appperrona.R
@@ -74,7 +74,8 @@ fun DogDetailScreen(
                 //Its only used to reset the status
             }
         }
-        val probablesDogsList = dogDetailViewModel.probableDogList.collectAsState().value
+        val probablesDogsList =
+            dogDetailViewModel.probableDogList.collectAsStateWithLifecycle().value
         CardDogDetail(
             dog = dog,
             isRecognition = isRecognition,
