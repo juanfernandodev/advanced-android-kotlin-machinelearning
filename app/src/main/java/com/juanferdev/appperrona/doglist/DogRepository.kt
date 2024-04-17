@@ -9,7 +9,11 @@ import com.juanferdev.appperrona.api.makeNetworkCall
 import com.juanferdev.appperrona.models.Dog
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 
 class DogRepository @Inject constructor(
@@ -87,5 +91,12 @@ class DogRepository @Inject constructor(
             }
             DogDTOMapper().fromDogDTOToDogDomain(response.data.dog)
         }
+
+    override fun CoroutineScope.getProbableDogs(probableDogsIds: List<String>): Flow<ApiResponseStatus<Dog>> =
+        flow {
+            probableDogsIds.forEach { dogId ->
+                emit(getRecognizedDog(dogId))
+            }
+        }.flowOn(dispatcherIO)
 
 }
