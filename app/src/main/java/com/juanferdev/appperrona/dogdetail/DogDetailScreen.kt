@@ -35,33 +35,65 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.hackaprende.dogedex.core.dogdetail.MostProbableDogsDialog
 import com.hackaprende.dogedex.core.dogdetail.getFakeDogs
 import com.juanferdev.appperrona.R
+import com.juanferdev.appperrona.api.ApiResponseStatus
+import com.juanferdev.appperrona.composables.ErrorDialog
+import com.juanferdev.appperrona.composables.LoadingWheel
 import com.juanferdev.appperrona.constants.SemanticConstants.SEMANTIC_DETAIL_DOG_BUTTON
 import com.juanferdev.appperrona.models.Dog
 
-
 @Composable
 fun DogDetailScreen(
+    dogDetailViewModel: DogDetailViewModel = hiltViewModel(),
+    finishActivity: (Int?) -> Unit,
+) {
+    val dog = dogDetailViewModel.dog.value
+    if (dog != null) {
+
+        val isRecognition = dogDetailViewModel.isRecognition.value
+        when (val status = dogDetailViewModel.status.value) {
+            is ApiResponseStatus.Error -> {
+                ErrorDialog(
+                    status.messageId,
+                    onDialogDismiss = { dogDetailViewModel.resetApiResponseStatus() })
+            }
+
+            is ApiResponseStatus.Loading -> {
+                LoadingWheel()
+            }
+
+            is ApiResponseStatus.Success -> {
+                finishActivity(R.string.dog_saved)
+            }
+
+            null -> {
+                //Its only used to reset the status
+            }
+        }
+
+        CardDogDetail(
+            dog = dog,
+            isRecognition = isRecognition,
+            addDogToUser = { dogId -> dogDetailViewModel.addDogToUser(dogId) },
+            finishActivity = { messageId -> finishActivity(messageId) }
+        )
+    } else {
+        finishActivity(R.string.error_adding_dog)
+    }
+}
+
+@Composable
+private fun CardDogDetail(
     dog: Dog,
     isRecognition: Boolean,
-    probableDogsIds: List<String>,
-    onClickButtonDetailActivity: () -> Unit
+    addDogToUser: (Long) -> Unit,
+    finishActivity: (Int?) -> Unit
 ) {
     val probableDogsDialogEnabled = remember { mutableStateOf(false) }
-
-    if (probableDogsDialogEnabled.value) {
-        MostProbableDogsDialog(
-            mostProbableDogs = getFakeDogs(),
-            onShowMostProbableDogsDialogDismiss = {
-                probableDogsDialogEnabled.value = false
-            },
-            onItemClicked = {}
-        )
-    }
-
     Box(
         modifier = Modifier
             .background(
@@ -86,13 +118,30 @@ fun DogDetailScreen(
                 .width(270.dp)
                 .padding(top = 80.dp)
         )
+
+        if (probableDogsDialogEnabled.value) {
+            MostProbableDogsDialog(
+                mostProbableDogs = getFakeDogs(),
+                onShowMostProbableDogsDialogDismiss = {
+                    probableDogsDialogEnabled.value = false
+                },
+                onItemClicked = {}
+            )
+        }
         FloatingActionButton(
             modifier = Modifier
                 .align(alignment = Alignment.BottomCenter)
                 .semantics {
                     testTag = SEMANTIC_DETAIL_DOG_BUTTON
                 },
-            onClick = { onClickButtonDetailActivity() }) {
+            onClick = {
+                if (isRecognition) {
+                    addDogToUser(dog.id)
+                } else {
+                    finishActivity(null)
+                }
+            }
+        ) {
             Icon(
                 imageVector = Icons.Filled.Check,
                 contentDescription = null
@@ -100,7 +149,6 @@ fun DogDetailScreen(
         }
     }
 }
-
 
 @Composable
 private fun DogInformation(
@@ -359,9 +407,11 @@ fun Preview() {
         "6"
     )
 
-    DogDetailScreen(
+    CardDogDetail(
+        addDogToUser = {},
         dog = dog,
-        probableDogsIds = emptyList(),
-        isRecognition = false
-    ) { }
+        finishActivity = {},
+        isRecognition = true
+    )
+
 }
