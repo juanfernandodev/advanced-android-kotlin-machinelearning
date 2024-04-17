@@ -21,6 +21,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -38,7 +39,6 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.hackaprende.dogedex.core.dogdetail.MostProbableDogsDialog
-import com.hackaprende.dogedex.core.dogdetail.getFakeDogs
 import com.juanferdev.appperrona.R
 import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.composables.ErrorDialog
@@ -74,12 +74,14 @@ fun DogDetailScreen(
                 //Its only used to reset the status
             }
         }
-
+        val probablesDogsList = dogDetailViewModel.probableDogList.collectAsState().value
         CardDogDetail(
             dog = dog,
             isRecognition = isRecognition,
             addDogToUser = { dogId -> dogDetailViewModel.addDogToUser(dogId) },
-            finishActivity = { messageId -> finishActivity(messageId) }
+            finishActivity = { messageId -> finishActivity(messageId) },
+            probablesDogsList = probablesDogsList,
+            getProbablesDogs = { dogDetailViewModel.getProbableDogs() }
         )
     } else {
         finishActivity(R.string.error_adding_dog)
@@ -91,7 +93,9 @@ private fun CardDogDetail(
     dog: Dog,
     isRecognition: Boolean,
     addDogToUser: (Long) -> Unit,
-    finishActivity: (Int?) -> Unit
+    finishActivity: (Int?) -> Unit,
+    probablesDogsList: List<Dog>,
+    getProbablesDogs: () -> Unit
 ) {
     val probableDogsDialogEnabled = remember { mutableStateOf(false) }
     Box(
@@ -107,8 +111,9 @@ private fun CardDogDetail(
     ) {
         DogInformation(
             dog = dog,
-            isRecognition = isRecognition
+            isRecognition = isRecognition,
         ) {
+            getProbablesDogs()
             probableDogsDialogEnabled.value = true
         }
         AsyncImage(
@@ -121,7 +126,7 @@ private fun CardDogDetail(
 
         if (probableDogsDialogEnabled.value) {
             MostProbableDogsDialog(
-                mostProbableDogs = getFakeDogs(),
+                mostProbableDogs = probablesDogsList,
                 onShowMostProbableDogsDialogDismiss = {
                     probableDogsDialogEnabled.value = false
                 },
@@ -411,7 +416,9 @@ fun Preview() {
         addDogToUser = {},
         dog = dog,
         finishActivity = {},
-        isRecognition = true
+        isRecognition = true,
+        getProbablesDogs = {},
+        probablesDogsList = mutableListOf()
     )
 
 }

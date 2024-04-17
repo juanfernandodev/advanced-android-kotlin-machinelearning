@@ -13,6 +13,8 @@ import com.juanferdev.appperrona.doglist.DogRepositoryContract
 import com.juanferdev.appperrona.models.Dog
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 @HiltViewModel
@@ -26,9 +28,8 @@ class DogDetailViewModel @Inject constructor(
     )
         private set
 
-    var probableDogsIds: MutableState<List<String>> =
+    private var probableDogsIds: MutableState<List<String>> =
         mutableStateOf(savedStateHandle[PROBABLES_DOG_ID_KEY] ?: emptyList())
-        private set
 
     var isRecognition: MutableState<Boolean> =
         mutableStateOf(savedStateHandle[IS_RECOGNITION_KEY] ?: false)
@@ -36,6 +37,25 @@ class DogDetailViewModel @Inject constructor(
 
 
     val status = mutableStateOf<ApiResponseStatus<Any>?>(null)
+
+    private var _probableDogList = MutableStateFlow<MutableList<Dog>>(mutableListOf())
+    val probableDogList: StateFlow<MutableList<Dog>>
+        get() = _probableDogList
+
+    fun getProbableDogs() {
+        _probableDogList.value.clear()
+        viewModelScope.launch {
+            dogRepository.getProbableDogs(probableDogsIds.value)
+                .collect { apiResponseStatus ->
+                    if (apiResponseStatus is ApiResponseStatus.Success) {
+                        val probablesDogsMutableList = _probableDogList.value.toMutableList()
+                        val newProbableDog = apiResponseStatus.data
+                        probablesDogsMutableList.add(newProbableDog)
+                        _probableDogList.value = probablesDogsMutableList
+                    }
+                }
+        }
+    }
 
     fun addDogToUser(dogId: Long) {
         viewModelScope.launch {

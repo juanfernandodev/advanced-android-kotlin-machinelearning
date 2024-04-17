@@ -32,7 +32,6 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
 import javax.inject.Inject
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import org.junit.After
 import org.junit.Before
@@ -121,7 +120,7 @@ class MainActivityTest {
             return ApiResponseStatus.Success(Dog(id = capturedDogId.toLong()))
         }
 
-        override fun CoroutineScope.getProbableDogs(probableDogsIds: List<String>): Flow<ApiResponseStatus<Dog>> {
+        override fun getProbableDogs(probableDogsIds: List<String>): Flow<ApiResponseStatus<Dog>> {
             TODO("Not yet implemented")
         }
     }

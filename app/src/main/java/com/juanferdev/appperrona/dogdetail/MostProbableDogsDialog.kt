@@ -27,9 +27,10 @@ import com.juanferdev.appperrona.dogdetail.ui.theme.AppPerronaTheme
 import com.juanferdev.appperrona.models.Dog
 
 
+@OptIn(ExperimentalCoilApi::class)
 @Composable
 fun MostProbableDogsDialog(
-    mostProbableDogs: MutableList<Dog>,
+    mostProbableDogs: List<Dog>,
     onShowMostProbableDogsDialogDismiss: () -> Unit,
     onItemClicked: (Dog) -> Unit
 ) {

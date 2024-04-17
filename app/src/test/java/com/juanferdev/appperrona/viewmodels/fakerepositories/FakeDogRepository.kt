@@ -4,7 +4,6 @@ import com.juanferdev.appperrona.R
 import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.doglist.DogRepositoryContract
 import com.juanferdev.appperrona.models.Dog
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 
 class FakeSuccessDogRepository : DogRepositoryContract {
@@ -26,7 +25,7 @@ class FakeSuccessDogRepository : DogRepositoryContract {
         return ApiResponseStatus.Success(Dog(id = capturedDogId.toLong()))
     }
 
-    override fun CoroutineScope.getProbableDogs(probableDogsIds: List<String>): Flow<ApiResponseStatus<Dog>> {
+    override fun getProbableDogs(probableDogsIds: List<String>): Flow<ApiResponseStatus<Dog>> {
         TODO("Not yet implemented")
     }
 }
@@ -45,7 +44,7 @@ class FakeErrorDogRepository : DogRepositoryContract {
         return ApiResponseStatus.Error(R.string.unknown_error)
     }
 
-    override fun CoroutineScope.getProbableDogs(probableDogsIds: List<String>): Flow<ApiResponseStatus<Dog>> {
+    override fun getProbableDogs(probableDogsIds: List<String>): Flow<ApiResponseStatus<Dog>> {
         TODO("Not yet implemented")
     }
 }
