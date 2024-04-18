@@ -1,13 +1,11 @@
 package com.juanferdev.appperrona.viewmodels.fakerepositories
 
 import com.juanferdev.appperrona.R
-import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.auth.AuthRepositoryContract
-import com.juanferdev.appperrona.models.User
 
 class FakeSuccessAuthRepositories : AuthRepositoryContract {
 
-    private val user = User(
+    private val user = com.juanferdev.appperrona.core.models.User(
         id = 121212L,
         email = "fernaanxd17@gmail.com",
         authenticationToken = "kajdlfjadlfj923j239j"
@@ -17,12 +15,15 @@ class FakeSuccessAuthRepositories : AuthRepositoryContract {
         email: String,
         password: String,
         passwordConfirmation: String
-    ): ApiResponseStatus<User> {
-        return ApiResponseStatus.Success(user)
+    ): com.juanferdev.appperrona.core.api.ApiResponseStatus<com.juanferdev.appperrona.core.models.User> {
+        return com.juanferdev.appperrona.core.api.ApiResponseStatus.Success(user)
     }
 
-    override suspend fun login(email: String, password: String): ApiResponseStatus<User> {
-        return ApiResponseStatus.Success(user)
+    override suspend fun login(
+        email: String,
+        password: String
+    ): com.juanferdev.appperrona.core.api.ApiResponseStatus<com.juanferdev.appperrona.core.models.User> {
+        return com.juanferdev.appperrona.core.api.ApiResponseStatus.Success(user)
     }
 }
 
@@ -31,11 +32,14 @@ class FakeErrorAuthRepositories : AuthRepositoryContract {
         email: String,
         password: String,
         passwordConfirmation: String
-    ): ApiResponseStatus<User> {
-        return ApiResponseStatus.Error(R.string.unknown_error)
+    ): com.juanferdev.appperrona.core.api.ApiResponseStatus<com.juanferdev.appperrona.core.models.User> {
+        return com.juanferdev.appperrona.core.api.ApiResponseStatus.Error(R.string.unknown_error)
     }
 
-    override suspend fun login(email: String, password: String): ApiResponseStatus<User> {
-        return ApiResponseStatus.Error(R.string.unknown_error)
+    override suspend fun login(
+        email: String,
+        password: String
+    ): com.juanferdev.appperrona.core.api.ApiResponseStatus<com.juanferdev.appperrona.core.models.User> {
+        return com.juanferdev.appperrona.core.api.ApiResponseStatus.Error(R.string.unknown_error)
     }
 }

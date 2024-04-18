@@ -5,8 +5,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.juanferdev.appperrona.auth.ui.theme.AppPerronaTheme
+import com.juanferdev.appperrona.core.models.User
 import com.juanferdev.appperrona.main.MainActivity
-import com.juanferdev.appperrona.models.User
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -16,15 +16,15 @@ class LoginActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AppPerronaTheme {
-                AuthScreen { user ->
+                AuthScreen { user: User ->
                     startMainActivity(user)
                 }
             }
         }
     }
 
-    private fun startMainActivity(user: User) {
-        User.setLoggedInUser(this, user)
+    private fun startMainActivity(user: com.juanferdev.appperrona.core.models.User) {
+        com.juanferdev.appperrona.core.models.User.setLoggedInUser(this, user)
         startActivity(Intent(this, MainActivity::class.java))
         finish()
     }

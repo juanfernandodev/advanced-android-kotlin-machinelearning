@@ -1,6 +1,7 @@
-package com.juanferdev.appperrona.api.dto
+package com.juanferdev.appperrona.core.api.dto
 
-import com.juanferdev.appperrona.models.User
+import com.juanferdev.appperrona.core.models.User
+
 
 class UserDTOMapper {
 

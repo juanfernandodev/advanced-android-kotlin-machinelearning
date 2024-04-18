@@ -1,7 +1,6 @@
 package com.juanferdev.appperrona.viewmodels
 
 import com.juanferdev.appperrona.MainDispatcherRule
-import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.doglist.DogListViewModel
 import com.juanferdev.appperrona.viewmodels.fakerepositories.FakeErrorDogRepository
 import com.juanferdev.appperrona.viewmodels.fakerepositories.FakeSuccessDogRepository
@@ -22,7 +21,7 @@ class DogListViewModelTest {
         )
         //When: Obtained dog list in ViewModel init method
         //Then
-        assert(viewModel.status.value is ApiResponseStatus.Success)
+        assert(viewModel.status.value is com.juanferdev.appperrona.core.api.ApiResponseStatus.Success)
     }
 
     @Test
@@ -33,7 +32,8 @@ class DogListViewModelTest {
         )
         //When: Obtained dog list in ViewModel init method
         //Then
-        val status = viewModel.status.value as ApiResponseStatus.Success
+        val status =
+            viewModel.status.value as com.juanferdev.appperrona.core.api.ApiResponseStatus.Success
         assert((status.data as List<*>).isNotEmpty())
 
     }
@@ -46,7 +46,7 @@ class DogListViewModelTest {
         )
         //When: Obtained dog list in ViewModel init method
         //Then
-        assert(viewModel.status.value is ApiResponseStatus.Error)
+        assert(viewModel.status.value is com.juanferdev.appperrona.core.api.ApiResponseStatus.Error)
     }
 
     @Test
@@ -57,7 +57,8 @@ class DogListViewModelTest {
         )
         //When: Obtained dog list in ViewModel init method
         //Then
-        val status = viewModel.status.value as ApiResponseStatus.Error
+        val status =
+            viewModel.status.value as com.juanferdev.appperrona.core.api.ApiResponseStatus.Error
         assertNotEquals(0, status.messageId)
     }
 

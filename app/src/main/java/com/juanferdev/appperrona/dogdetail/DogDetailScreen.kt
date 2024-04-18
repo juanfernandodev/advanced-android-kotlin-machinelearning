@@ -40,11 +40,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.hackaprende.dogedex.core.dogdetail.MostProbableDogsDialog
 import com.juanferdev.appperrona.R
-import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.composables.ErrorDialog
 import com.juanferdev.appperrona.composables.LoadingWheel
 import com.juanferdev.appperrona.constants.SemanticConstants.SEMANTIC_DETAIL_DOG_BUTTON
-import com.juanferdev.appperrona.models.Dog
 
 @Composable
 fun DogDetailScreen(
@@ -56,17 +54,17 @@ fun DogDetailScreen(
 
         val isRecognition = dogDetailViewModel.isRecognition.value
         when (val status = dogDetailViewModel.status.value) {
-            is ApiResponseStatus.Error -> {
+            is com.juanferdev.appperrona.core.api.ApiResponseStatus.Error -> {
                 ErrorDialog(
                     status.messageId,
                     onDialogDismiss = { dogDetailViewModel.resetApiResponseStatus() })
             }
 
-            is ApiResponseStatus.Loading -> {
+            is com.juanferdev.appperrona.core.api.ApiResponseStatus.Loading -> {
                 LoadingWheel()
             }
 
-            is ApiResponseStatus.Success -> {
+            is com.juanferdev.appperrona.core.api.ApiResponseStatus.Success -> {
                 finishActivity(R.string.dog_saved)
             }
 
@@ -91,11 +89,11 @@ fun DogDetailScreen(
 
 @Composable
 private fun CardDogDetail(
-    dog: Dog,
+    dog: com.juanferdev.appperrona.core.models.Dog,
     isRecognition: Boolean,
     addDogToUser: (Long) -> Unit,
     finishActivity: (Int?) -> Unit,
-    probablesDogsList: List<Dog>,
+    probablesDogsList: List<com.juanferdev.appperrona.core.models.Dog>,
     getProbablesDogs: () -> Unit
 ) {
     val probableDogsDialogEnabled = remember { mutableStateOf(false) }
@@ -158,7 +156,7 @@ private fun CardDogDetail(
 
 @Composable
 private fun DogInformation(
-    dog: Dog,
+    dog: com.juanferdev.appperrona.core.models.Dog,
     isRecognition: Boolean,
     onProbableDogsButtonClick: () -> Unit
 ) {
@@ -399,7 +397,7 @@ private fun LifeIcon() {
 @Preview(showBackground = true)
 @Composable
 fun Preview() {
-    val dog = Dog(
+    val dog = com.juanferdev.appperrona.core.models.Dog(
         1L,
         78,
         "Pug",

@@ -5,11 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.doglist.DogRepositoryContract
 import com.juanferdev.appperrona.machinelearning.ClassifierRepositoryContract
 import com.juanferdev.appperrona.machinelearning.DogRecognition
-import com.juanferdev.appperrona.models.Dog
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.launch
@@ -20,8 +18,9 @@ class MainViewModel @Inject constructor(
     private val classifierRepository: ClassifierRepositoryContract
 ) : ViewModel() {
 
-    private val _status = MutableLiveData<ApiResponseStatus<Dog>>()
-    val status: LiveData<ApiResponseStatus<Dog>>
+    private val _status =
+        MutableLiveData<com.juanferdev.appperrona.core.api.ApiResponseStatus<com.juanferdev.appperrona.core.models.Dog>>()
+    val status: LiveData<com.juanferdev.appperrona.core.api.ApiResponseStatus<com.juanferdev.appperrona.core.models.Dog>>
         get() = _status
 
     private val _statusDogRecognized = MutableLiveData<DogRecognition>()
@@ -32,7 +31,7 @@ class MainViewModel @Inject constructor(
 
     fun getRecognizedDog(capturedDogId: String) {
         viewModelScope.launch {
-            _status.value = ApiResponseStatus.Loading()
+            _status.value = com.juanferdev.appperrona.core.api.ApiResponseStatus.Loading()
             _status.value = dogRepository.getRecognizedDog(capturedDogId)
         }
     }

@@ -15,7 +15,6 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.GrantPermissionRule
-import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.constants.SemanticConstants.SEMANTIC_DETAIL_DOG_BUTTON
 import com.juanferdev.appperrona.di.ClassifierRepositoryContractModule
 import com.juanferdev.appperrona.di.DogRepositoryModule
@@ -23,7 +22,6 @@ import com.juanferdev.appperrona.doglist.DogRepositoryContract
 import com.juanferdev.appperrona.machinelearning.ClassifierRepositoryContract
 import com.juanferdev.appperrona.machinelearning.DogRecognition
 import com.juanferdev.appperrona.main.MainActivity
-import com.juanferdev.appperrona.models.Dog
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -102,25 +100,29 @@ class MainActivityTest {
 
 
     class FakeSuccessDogRepository @Inject constructor() : DogRepositoryContract {
-        override suspend fun getDogCollection(): ApiResponseStatus<List<Dog>> {
-            return ApiResponseStatus.Success(
+        override suspend fun getDogCollection(): com.juanferdev.appperrona.core.api.ApiResponseStatus<List<com.juanferdev.appperrona.core.models.Dog>> {
+            return com.juanferdev.appperrona.core.api.ApiResponseStatus.Success(
                 listOf(
-                    Dog(id = 1),
-                    Dog(id = 2),
-                    Dog(id = 3)
+                    com.juanferdev.appperrona.core.models.Dog(id = 1),
+                    com.juanferdev.appperrona.core.models.Dog(id = 2),
+                    com.juanferdev.appperrona.core.models.Dog(id = 3)
                 )
             )
         }
 
-        override suspend fun addDogToUser(dogId: Long): ApiResponseStatus<Any> {
-            return ApiResponseStatus.Success(Unit)
+        override suspend fun addDogToUser(dogId: Long): com.juanferdev.appperrona.core.api.ApiResponseStatus<Any> {
+            return com.juanferdev.appperrona.core.api.ApiResponseStatus.Success(Unit)
         }
 
-        override suspend fun getRecognizedDog(capturedDogId: String): ApiResponseStatus<Dog> {
-            return ApiResponseStatus.Success(Dog(id = capturedDogId.toLong()))
+        override suspend fun getRecognizedDog(capturedDogId: String): com.juanferdev.appperrona.core.api.ApiResponseStatus<com.juanferdev.appperrona.core.models.Dog> {
+            return com.juanferdev.appperrona.core.api.ApiResponseStatus.Success(
+                com.juanferdev.appperrona.core.models.Dog(
+                    id = capturedDogId.toLong()
+                )
+            )
         }
 
-        override fun getProbableDogs(probableDogsIds: List<String>): Flow<ApiResponseStatus<Dog>> {
+        override fun getProbableDogs(probableDogsIds: List<String>): Flow<com.juanferdev.appperrona.core.api.ApiResponseStatus<com.juanferdev.appperrona.core.models.Dog>> {
             TODO("Not yet implemented")
         }
     }

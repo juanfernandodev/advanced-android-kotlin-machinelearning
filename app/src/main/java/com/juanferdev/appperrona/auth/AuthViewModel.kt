@@ -4,8 +4,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.juanferdev.appperrona.R
-import com.juanferdev.appperrona.api.ApiResponseStatus
-import com.juanferdev.appperrona.models.User
 import com.juanferdev.appperrona.utils.isValidEmail
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -17,7 +15,10 @@ class AuthViewModel @Inject constructor(
 ) : ViewModel() {
     private val minimumLength = 8
 
-    var status = mutableStateOf<ApiResponseStatus<User>?>(null)
+    var status =
+        mutableStateOf<com.juanferdev.appperrona.core.api.ApiResponseStatus<com.juanferdev.appperrona.core.models.User>?>(
+            null
+        )
         private set
 
     var authFieldStatus = mutableStateOf<AuthFieldStatus>(AuthFieldStatus.NoError)
@@ -46,7 +47,7 @@ class AuthViewModel @Inject constructor(
 
             else -> {
                 viewModelScope.launch {
-                    status.value = ApiResponseStatus.Loading()
+                    status.value = com.juanferdev.appperrona.core.api.ApiResponseStatus.Loading()
                     status.value = authRepository.signUp(email, password, passwordConfirmation)
                 }
             }
@@ -67,7 +68,7 @@ class AuthViewModel @Inject constructor(
 
             else -> {
                 viewModelScope.launch {
-                    status.value = ApiResponseStatus.Loading()
+                    status.value = com.juanferdev.appperrona.core.api.ApiResponseStatus.Loading()
                     status.value = authRepository.login(email, password)
                 }
             }

@@ -1,4 +1,4 @@
-package com.juanferdev.appperrona.api.responses
+package com.juanferdev.appperrona.core.api.responses
 
 import com.squareup.moshi.Json
 

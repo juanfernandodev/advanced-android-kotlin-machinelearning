@@ -12,14 +12,12 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.rule.GrantPermissionRule
-import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.auth.AuthRepositoryContract
 import com.juanferdev.appperrona.auth.LoginActivity
 import com.juanferdev.appperrona.constants.SemanticConstants.SEMANTIC_EMAIL_FIELD
 import com.juanferdev.appperrona.constants.SemanticConstants.SEMANTIC_LOGIN_BUTTON
 import com.juanferdev.appperrona.constants.SemanticConstants.SEMANTIC_PASSWORD_FIELD
 import com.juanferdev.appperrona.di.AuthRepositoryModule
-import com.juanferdev.appperrona.models.User
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -73,7 +71,7 @@ class LoginActivityTest {
 
 
     class FakeAuthRepository @Inject constructor() : AuthRepositoryContract {
-        private val user = User(
+        private val user = com.juanferdev.appperrona.core.models.User(
             id = 121212L,
             email = "fernaanxd17@gmail.com",
             authenticationToken = "kajdlfjadlfj923j239j"
@@ -83,12 +81,15 @@ class LoginActivityTest {
             email: String,
             password: String,
             passwordConfirmation: String
-        ): ApiResponseStatus<User> {
-            return ApiResponseStatus.Success(user)
+        ): com.juanferdev.appperrona.core.api.ApiResponseStatus<com.juanferdev.appperrona.core.models.User> {
+            return com.juanferdev.appperrona.core.api.ApiResponseStatus.Success(user)
         }
 
-        override suspend fun login(email: String, password: String): ApiResponseStatus<User> {
-            return ApiResponseStatus.Success(user)
+        override suspend fun login(
+            email: String,
+            password: String
+        ): com.juanferdev.appperrona.core.api.ApiResponseStatus<com.juanferdev.appperrona.core.models.User> {
+            return com.juanferdev.appperrona.core.api.ApiResponseStatus.Success(user)
         }
 
     }

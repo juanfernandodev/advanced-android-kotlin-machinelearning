@@ -122,9 +122,9 @@ android {
 }
 
 dependencies {
+    implementation(project(":core"))
     val lifecycle_version = "2.7.0"
     val activity_version = "1.8.2"
-    val retrofit_version = "2.9.0"
     val android_core_version = "1.12.0"
     val android_appcompat_version = "1.6.1"
     val android_material = "1.11.0"
@@ -133,8 +133,7 @@ dependencies {
     val coilVersion = "2.6.0"
     val navVersion = "2.7.7"
     val cameraxVersion = "1.4.0-alpha04"
-    val tensorflowLiteVersion = "2.4.0"
-    val tensorflowLiteSupportVersion = "0.1.0"
+
     implementation("androidx.core:core-ktx:$android_core_version")
     implementation("androidx.appcompat:appcompat:$android_appcompat_version")
     implementation("com.google.android.material:material:$android_material")
@@ -143,9 +142,9 @@ dependencies {
     implementation("androidx.activity:activity-ktx:$activity_version")
     //Navigation
     implementation("androidx.navigation:navigation-compose:$navVersion")
-    //Retrofit
-    implementation("com.squareup.retrofit2:retrofit:$retrofit_version")
-    implementation("com.squareup.retrofit2:converter-moshi:$retrofit_version")
+    val retrofitVersion = "2.9.0"
+    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
+    implementation("com.squareup.retrofit2:converter-moshi:$retrofitVersion")
     //Coil Images
     val coilComposeVersion = "2.6.0"
     implementation("io.coil-kt:coil:$coilVersion")
@@ -154,10 +153,7 @@ dependencies {
     implementation("androidx.camera:camera-camera2:${cameraxVersion}")
     implementation("androidx.camera:camera-lifecycle:${cameraxVersion}")
     implementation("androidx.camera:camera-view:${cameraxVersion}")
-    //TensorFlow
-    implementation("org.tensorflow:tensorflow-lite:${tensorflowLiteVersion}")
-    implementation("org.tensorflow:tensorflow-lite-support:$tensorflowLiteSupportVersion")
-    //Compose
+    //Composef
     val activityComposeVersion = "1.8.2"
     val viewModelComposeVersion = "2.7.0"
     val lifecycleRuntimeVersion = "2.7.0"
@@ -177,6 +173,12 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.material3:material3")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:$lifecycleCompose")
+
+    //TensorFlow
+    val tensorflowLiteVersion = "2.4.0"
+    val tensorflowLiteSupportVersion = "0.1.0"
+    implementation("org.tensorflow:tensorflow-lite:${tensorflowLiteVersion}")
+    implementation("org.tensorflow:tensorflow-lite-support:$tensorflowLiteSupportVersion")
 
     //Hilt dependency injection
     val hiltVersion = "2.50"

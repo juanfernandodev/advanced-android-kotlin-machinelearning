@@ -21,8 +21,6 @@ import androidx.lifecycle.LifecycleOwner
 import com.google.common.util.concurrent.ListenableFuture
 import com.juanferdev.appperrona.EspressoIdlingResource
 import com.juanferdev.appperrona.R
-import com.juanferdev.appperrona.api.ApiResponseStatus
-import com.juanferdev.appperrona.api.ApiServiceInterceptor
 import com.juanferdev.appperrona.auth.LoginActivity
 import com.juanferdev.appperrona.constants.DOG_KEY
 import com.juanferdev.appperrona.constants.IS_RECOGNITION_KEY
@@ -31,8 +29,6 @@ import com.juanferdev.appperrona.databinding.ActivityMainBinding
 import com.juanferdev.appperrona.dogdetail.DogDetailActivity
 import com.juanferdev.appperrona.doglist.DogListActivity
 import com.juanferdev.appperrona.machinelearning.DogRecognition
-import com.juanferdev.appperrona.models.Dog
-import com.juanferdev.appperrona.models.User
 import com.juanferdev.appperrona.settings.SettingsActivity
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.ExecutorService
@@ -153,12 +149,12 @@ class MainActivity : AppCompatActivity() {
         startActivity(Intent(this, DogListActivity::class.java))
 
     private fun validateUser() {
-        val user = User.getLoggedInUser(this)
+        val user = com.juanferdev.appperrona.core.models.User.getLoggedInUser(this)
         if (user == null) {
             openLoginActivity()
             return
         } else {
-            ApiServiceInterceptor.setSessionToken(user.authenticationToken)
+            com.juanferdev.appperrona.core.api.ApiServiceInterceptor.setSessionToken(user.authenticationToken)
         }
     }
 
@@ -208,16 +204,16 @@ class MainActivity : AppCompatActivity() {
     private fun initObservers() {
         viewModel.status.observe(this) { status ->
             when (status) {
-                is ApiResponseStatus.Error -> {
+                is com.juanferdev.appperrona.core.api.ApiResponseStatus.Error -> {
                     binding.progressBar.visibility = View.GONE
                     Toast.makeText(this, status.messageId, Toast.LENGTH_LONG).show()
                 }
 
-                is ApiResponseStatus.Loading -> {
+                is com.juanferdev.appperrona.core.api.ApiResponseStatus.Loading -> {
                     binding.progressBar.visibility = View.VISIBLE
                 }
 
-                is ApiResponseStatus.Success -> {
+                is com.juanferdev.appperrona.core.api.ApiResponseStatus.Success -> {
                     openDetailActivity(status.data)
                 }
             }
@@ -228,7 +224,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun openDetailActivity(dogRecognized: Dog) {
+    private fun openDetailActivity(dogRecognized: com.juanferdev.appperrona.core.models.Dog) {
         val intent = Intent(this, DogDetailActivity::class.java)
         intent.putExtra(DOG_KEY, dogRecognized)
         intent.putExtra(PROBABLES_DOG_ID_KEY, viewModel.probableDogIds)

@@ -1,4 +1,4 @@
-package com.juanferdev.appperrona.api
+package com.juanferdev.appperrona.core.api
 
 sealed class ApiResponseStatus<T> {
     class Success<T>(val data: T) : ApiResponseStatus<T>()

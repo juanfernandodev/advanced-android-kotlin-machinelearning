@@ -1,6 +1,10 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-kapt")
+    kotlin("kapt")
+    id("com.google.dagger.hilt.android")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -8,7 +12,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        minSdk = 24
+        minSdk = 21
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -40,4 +44,27 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    //Lifecycle
+    val lifecycleVersion = "2.7.0"
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
+
+    val retrofitVersion = "2.9.0"
+    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
+    implementation("com.squareup.retrofit2:converter-moshi:$retrofitVersion")
+
+    //Hilt dependency injection
+    val hiltVersion = "2.50"
+    val hiltNavigation = "1.2.0"
+    implementation("com.google.dagger:hilt-android:${hiltVersion}")
+    implementation("androidx.hilt:hilt-navigation-compose:${hiltNavigation}")
+    kapt("com.google.dagger:hilt-android-compiler:${hiltVersion}")
+
+    // For instrumented tests.
+    val hiltAndroidTesting = "2.44"
+    androidTestImplementation("com.google.dagger:hilt-android-testing:$hiltAndroidTesting")
+    // ...with Kotlin.
+    val hiltAndroidCompiler = "2.50"
+    kaptAndroidTest("com.google.dagger:hilt-android-compiler:$hiltAndroidCompiler")
+    val testRules = "1.5.0"
+    implementation("androidx.test:rules:${testRules}")
 }

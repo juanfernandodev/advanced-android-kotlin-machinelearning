@@ -25,18 +25,16 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.juanferdev.appperrona.R
-import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.composables.BackTopAppBar
 import com.juanferdev.appperrona.composables.ErrorDialog
 import com.juanferdev.appperrona.composables.LoadingWheel
-import com.juanferdev.appperrona.models.Dog
 
 private const val GRID_SPAN_COUNT = 3
 
 @Composable
 fun DogListScreen(
     onNavigationIconClick: () -> Unit,
-    onDogClicked: (Dog) -> Unit,
+    onDogClicked: (com.juanferdev.appperrona.core.models.Dog) -> Unit,
     viewModel: DogListViewModel = hiltViewModel()
 ) {
     Scaffold(
@@ -44,17 +42,17 @@ fun DogListScreen(
     ) { paddingValues ->
 
         when (val status = viewModel.status.value) {
-            is ApiResponseStatus.Loading -> {
+            is com.juanferdev.appperrona.core.api.ApiResponseStatus.Loading -> {
                 LoadingWheel()
             }
 
-            is ApiResponseStatus.Error -> {
+            is com.juanferdev.appperrona.core.api.ApiResponseStatus.Error -> {
                 ErrorDialog(status.messageId) {
                     onNavigationIconClick()
                 }
             }
 
-            is ApiResponseStatus.Success -> {
+            is com.juanferdev.appperrona.core.api.ApiResponseStatus.Success -> {
                 val listDog = status.data
                 LazyVerticalGrid(
                     modifier = Modifier
@@ -80,7 +78,10 @@ fun DogListScreenTopBar(onClick: () -> Unit) {
 }
 
 @Composable
-fun DogGridItem(dog: Dog, onDogClicked: (Dog) -> Unit) {
+fun DogGridItem(
+    dog: com.juanferdev.appperrona.core.models.Dog,
+    onDogClicked: (com.juanferdev.appperrona.core.models.Dog) -> Unit
+) {
     if (dog.inCollection) {
         Surface(
             modifier = Modifier

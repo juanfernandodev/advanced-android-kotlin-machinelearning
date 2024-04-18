@@ -1,4 +1,4 @@
-package com.juanferdev.appperrona.models
+package com.juanferdev.appperrona.core.models
 
 import android.app.Activity
 import android.content.Context

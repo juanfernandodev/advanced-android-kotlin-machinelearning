@@ -2,7 +2,6 @@ package com.juanferdev.appperrona.viewmodels
 
 import com.juanferdev.appperrona.MainDispatcherRule
 import com.juanferdev.appperrona.R
-import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.auth.AuthFieldStatus
 import com.juanferdev.appperrona.auth.AuthViewModel
 import com.juanferdev.appperrona.viewmodels.fakerepositories.FakeErrorAuthRepositories
@@ -70,7 +69,7 @@ class AuthViewModelTest {
         //When
         viewModel.signUp(email, password, confirmationPassword)
         //Then
-        assert(viewModel.status.value is ApiResponseStatus.Success)
+        assert(viewModel.status.value is com.juanferdev.appperrona.core.api.ApiResponseStatus.Success)
     }
 
     @Test
@@ -83,7 +82,8 @@ class AuthViewModelTest {
         //When
         viewModel.signUp(email, password, confirmationPassword)
         //Then
-        val status = viewModel.status.value as ApiResponseStatus.Error
+        val status =
+            viewModel.status.value as com.juanferdev.appperrona.core.api.ApiResponseStatus.Error
         assertNotEquals(0, status.messageId)
     }
 
@@ -122,7 +122,7 @@ class AuthViewModelTest {
         //When
         viewModel.login(email, password)
         //Then
-        assert(viewModel.status.value is ApiResponseStatus.Success)
+        assert(viewModel.status.value is com.juanferdev.appperrona.core.api.ApiResponseStatus.Success)
     }
 
     @Test
@@ -146,7 +146,8 @@ class AuthViewModelTest {
         //When
         viewModel.login(email, password)
         //Then
-        val status = viewModel.status.value as ApiResponseStatus.Error
+        val status =
+            viewModel.status.value as com.juanferdev.appperrona.core.api.ApiResponseStatus.Error
         assertNotEquals(0, status.messageId)
     }
 

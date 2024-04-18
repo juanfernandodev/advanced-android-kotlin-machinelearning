@@ -6,12 +6,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.auth.AuthNavDestinations.LOGIN_SCREEN_DESTINATION
 import com.juanferdev.appperrona.auth.AuthNavDestinations.SIGN_UP_SCREEN_DESTINATION
 import com.juanferdev.appperrona.composables.ErrorDialog
 import com.juanferdev.appperrona.composables.LoadingWheel
-import com.juanferdev.appperrona.models.User
+import com.juanferdev.appperrona.core.models.User
 
 @Composable
 fun AuthScreen(
@@ -33,11 +32,11 @@ fun AuthScreen(
     )
 
     when (val status = viewModel.status.value) {
-        is ApiResponseStatus.Success -> {
+        is com.juanferdev.appperrona.core.api.ApiResponseStatus.Success -> {
             onUserLogin(status.data)
         }
 
-        is ApiResponseStatus.Loading -> {
+        is com.juanferdev.appperrona.core.api.ApiResponseStatus.Loading -> {
             LoadingWheel()
         }
 
@@ -45,7 +44,7 @@ fun AuthScreen(
             //Nothing happens
         }
 
-        is ApiResponseStatus.Error -> {
+        is com.juanferdev.appperrona.core.api.ApiResponseStatus.Error -> {
             ErrorDialog(
                 errorMessageId = status.messageId
             ) {

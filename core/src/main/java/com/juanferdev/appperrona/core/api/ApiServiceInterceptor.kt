@@ -1,8 +1,7 @@
-package com.juanferdev.appperrona.api
+package com.juanferdev.appperrona.core.api
 
 import okhttp3.Interceptor
 import okhttp3.Response
-
 
 object ApiServiceInterceptor : Interceptor {
 
@@ -10,7 +9,7 @@ object ApiServiceInterceptor : Interceptor {
 
     private var sessionToken: String? = null
     fun setSessionToken(sessionToken: String) {
-        this.sessionToken = sessionToken
+        ApiServiceInterceptor.sessionToken = sessionToken
     }
 
     override fun intercept(chain: Interceptor.Chain): Response {

@@ -1,50 +1,52 @@
 package com.juanferdev.appperrona.viewmodels.fakerepositories
 
 import com.juanferdev.appperrona.R
-import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.doglist.DogRepositoryContract
-import com.juanferdev.appperrona.models.Dog
 import kotlinx.coroutines.flow.Flow
 
 class FakeSuccessDogRepository : DogRepositoryContract {
-    override suspend fun getDogCollection(): ApiResponseStatus<List<Dog>> {
-        return ApiResponseStatus.Success(
+    override suspend fun getDogCollection(): com.juanferdev.appperrona.core.api.ApiResponseStatus<List<com.juanferdev.appperrona.core.models.Dog>> {
+        return com.juanferdev.appperrona.core.api.ApiResponseStatus.Success(
             listOf(
-                Dog(id = 1),
-                Dog(id = 2),
-                Dog(id = 3)
+                com.juanferdev.appperrona.core.models.Dog(id = 1),
+                com.juanferdev.appperrona.core.models.Dog(id = 2),
+                com.juanferdev.appperrona.core.models.Dog(id = 3)
             )
         )
     }
 
-    override suspend fun addDogToUser(dogId: Long): ApiResponseStatus<Any> {
-        return ApiResponseStatus.Success(Unit)
+    override suspend fun addDogToUser(dogId: Long): com.juanferdev.appperrona.core.api.ApiResponseStatus<Any> {
+        return com.juanferdev.appperrona.core.api.ApiResponseStatus.Success(Unit)
     }
 
-    override suspend fun getRecognizedDog(capturedDogId: String): ApiResponseStatus<Dog> {
-        return ApiResponseStatus.Success(Dog(id = capturedDogId.toLong()))
+    override suspend fun getRecognizedDog(capturedDogId: String): com.juanferdev.appperrona.core.api.ApiResponseStatus<com.juanferdev.appperrona.core.models.Dog> {
+        return com.juanferdev.appperrona.core.api.ApiResponseStatus.Success(
+            com.juanferdev.appperrona.core.models.Dog(
+                id = capturedDogId.toLong()
+            )
+        )
     }
 
-    override fun getProbableDogs(probableDogsIds: List<String>): Flow<ApiResponseStatus<Dog>> {
+    override fun getProbableDogs(probableDogsIds: List<String>): Flow<com.juanferdev.appperrona.core.api.ApiResponseStatus<com.juanferdev.appperrona.core.models.Dog>> {
         TODO("Not yet implemented")
     }
 }
 
 
 class FakeErrorDogRepository : DogRepositoryContract {
-    override suspend fun getDogCollection(): ApiResponseStatus<List<Dog>> {
-        return ApiResponseStatus.Error(messageId = R.string.unknown_error)
+    override suspend fun getDogCollection(): com.juanferdev.appperrona.core.api.ApiResponseStatus<List<com.juanferdev.appperrona.core.models.Dog>> {
+        return com.juanferdev.appperrona.core.api.ApiResponseStatus.Error(messageId = R.string.unknown_error)
     }
 
-    override suspend fun addDogToUser(dogId: Long): ApiResponseStatus<Any> {
-        return ApiResponseStatus.Error(R.string.unknown_error)
+    override suspend fun addDogToUser(dogId: Long): com.juanferdev.appperrona.core.api.ApiResponseStatus<Any> {
+        return com.juanferdev.appperrona.core.api.ApiResponseStatus.Error(R.string.unknown_error)
     }
 
-    override suspend fun getRecognizedDog(capturedDogId: String): ApiResponseStatus<Dog> {
-        return ApiResponseStatus.Error(R.string.unknown_error)
+    override suspend fun getRecognizedDog(capturedDogId: String): com.juanferdev.appperrona.core.api.ApiResponseStatus<com.juanferdev.appperrona.core.models.Dog> {
+        return com.juanferdev.appperrona.core.api.ApiResponseStatus.Error(R.string.unknown_error)
     }
 
-    override fun getProbableDogs(probableDogsIds: List<String>): Flow<ApiResponseStatus<Dog>> {
+    override fun getProbableDogs(probableDogsIds: List<String>): Flow<com.juanferdev.appperrona.core.api.ApiResponseStatus<com.juanferdev.appperrona.core.models.Dog>> {
         TODO("Not yet implemented")
     }
 }

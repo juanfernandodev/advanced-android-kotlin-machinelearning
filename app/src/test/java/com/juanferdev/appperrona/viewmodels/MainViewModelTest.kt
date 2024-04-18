@@ -3,7 +3,6 @@ package com.juanferdev.appperrona.viewmodels
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.juanferdev.appperrona.MainDispatcherRule
 import com.juanferdev.appperrona.R
-import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.main.MainViewModel
 import com.juanferdev.appperrona.viewmodels.fakeimageproxy.FakeImageProxy
 import com.juanferdev.appperrona.viewmodels.fakerepositories.FakeErrorDogRepository
@@ -32,7 +31,8 @@ class MainViewModelTest {
         //When
         mainViewModel.getRecognizedDog("1")
         //Then
-        val statusValue = mainViewModel.status.value as ApiResponseStatus.Success
+        val statusValue =
+            mainViewModel.status.value as com.juanferdev.appperrona.core.api.ApiResponseStatus.Success
         val dog = statusValue.data
         assertEquals(1L, dog.id)
     }
@@ -47,7 +47,8 @@ class MainViewModelTest {
         //When
         mainViewModel.getRecognizedDog("1")
         //Then
-        val statusValue = mainViewModel.status.value as ApiResponseStatus.Error
+        val statusValue =
+            mainViewModel.status.value as com.juanferdev.appperrona.core.api.ApiResponseStatus.Error
         assertEquals(R.string.unknown_error, statusValue.messageId)
     }
 

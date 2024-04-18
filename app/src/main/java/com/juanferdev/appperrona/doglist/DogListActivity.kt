@@ -7,7 +7,6 @@ import androidx.activity.compose.setContent
 import com.juanferdev.appperrona.constants.DOG_KEY
 import com.juanferdev.appperrona.dogdetail.DogDetailActivity
 import com.juanferdev.appperrona.dogdetail.ui.theme.AppPerronaTheme
-import com.juanferdev.appperrona.models.Dog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,7 +24,7 @@ class DogListActivity : ComponentActivity() {
         }
     }
 
-    private fun openDogDetailActivity(dog: Dog) {
+    private fun openDogDetailActivity(dog: com.juanferdev.appperrona.core.models.Dog) {
         val intent = Intent(this, DogDetailActivity::class.java)
         intent.putExtra(DOG_KEY, dog)
         startActivity(intent)

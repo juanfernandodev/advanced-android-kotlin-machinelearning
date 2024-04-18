@@ -5,12 +5,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.constants.DOG_KEY
 import com.juanferdev.appperrona.constants.IS_RECOGNITION_KEY
 import com.juanferdev.appperrona.constants.PROBABLES_DOG_ID_KEY
 import com.juanferdev.appperrona.doglist.DogRepositoryContract
-import com.juanferdev.appperrona.models.Dog
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,7 +21,7 @@ class DogDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    var dog: MutableState<Dog?> = mutableStateOf(
+    var dog: MutableState<com.juanferdev.appperrona.core.models.Dog?> = mutableStateOf(
         savedStateHandle[DOG_KEY]
     )
         private set
@@ -36,10 +34,11 @@ class DogDetailViewModel @Inject constructor(
         private set
 
 
-    val status = mutableStateOf<ApiResponseStatus<Any>?>(null)
+    val status = mutableStateOf<com.juanferdev.appperrona.core.api.ApiResponseStatus<Any>?>(null)
 
-    private var _probableDogList = MutableStateFlow<MutableList<Dog>>(mutableListOf())
-    val probableDogList: StateFlow<MutableList<Dog>>
+    private var _probableDogList =
+        MutableStateFlow<MutableList<com.juanferdev.appperrona.core.models.Dog>>(mutableListOf())
+    val probableDogList: StateFlow<MutableList<com.juanferdev.appperrona.core.models.Dog>>
         get() = _probableDogList
 
     fun getProbableDogs() {
@@ -47,7 +46,7 @@ class DogDetailViewModel @Inject constructor(
         viewModelScope.launch {
             dogRepository.getProbableDogs(probableDogsIds.value)
                 .collect { apiResponseStatus ->
-                    if (apiResponseStatus is ApiResponseStatus.Success) {
+                    if (apiResponseStatus is com.juanferdev.appperrona.core.api.ApiResponseStatus.Success) {
                         val probablesDogsMutableList = _probableDogList.value.toMutableList()
                         val newProbableDog = apiResponseStatus.data
                         probablesDogsMutableList.add(newProbableDog)
@@ -59,7 +58,7 @@ class DogDetailViewModel @Inject constructor(
 
     fun addDogToUser(dogId: Long) {
         viewModelScope.launch {
-            status.value = ApiResponseStatus.Loading()
+            status.value = com.juanferdev.appperrona.core.api.ApiResponseStatus.Loading()
             status.value = dogRepository.addDogToUser(dogId)
         }
     }

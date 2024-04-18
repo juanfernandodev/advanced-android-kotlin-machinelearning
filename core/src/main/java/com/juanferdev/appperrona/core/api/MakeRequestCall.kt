@@ -1,6 +1,6 @@
-package com.juanferdev.appperrona.api
+package com.juanferdev.appperrona.core.api
 
-import com.juanferdev.appperrona.R
+import com.juanferdev.appperrona.core.R
 import java.net.UnknownHostException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext

@@ -1,8 +1,7 @@
-package com.juanferdev.appperrona.di
+package com.juanferdev.appperrona.core.di
 
-import com.juanferdev.appperrona.api.ApiService
-import com.juanferdev.appperrona.api.ApiServiceInterceptor
-import com.juanferdev.appperrona.constants.BASE_URL
+import com.juanferdev.appperrona.core.api.ApiService
+import com.juanferdev.appperrona.core.api.constantsurls.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,7 +30,7 @@ object ApiServiceModule {
     fun provideOkHttpClient(): OkHttpClient =
         OkHttpClient
             .Builder()
-            .addInterceptor(ApiServiceInterceptor)
+            .addInterceptor(com.juanferdev.appperrona.core.api.ApiServiceInterceptor)
             .build()
 
 }

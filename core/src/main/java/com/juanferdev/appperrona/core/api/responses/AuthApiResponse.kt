@@ -1,9 +1,10 @@
-package com.juanferdev.appperrona.api.responses
+package com.juanferdev.appperrona.core.api.responses
 
 import com.squareup.moshi.Json
 
-data class DogApiResponse(
+class AuthApiResponse(
     val message: String,
     @field:Json(name = "is_success") val isSuccess: Boolean,
-    val data: DogResponse
-)
+    val data: UserResponse
+) {
+}

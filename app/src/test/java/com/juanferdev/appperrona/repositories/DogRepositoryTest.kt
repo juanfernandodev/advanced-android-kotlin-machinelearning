@@ -1,15 +1,6 @@
 package com.juanferdev.appperrona.repositories
 
 import com.juanferdev.appperrona.R
-import com.juanferdev.appperrona.api.ApiResponseStatus
-import com.juanferdev.appperrona.api.ApiService
-import com.juanferdev.appperrona.api.dto.AddDogToUserDTO
-import com.juanferdev.appperrona.api.dto.DogDTO
-import com.juanferdev.appperrona.api.responses.DefaultResponse
-import com.juanferdev.appperrona.api.responses.DogApiResponse
-import com.juanferdev.appperrona.api.responses.DogListApiResponse
-import com.juanferdev.appperrona.api.responses.DogListResponse
-import com.juanferdev.appperrona.api.responses.DogResponse
 import com.juanferdev.appperrona.doglist.DogRepository
 import java.net.UnknownHostException
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -30,22 +21,22 @@ import retrofit2.HttpException
 @RunWith(MockitoJUnitRunner::class)
 class DogRepositoryTest {
 
-    private val apiServiceMock = mock(ApiService::class.java)
+    private val apiServiceMock = mock(com.juanferdev.appperrona.core.api.ApiService::class.java)
     private val httpException = mock(HttpException::class.java)
-    private val dogInBothCollections = DogDTO(
+    private val dogInBothCollections = com.juanferdev.appperrona.core.api.dto.DogDTO(
         id = 1L,
         index = 1,
         name = "Peluche"
     )
-    private val allDogListResponse = DogListResponse(
+    private val allDogListResponse = com.juanferdev.appperrona.core.api.responses.DogListResponse(
         dogs = listOf(
             dogInBothCollections,
-            DogDTO(
+            com.juanferdev.appperrona.core.api.dto.DogDTO(
                 id = 2L,
                 index = 2,
                 name = "Mona"
             ),
-            DogDTO(
+            com.juanferdev.appperrona.core.api.dto.DogDTO(
                 id = 3L,
                 index = 3,
                 name = "Tarzan"
@@ -53,7 +44,7 @@ class DogRepositoryTest {
         )
     )
 
-    private val userDogListResponse = DogListResponse(
+    private val userDogListResponse = com.juanferdev.appperrona.core.api.responses.DogListResponse(
         dogs = listOf(
             dogInBothCollections
         )
@@ -63,14 +54,14 @@ class DogRepositoryTest {
     fun getDogCollectionWhenAllIsSuccessThenGetDogList(): Unit = runBlocking {
         //Give
         `when`(apiServiceMock.getAllDogs()).thenReturn(
-            DogListApiResponse(
+            com.juanferdev.appperrona.core.api.responses.DogListApiResponse(
                 message = String(),
                 isSuccess = true,
                 data = allDogListResponse
             )
         )
         `when`(apiServiceMock.getUserDogs()).thenReturn(
-            DogListApiResponse(
+            com.juanferdev.appperrona.core.api.responses.DogListApiResponse(
                 message = String(),
                 isSuccess = true,
                 data = userDogListResponse
@@ -81,7 +72,8 @@ class DogRepositoryTest {
             dispatcherIO = UnconfinedTestDispatcher()
         )
         //When
-        val apiResponseStatus = dogRepository.getDogCollection() as ApiResponseStatus.Success
+        val apiResponseStatus =
+            dogRepository.getDogCollection() as com.juanferdev.appperrona.core.api.ApiResponseStatus.Success
         //Then
         assert(apiResponseStatus.data.isNotEmpty())
     }
@@ -96,7 +88,8 @@ class DogRepositoryTest {
                 dispatcherIO = UnconfinedTestDispatcher()
             )
             //When
-            val apiResponseStatus = dogRepository.getDogCollection() as ApiResponseStatus.Error
+            val apiResponseStatus =
+                dogRepository.getDogCollection() as com.juanferdev.appperrona.core.api.ApiResponseStatus.Error
             //Then
             assertEquals(R.string.error_sign_up, apiResponseStatus.messageId)
         }
@@ -111,7 +104,8 @@ class DogRepositoryTest {
                 dispatcherIO = UnconfinedTestDispatcher()
             )
             //When
-            val apiResponseStatus = dogRepository.getDogCollection() as ApiResponseStatus.Error
+            val apiResponseStatus =
+                dogRepository.getDogCollection() as com.juanferdev.appperrona.core.api.ApiResponseStatus.Error
             //Then
             assertEquals(R.string.error_no_internet, apiResponseStatus.messageId)
         }
@@ -121,7 +115,7 @@ class DogRepositoryTest {
         runBlocking {
             //Give
             `when`(apiServiceMock.getAllDogs()).thenReturn(
-                DogListApiResponse(
+                com.juanferdev.appperrona.core.api.responses.DogListApiResponse(
                     message = String(),
                     isSuccess = true,
                     data = allDogListResponse
@@ -136,7 +130,8 @@ class DogRepositoryTest {
                 dispatcherIO = UnconfinedTestDispatcher()
             )
             //When
-            val apiResponseStatus = dogRepository.getDogCollection() as ApiResponseStatus.Error
+            val apiResponseStatus =
+                dogRepository.getDogCollection() as com.juanferdev.appperrona.core.api.ApiResponseStatus.Error
             //Then
             assertEquals(R.string.error_network, apiResponseStatus.messageId)
         }
@@ -145,14 +140,14 @@ class DogRepositoryTest {
     fun getDogCollectionWhenUserHasDogsThenCollectionHasTheDogOfTheUser(): Unit = runBlocking {
         //Give
         `when`(apiServiceMock.getAllDogs()).thenReturn(
-            DogListApiResponse(
+            com.juanferdev.appperrona.core.api.responses.DogListApiResponse(
                 message = String(),
                 isSuccess = true,
                 data = allDogListResponse
             )
         )
         `when`(apiServiceMock.getUserDogs()).thenReturn(
-            DogListApiResponse(
+            com.juanferdev.appperrona.core.api.responses.DogListApiResponse(
                 message = String(),
                 isSuccess = true,
                 data = userDogListResponse
@@ -163,7 +158,8 @@ class DogRepositoryTest {
             dispatcherIO = UnconfinedTestDispatcher()
         )
 
-        val apiResponseStatus = dogRepository.getDogCollection() as ApiResponseStatus.Success
+        val apiResponseStatus =
+            dogRepository.getDogCollection() as com.juanferdev.appperrona.core.api.ApiResponseStatus.Success
         assertNotNull(apiResponseStatus.data.firstOrNull { it.name == "Peluche" }) //Peluche is in both collections
     }
 
@@ -171,14 +167,14 @@ class DogRepositoryTest {
     fun getDogCollectionWhenUserHaveNotADogThenDogIsNotInCollection(): Unit = runBlocking {
         //Give
         `when`(apiServiceMock.getAllDogs()).thenReturn(
-            DogListApiResponse(
+            com.juanferdev.appperrona.core.api.responses.DogListApiResponse(
                 message = String(),
                 isSuccess = true,
                 data = allDogListResponse
             )
         )
         `when`(apiServiceMock.getUserDogs()).thenReturn(
-            DogListApiResponse(
+            com.juanferdev.appperrona.core.api.responses.DogListApiResponse(
                 message = String(),
                 isSuccess = true,
                 data = userDogListResponse
@@ -189,7 +185,8 @@ class DogRepositoryTest {
             dispatcherIO = UnconfinedTestDispatcher()
         )
 
-        val apiResponseStatus = dogRepository.getDogCollection() as ApiResponseStatus.Success
+        val apiResponseStatus =
+            dogRepository.getDogCollection() as com.juanferdev.appperrona.core.api.ApiResponseStatus.Success
         val indexDogIsNotInCollection = 2
         assertFalse(
             apiResponseStatus.data.firstOrNull { it.index == indexDogIsNotInCollection }?.inCollection
@@ -200,9 +197,9 @@ class DogRepositoryTest {
     @Test
     fun addDogToUserWhenAllIsOkThenStatusIsSuccess(): Unit = runBlocking {
         val dogId = 1L
-        val addDogToUserDTO = AddDogToUserDTO(dogId = dogId)
+        val addDogToUserDTO = com.juanferdev.appperrona.core.api.dto.AddDogToUserDTO(dogId = dogId)
         `when`(apiServiceMock.addDogToUser(addDogToUserDTO)).thenReturn(
-            DefaultResponse(
+            com.juanferdev.appperrona.core.api.responses.DefaultResponse(
                 message = "All is Good",
                 isSuccess = true
             )
@@ -212,16 +209,16 @@ class DogRepositoryTest {
             dispatcherIO = UnconfinedTestDispatcher()
         )
         val apiResponseStatus = dogRepository.addDogToUser(dogId = dogId)
-        assert(apiResponseStatus is ApiResponseStatus.Success)
+        assert(apiResponseStatus is com.juanferdev.appperrona.core.api.ApiResponseStatus.Success)
     }
 
     @Test
     fun addDogToUserWhenResponseIsNotSuccessThenStatusHasErrorMessage(): Unit = runBlocking {
         val dogId = 1L
         val errorMessage = "Dog already belongs to user"
-        val addDogToUserDTO = AddDogToUserDTO(dogId = dogId)
+        val addDogToUserDTO = com.juanferdev.appperrona.core.api.dto.AddDogToUserDTO(dogId = dogId)
         `when`(apiServiceMock.addDogToUser(addDogToUserDTO)).thenReturn(
-            DefaultResponse(
+            com.juanferdev.appperrona.core.api.responses.DefaultResponse(
                 message = errorMessage,
                 isSuccess = false
             )
@@ -230,7 +227,8 @@ class DogRepositoryTest {
             apiService = apiServiceMock,
             dispatcherIO = UnconfinedTestDispatcher()
         )
-        val apiResponseStatus = dogRepository.addDogToUser(dogId = dogId) as ApiResponseStatus.Error
+        val apiResponseStatus =
+            dogRepository.addDogToUser(dogId = dogId) as com.juanferdev.appperrona.core.api.ApiResponseStatus.Error
         assertEquals(R.string.dog_already_belongs_to_user, apiResponseStatus.messageId)
     }
 
@@ -238,10 +236,10 @@ class DogRepositoryTest {
     fun getRecognizedDogWhenAllIsOkThenStatusIsSuccess(): Unit = runBlocking {
         val capturedDogId = "1"
         `when`(apiServiceMock.getRecognizedDog(capturedDogId)).thenReturn(
-            DogApiResponse(
+            com.juanferdev.appperrona.core.api.responses.DogApiResponse(
                 message = "All look good",
                 isSuccess = true,
-                data = DogResponse(
+                data = com.juanferdev.appperrona.core.api.responses.DogResponse(
                     dog = dogInBothCollections
                 )
             )
@@ -251,17 +249,17 @@ class DogRepositoryTest {
             dispatcherIO = UnconfinedTestDispatcher()
         )
         val apiResponseStatus = dogRepository.getRecognizedDog(capturedDogId = capturedDogId)
-        assert(apiResponseStatus is ApiResponseStatus.Success)
+        assert(apiResponseStatus is com.juanferdev.appperrona.core.api.ApiResponseStatus.Success)
     }
 
     @Test
     fun getRecognizedDogWhenResponseIsNotSuccessThenStatusIsSuccess(): Unit = runBlocking {
         val capturedDogId = "1"
         `when`(apiServiceMock.getRecognizedDog(capturedDogId)).thenReturn(
-            DogApiResponse(
+            com.juanferdev.appperrona.core.api.responses.DogApiResponse(
                 message = "There was an error",
                 isSuccess = false,
-                data = DogResponse(
+                data = com.juanferdev.appperrona.core.api.responses.DogResponse(
                     dog = dogInBothCollections
                 )
             )
@@ -271,7 +269,7 @@ class DogRepositoryTest {
             dispatcherIO = UnconfinedTestDispatcher()
         )
         val apiResponseStatus =
-            dogRepository.getRecognizedDog(capturedDogId = capturedDogId) as ApiResponseStatus.Error
+            dogRepository.getRecognizedDog(capturedDogId = capturedDogId) as com.juanferdev.appperrona.core.api.ApiResponseStatus.Error
         assertEquals(R.string.unknown_error, apiResponseStatus.messageId)
     }
 

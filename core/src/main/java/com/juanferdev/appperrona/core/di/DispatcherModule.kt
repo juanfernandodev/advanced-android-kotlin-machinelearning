@@ -1,4 +1,4 @@
-package com.juanferdev.appperrona.di
+package com.juanferdev.appperrona.core.di
 
 import dagger.Module
 import dagger.Provides

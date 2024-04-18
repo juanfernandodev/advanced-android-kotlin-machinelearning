@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_no_internet">Error: There is no internet connection</string>
+    <string name="error_downloading_data">Error downloading data</string>
+    <string name="unknown_error">There was an error</string>
+    <string name="wrong_user_or_password">Wrong user or password</string>
+    <string name="error_network">There was an error network</string>
+    <string name="error_sign_up">Error signing up</string>
+    <string name="error_sign_in">Error signing in</string>
+    <string name="user_already_exists">User already exist</string>
+    <string name="user_not_found">User not found</string>
+    <string name="error_adding_dog">Error adding dog</string>
+    <string name="dog_already_belongs_to_user">Dog already belongs to</string>
+</resources>

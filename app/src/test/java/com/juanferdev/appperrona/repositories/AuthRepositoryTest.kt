@@ -1,13 +1,6 @@
 package com.juanferdev.appperrona.repositories
 
 import com.juanferdev.appperrona.R
-import com.juanferdev.appperrona.api.ApiResponseStatus
-import com.juanferdev.appperrona.api.ApiService
-import com.juanferdev.appperrona.api.dto.SignInDTO
-import com.juanferdev.appperrona.api.dto.SignUpDTO
-import com.juanferdev.appperrona.api.dto.UserDTO
-import com.juanferdev.appperrona.api.responses.AuthApiResponse
-import com.juanferdev.appperrona.api.responses.UserResponse
 import com.juanferdev.appperrona.auth.AuthRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
@@ -23,7 +16,8 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class AuthRepositoryTest {
 
-    private val apiServiceMock = Mockito.mock(ApiService::class.java)
+    private val apiServiceMock =
+        Mockito.mock(com.juanferdev.appperrona.core.api.ApiService::class.java)
     private val idUser = 1L
     private val email = "example@example.com"
     private val password = "12345678"
@@ -33,12 +27,13 @@ class AuthRepositoryTest {
     @Test
     fun signUpWhenAllDataIsCompletedThenStatusIsSuccess(): Unit = runBlocking {
         //Give
-        val signUpDTO = SignUpDTO(email, password, passwordConfirmation)
-        val authApiResponse = AuthApiResponse(
+        val signUpDTO =
+            com.juanferdev.appperrona.core.api.dto.SignUpDTO(email, password, passwordConfirmation)
+        val authApiResponse = com.juanferdev.appperrona.core.api.responses.AuthApiResponse(
             message = "All look ok",
             isSuccess = true,
-            data = UserResponse(
-                user = UserDTO(
+            data = com.juanferdev.appperrona.core.api.responses.UserResponse(
+                user = com.juanferdev.appperrona.core.api.dto.UserDTO(
                     id = idUser,
                     email,
                     authenticationToken
@@ -53,18 +48,19 @@ class AuthRepositoryTest {
         //When
         val apiResponseStatus = authRepository.signUp(email, password, passwordConfirmation)
         //Then
-        assert(apiResponseStatus is ApiResponseStatus.Success)
+        assert(apiResponseStatus is com.juanferdev.appperrona.core.api.ApiResponseStatus.Success)
     }
 
     @Test
     fun signUpWhenStatusApiServicesIsNotSuccessThenThrowException(): Unit = runBlocking {
         //Give
-        val signUpDTO = SignUpDTO(email, password, passwordConfirmation)
-        val authApiResponse = AuthApiResponse(
+        val signUpDTO =
+            com.juanferdev.appperrona.core.api.dto.SignUpDTO(email, password, passwordConfirmation)
+        val authApiResponse = com.juanferdev.appperrona.core.api.responses.AuthApiResponse(
             message = "user_not_found",
             isSuccess = false,
-            data = UserResponse(
-                user = UserDTO(
+            data = com.juanferdev.appperrona.core.api.responses.UserResponse(
+                user = com.juanferdev.appperrona.core.api.dto.UserDTO(
                     id = idUser,
                     email,
                     authenticationToken
@@ -78,7 +74,11 @@ class AuthRepositoryTest {
         )
         //When
         val apiResponseStatus =
-            authRepository.signUp(email, password, passwordConfirmation) as ApiResponseStatus.Error
+            authRepository.signUp(
+                email,
+                password,
+                passwordConfirmation
+            ) as com.juanferdev.appperrona.core.api.ApiResponseStatus.Error
         //Then
         assertEquals(R.string.user_not_found, apiResponseStatus.messageId)
     }
@@ -87,12 +87,12 @@ class AuthRepositoryTest {
     @Test
     fun loginWhenAllDataIsCompletedThenStatusIsSuccess(): Unit = runBlocking {
         //Give
-        val signInDTO = SignInDTO(email, password)
-        val authApiResponse = AuthApiResponse(
+        val signInDTO = com.juanferdev.appperrona.core.api.dto.SignInDTO(email, password)
+        val authApiResponse = com.juanferdev.appperrona.core.api.responses.AuthApiResponse(
             message = "All look good",
             isSuccess = true,
-            data = UserResponse(
-                user = UserDTO(
+            data = com.juanferdev.appperrona.core.api.responses.UserResponse(
+                user = com.juanferdev.appperrona.core.api.dto.UserDTO(
                     id = idUser,
                     email,
                     authenticationToken
@@ -107,18 +107,18 @@ class AuthRepositoryTest {
         )
         //Then
         val apiResponseStatus = authRepository.login(email, password)
-        assert(apiResponseStatus is ApiResponseStatus.Success)
+        assert(apiResponseStatus is com.juanferdev.appperrona.core.api.ApiResponseStatus.Success)
     }
 
     @Test
     fun loginWhenStatusApiServicesIsNotSuccessThenThrowException(): Unit = runBlocking {
         //Give
-        val signInDTO = SignInDTO(email, password)
-        val authApiResponse = AuthApiResponse(
+        val signInDTO = com.juanferdev.appperrona.core.api.dto.SignInDTO(email, password)
+        val authApiResponse = com.juanferdev.appperrona.core.api.responses.AuthApiResponse(
             message = "sign_in_error",
             isSuccess = false,
-            data = UserResponse(
-                user = UserDTO(
+            data = com.juanferdev.appperrona.core.api.responses.UserResponse(
+                user = com.juanferdev.appperrona.core.api.dto.UserDTO(
                     id = idUser,
                     email,
                     authenticationToken
@@ -131,7 +131,10 @@ class AuthRepositoryTest {
             apiService = apiServiceMock
         )
         //When
-        val apiResponseStatus = authRepository.login(email, password) as ApiResponseStatus.Error
+        val apiResponseStatus = authRepository.login(
+            email,
+            password
+        ) as com.juanferdev.appperrona.core.api.ApiResponseStatus.Error
         //Then
         assertEquals(R.string.error_sign_in, apiResponseStatus.messageId)
     }

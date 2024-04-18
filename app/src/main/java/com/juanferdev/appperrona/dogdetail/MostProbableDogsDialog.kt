@@ -24,15 +24,14 @@ import androidx.compose.ui.unit.sp
 import coil.annotation.ExperimentalCoilApi
 import com.juanferdev.appperrona.R
 import com.juanferdev.appperrona.dogdetail.ui.theme.AppPerronaTheme
-import com.juanferdev.appperrona.models.Dog
 
 
 @OptIn(ExperimentalCoilApi::class)
 @Composable
 fun MostProbableDogsDialog(
-    mostProbableDogs: List<Dog>,
+    mostProbableDogs: List<com.juanferdev.appperrona.core.models.Dog>,
     onShowMostProbableDogsDialogDismiss: () -> Unit,
-    onItemClicked: (Dog) -> Unit
+    onItemClicked: (com.juanferdev.appperrona.core.models.Dog) -> Unit
 ) {
     AlertDialog(
         onDismissRequest = {
@@ -70,7 +69,10 @@ fun MostProbableDogsDialog(
 
 @ExperimentalCoilApi
 @Composable
-fun MostProbableDogsList(dogs: List<Dog>, onItemClicked: (Dog) -> Unit) {
+fun MostProbableDogsList(
+    dogs: List<com.juanferdev.appperrona.core.models.Dog>,
+    onItemClicked: (com.juanferdev.appperrona.core.models.Dog) -> Unit
+) {
     Box(
         Modifier.height(250.dp)
     ) {
@@ -86,7 +88,10 @@ fun MostProbableDogsList(dogs: List<Dog>, onItemClicked: (Dog) -> Unit) {
 
 @ExperimentalCoilApi
 @Composable
-fun MostProbableDogItem(dog: Dog, onItemClicked: (Dog) -> Unit) {
+fun MostProbableDogItem(
+    dog: com.juanferdev.appperrona.core.models.Dog,
+    onItemClicked: (com.juanferdev.appperrona.core.models.Dog) -> Unit
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -115,24 +120,24 @@ fun MostProbableDogsDialogPreview() {
     }
 }
 
-fun getFakeDogs(): MutableList<Dog> {
-    val dogList = mutableListOf<Dog>()
+fun getFakeDogs(): MutableList<com.juanferdev.appperrona.core.models.Dog> {
+    val dogList = mutableListOf<com.juanferdev.appperrona.core.models.Dog>()
     dogList.add(
-        Dog(
+        com.juanferdev.appperrona.core.models.Dog(
             1, 1, "Chihuahua", "Chihuahua", "Toy",
             "19", "Brave", "12 - 15",
             "2.0", "2.5", "12.0", false
         )
     )
     dogList.add(
-        Dog(
+        com.juanferdev.appperrona.core.models.Dog(
             2, 2, "Pug", "Pug", "Toy",
             "12", "Friendly", "www.pug.com",
             "10 - 12", "4.5", "12.0", true
         )
     )
     dogList.add(
-        Dog(
+        com.juanferdev.appperrona.core.models.Dog(
             3, 3, "Husky", "Husky", "Sporting",
             "15", "www.husky.com", "8 - 12 ",
             "5.0", "4.5", "12.0", false

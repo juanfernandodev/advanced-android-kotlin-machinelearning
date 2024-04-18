@@ -6,13 +6,11 @@ import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
-import com.juanferdev.appperrona.api.ApiResponseStatus
 import com.juanferdev.appperrona.composables.constants.SEMANTIC_ERROR_DIALOG
 import com.juanferdev.appperrona.composables.constants.SEMANTIC_LOADING_WHEEL
 import com.juanferdev.appperrona.doglist.DogListScreen
 import com.juanferdev.appperrona.doglist.DogListViewModel
 import com.juanferdev.appperrona.doglist.DogRepositoryContract
-import com.juanferdev.appperrona.models.Dog
 import kotlinx.coroutines.runBlocking
 import org.junit.Rule
 import org.junit.Test
@@ -31,7 +29,7 @@ class DogListScreenTest {
 
     @Test
     fun progressBarShowsWhenLoadingState(): Unit = runBlocking {
-        `when`(mockDogRepository.getDogCollection()).thenReturn(ApiResponseStatus.Loading())
+        `when`(mockDogRepository.getDogCollection()).thenReturn(com.juanferdev.appperrona.core.api.ApiResponseStatus.Loading())
 
         val viewModel = DogListViewModel(
             dogRepository = mockDogRepository
@@ -53,7 +51,11 @@ class DogListScreenTest {
 
     @Test
     fun getDogCollectionWhenThereIsAnErrorThenShowErrorDialog(): Unit = runBlocking {
-        `when`(mockDogRepository.getDogCollection()).thenReturn(ApiResponseStatus.Error(messageId = R.string.unknown_error))
+        `when`(mockDogRepository.getDogCollection()).thenReturn(
+            com.juanferdev.appperrona.core.api.ApiResponseStatus.Error(
+                messageId = R.string.unknown_error
+            )
+        )
         val viewModel = DogListViewModel(
             dogRepository = mockDogRepository
         )
@@ -76,13 +78,13 @@ class DogListScreenTest {
     fun getDogCollectionWhenIsSuccessThenShowDogsList(): Unit = runBlocking {
 
         val dogs = listOf(
-            Dog(
+            com.juanferdev.appperrona.core.models.Dog(
                 id = 1L,
                 index = 1,
                 name = "Mona",
                 inCollection = true
             ),
-            Dog(
+            com.juanferdev.appperrona.core.models.Dog(
                 id = 2L,
                 index = 2,
                 name = "Tarzan",
@@ -90,7 +92,11 @@ class DogListScreenTest {
             )
         )
 
-        `when`(mockDogRepository.getDogCollection()).thenReturn(ApiResponseStatus.Success(data = dogs))
+        `when`(mockDogRepository.getDogCollection()).thenReturn(
+            com.juanferdev.appperrona.core.api.ApiResponseStatus.Success(
+                data = dogs
+            )
+        )
 
         val viewModel = DogListViewModel(
             dogRepository = mockDogRepository
