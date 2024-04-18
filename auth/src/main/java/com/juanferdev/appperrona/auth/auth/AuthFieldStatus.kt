@@ -1,4 +1,4 @@
-package com.juanferdev.appperrona.core.auth
+package com.juanferdev.appperrona.auth.auth
 
 sealed class AuthFieldStatus {
     class Email(val messageId: Int) : AuthFieldStatus()

@@ -1,5 +1,10 @@
-package com.juanferdev.appperrona.core.auth
+package com.juanferdev.appperrona.auth.auth
 
+import com.juanferdev.appperrona.core.api.ApiResponseStatus
+import com.juanferdev.appperrona.core.api.dto.SignUpDTO
+import com.juanferdev.appperrona.core.api.dto.UserDTOMapper
+import com.juanferdev.appperrona.core.api.makeNetworkCall
+import com.juanferdev.appperrona.core.models.User
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 
@@ -12,9 +17,9 @@ class AuthRepository @Inject constructor(
         email: String,
         password: String,
         passwordConfirmation: String
-    ): com.juanferdev.appperrona.core.api.ApiResponseStatus<com.juanferdev.appperrona.core.models.User> =
-        com.juanferdev.appperrona.core.api.makeNetworkCall(dispatcherIO) {
-            val signUpDTO = com.juanferdev.appperrona.core.api.dto.SignUpDTO(
+    ): ApiResponseStatus<User> =
+        makeNetworkCall(dispatcherIO) {
+            val signUpDTO = SignUpDTO(
                 email,
                 password,
                 passwordConfirmation
@@ -24,20 +29,20 @@ class AuthRepository @Inject constructor(
                 throw Exception(signUpResponse.message)
             }
             val userDTO = signUpResponse.data.user
-            com.juanferdev.appperrona.core.api.dto.UserDTOMapper().fromUserDTOToUserDomain(userDTO)
+            UserDTOMapper().fromUserDTOToUserDomain(userDTO)
         }
 
     override suspend fun login(
         email: String,
         password: String
-    ): com.juanferdev.appperrona.core.api.ApiResponseStatus<com.juanferdev.appperrona.core.models.User> =
-        com.juanferdev.appperrona.core.api.makeNetworkCall(dispatcherIO) {
+    ): ApiResponseStatus<User> =
+        makeNetworkCall(dispatcherIO) {
             val signInDTO = com.juanferdev.appperrona.core.api.dto.SignInDTO(email, password)
             val signInResponse = apiService.signIn(signInDTO)
             if (signInResponse.isSuccess.not()) {
                 throw Exception(signInResponse.message)
             }
             val userDTO = signInResponse.data.user
-            com.juanferdev.appperrona.core.api.dto.UserDTOMapper().fromUserDTOToUserDomain(userDTO)
+            UserDTOMapper().fromUserDTOToUserDomain(userDTO)
         }
 }

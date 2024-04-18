@@ -17,3 +17,4 @@ rootProject.name = "AppPerrona"
 include(":app")
 include(":core")
 include(":camera")
+include(":auth")

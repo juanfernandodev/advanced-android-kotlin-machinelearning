@@ -12,13 +12,12 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.rule.GrantPermissionRule
+import com.juanferdev.appperrona.auth.auth.LoginActivity
+import com.juanferdev.appperrona.auth.di.AuthRepositoryModule
 import com.juanferdev.appperrona.camera.R
-import com.juanferdev.appperrona.core.auth.AuthRepositoryContract
-import com.juanferdev.appperrona.core.auth.LoginActivity
 import com.juanferdev.appperrona.core.constants.SemanticConstants.SEMANTIC_EMAIL_FIELD
 import com.juanferdev.appperrona.core.constants.SemanticConstants.SEMANTIC_LOGIN_BUTTON
 import com.juanferdev.appperrona.core.constants.SemanticConstants.SEMANTIC_PASSWORD_FIELD
-import com.juanferdev.appperrona.core.di.AuthRepositoryModule
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -71,7 +70,8 @@ class LoginActivityTest {
     }
 
 
-    class FakeAuthRepository @Inject constructor() : AuthRepositoryContract {
+    class FakeAuthRepository @Inject constructor() :
+        com.juanferdev.appperrona.auth.auth.AuthRepositoryContract {
         private val user = com.juanferdev.appperrona.core.models.User(
             id = 121212L,
             email = "fernaanxd17@gmail.com",
@@ -99,7 +99,7 @@ class LoginActivityTest {
     @InstallIn(ViewModelComponent::class)
     fun interface AuthRepositoryModule {
         @Binds
-        fun provideAuthRepository(authRepository: FakeAuthRepository): AuthRepositoryContract
+        fun provideAuthRepository(authRepository: FakeAuthRepository): com.juanferdev.appperrona.auth.auth.AuthRepositoryContract
     }
 
 

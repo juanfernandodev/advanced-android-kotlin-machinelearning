@@ -1,7 +1,7 @@
-package com.juanferdev.appperrona.core.di
+package com.juanferdev.appperrona.auth.di
 
-import com.juanferdev.appperrona.core.auth.AuthRepository
-import com.juanferdev.appperrona.core.auth.AuthRepositoryContract
+import com.juanferdev.appperrona.auth.auth.AuthRepository
+import com.juanferdev.appperrona.auth.auth.AuthRepositoryContract
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

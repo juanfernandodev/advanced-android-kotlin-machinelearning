@@ -1,7 +1,7 @@
 package com.juanferdev.appperrona.core.repositories
 
+import com.juanferdev.appperrona.auth.auth.AuthRepository
 import com.juanferdev.appperrona.core.R
-import com.juanferdev.appperrona.core.auth.AuthRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -40,7 +40,7 @@ class AuthRepositoryTest {
                 )
             )
         )
-        val authRepository = AuthRepository(
+        val authRepository = com.juanferdev.appperrona.auth.auth.AuthRepository(
             dispatcherIO = UnconfinedTestDispatcher(),
             apiService = apiServiceMock
         )
@@ -68,7 +68,7 @@ class AuthRepositoryTest {
             )
         )
         `when`(apiServiceMock.signUp(signUpDTO)).thenReturn(authApiResponse)
-        val authRepository = AuthRepository(
+        val authRepository = com.juanferdev.appperrona.auth.auth.AuthRepository(
             dispatcherIO = UnconfinedTestDispatcher(),
             apiService = apiServiceMock
         )
@@ -101,7 +101,7 @@ class AuthRepositoryTest {
         )
         `when`(apiServiceMock.signIn(signInDTO)).thenReturn(authApiResponse)
         //When
-        val authRepository = AuthRepository(
+        val authRepository = com.juanferdev.appperrona.auth.auth.AuthRepository(
             dispatcherIO = UnconfinedTestDispatcher(),
             apiService = apiServiceMock
         )
@@ -126,7 +126,7 @@ class AuthRepositoryTest {
             )
         )
         `when`(apiServiceMock.signIn(signInDTO)).thenReturn(authApiResponse)
-        val authRepository = AuthRepository(
+        val authRepository = com.juanferdev.appperrona.auth.auth.AuthRepository(
             dispatcherIO = UnconfinedTestDispatcher(),
             apiService = apiServiceMock
         )

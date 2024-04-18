@@ -1,4 +1,4 @@
-package com.juanferdev.appperrona.core
+package com.juanferdev.appperrona
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertTextEquals
@@ -6,9 +6,6 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
-import com.juanferdev.appperrona.core.auth.AuthRepositoryContract
-import com.juanferdev.appperrona.core.auth.AuthScreen
-import com.juanferdev.appperrona.core.auth.AuthViewModel
 import com.juanferdev.appperrona.core.constants.SemanticConstants
 import com.juanferdev.appperrona.core.constants.SemanticConstants.SEMANTIC_EMAIL_FIELD
 import com.juanferdev.appperrona.core.constants.SemanticConstants.SEMANTIC_ERROR_TEXT_PASSWORD_FIELD
@@ -28,16 +25,17 @@ class AuthScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    private val mockAuthRepository = Mockito.mock(AuthRepositoryContract::class.java)
+    private val mockAuthRepository =
+        Mockito.mock(com.juanferdev.appperrona.auth.auth.AuthRepositoryContract::class.java)
 
     @Test
     fun onClickRegisterWhenAllIsGoodThenOpenSignUpScreen() {
-        val viewModel = AuthViewModel(
+        val viewModel = com.juanferdev.appperrona.auth.auth.AuthViewModel(
             authRepository = mockAuthRepository
         )
 
         composeTestRule.setContent {
-            AuthScreen(
+            com.juanferdev.appperrona.auth.auth.AuthScreen(
                 viewModel = viewModel,
                 onUserLogin = {}
             )
@@ -61,12 +59,12 @@ class AuthScreenTest {
 
     @Test
     fun onClickLoginButtonWhenEmailIsInvalidThenShowErrorMessageOnEmailField() {
-        val viewModel = AuthViewModel(
+        val viewModel = com.juanferdev.appperrona.auth.auth.AuthViewModel(
             authRepository = mockAuthRepository
         )
 
         composeTestRule.setContent {
-            AuthScreen(
+            com.juanferdev.appperrona.auth.auth.AuthScreen(
                 viewModel = viewModel,
                 onUserLogin = {}
             )
@@ -110,11 +108,11 @@ class AuthScreenTest {
 
     @Test
     fun onClickLoginButtonWhenPasswordIsInvalidThenShowErrorMessageOnPasswordField() {
-        val viewModel = AuthViewModel(
+        val viewModel = com.juanferdev.appperrona.auth.auth.AuthViewModel(
             authRepository = mockAuthRepository
         )
         composeTestRule.setContent {
-            AuthScreen(
+            com.juanferdev.appperrona.auth.auth.AuthScreen(
                 viewModel = viewModel,
                 onUserLogin = {}
             )

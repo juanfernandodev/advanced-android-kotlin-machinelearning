@@ -1,4 +1,4 @@
-package com.juanferdev.appperrona.core.auth
+package com.juanferdev.appperrona.auth.auth
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column

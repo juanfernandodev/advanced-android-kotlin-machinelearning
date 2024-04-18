@@ -122,6 +122,7 @@ android {
 dependencies {
     implementation(project(":core"))
     implementation(project(":camera"))
+    implementation(project(":auth"))
     val lifecycle_version = "2.7.0"
     val activity_version = "1.8.2"
     val android_core_version = "1.12.0"
@@ -174,6 +175,11 @@ dependencies {
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinxCoroutines")
     testImplementation("org.testng:testng:$testng")
     testImplementation("androidx.arch.core:core-testing:$coreTesting")
+
+    //Mockito
+    val mockitoVersion = "5.10.0"
+    testImplementation("org.mockito:mockito-core:$mockitoVersion")
+    androidTestImplementation("org.mockito:mockito-android:$mockitoVersion")
 }
 
 // Allow references to generated code

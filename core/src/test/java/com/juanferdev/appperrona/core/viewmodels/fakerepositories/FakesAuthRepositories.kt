@@ -1,9 +1,9 @@
 package com.juanferdev.appperrona.core.viewmodels.fakerepositories
 
+import com.juanferdev.appperrona.auth.auth.AuthRepositoryContract
 import com.juanferdev.appperrona.core.R
-import com.juanferdev.appperrona.core.auth.AuthRepositoryContract
 
-class FakeSuccessAuthRepositories : AuthRepositoryContract {
+class FakeSuccessAuthRepositories : com.juanferdev.appperrona.auth.auth.AuthRepositoryContract {
 
     private val user = com.juanferdev.appperrona.core.models.User(
         id = 121212L,
@@ -27,7 +27,7 @@ class FakeSuccessAuthRepositories : AuthRepositoryContract {
     }
 }
 
-class FakeErrorAuthRepositories : AuthRepositoryContract {
+class FakeErrorAuthRepositories : com.juanferdev.appperrona.auth.auth.AuthRepositoryContract {
     override suspend fun signUp(
         email: String,
         password: String,

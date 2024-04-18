@@ -1,4 +1,4 @@
-package com.juanferdev.appperrona.core.auth
+package com.juanferdev.appperrona.auth.auth
 
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -6,8 +6,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.juanferdev.appperrona.core.auth.AuthNavDestinations.LOGIN_SCREEN_DESTINATION
-import com.juanferdev.appperrona.core.auth.AuthNavDestinations.SIGN_UP_SCREEN_DESTINATION
+import com.juanferdev.appperrona.auth.auth.AuthNavDestinations.LOGIN_SCREEN_DESTINATION
+import com.juanferdev.appperrona.auth.auth.AuthNavDestinations.SIGN_UP_SCREEN_DESTINATION
 import com.juanferdev.appperrona.core.composables.ErrorDialog
 import com.juanferdev.appperrona.core.composables.LoadingWheel
 import com.juanferdev.appperrona.core.models.User

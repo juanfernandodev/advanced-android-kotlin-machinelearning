@@ -1,4 +1,4 @@
-package com.juanferdev.appperrona.core.auth.ui.theme
+package com.juanferdev.appperrona.auth.auth.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

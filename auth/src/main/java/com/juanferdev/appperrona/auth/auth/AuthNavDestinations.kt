@@ -1,4 +1,4 @@
-package com.juanferdev.appperrona.core.auth
+package com.juanferdev.appperrona.auth.auth
 
 object AuthNavDestinations {
     const val LOGIN_SCREEN_DESTINATION = "login_screen"

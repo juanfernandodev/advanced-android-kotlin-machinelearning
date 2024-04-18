@@ -1,11 +1,11 @@
-package com.juanferdev.appperrona.core.auth
+package com.juanferdev.appperrona.auth.auth
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.juanferdev.appperrona.core.auth.ui.theme.AppPerronaTheme
+import com.juanferdev.appperrona.auth.auth.ui.theme.AppPerronaTheme
 import com.juanferdev.appperrona.core.models.User
 import dagger.hilt.android.AndroidEntryPoint
 

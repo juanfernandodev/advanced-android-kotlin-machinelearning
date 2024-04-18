@@ -25,7 +25,6 @@ import com.juanferdev.appperrona.camera.machinelearning.DogRecognition
 import com.juanferdev.appperrona.core.EspressoIdlingResource
 import com.juanferdev.appperrona.core.api.ApiResponseStatus
 import com.juanferdev.appperrona.core.api.ApiServiceInterceptor
-import com.juanferdev.appperrona.core.auth.LoginActivity
 import com.juanferdev.appperrona.core.constants.DOG_KEY
 import com.juanferdev.appperrona.core.constants.IS_RECOGNITION_KEY
 import com.juanferdev.appperrona.core.constants.PROBABLES_DOG_ID_KEY
@@ -162,7 +161,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openLoginActivity() {
-        startActivity(Intent(this, LoginActivity::class.java))
+        try {
+            val intent = Intent(
+                this,
+                Class.forName("com.juanferdev.appperrona.auth.auth.LoginActivity")
+            )
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intent)
+        } catch (e: Exception) {
+            Toast.makeText(this, "Class not LoginActivity not found", Toast.LENGTH_LONG).show()
+        }
+
         finish()
     }
 
