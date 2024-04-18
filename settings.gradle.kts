@@ -15,4 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "AppPerrona"
 include(":app")
- 
+include(":core")
