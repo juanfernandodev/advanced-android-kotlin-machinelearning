@@ -1,7 +1,7 @@
 package com.juanferdev.appperrona.viewmodels.fakerepositories
 
-import com.juanferdev.appperrona.R
-import com.juanferdev.appperrona.doglist.DogRepositoryContract
+import com.juanferdev.appperrona.core.R
+import com.juanferdev.appperrona.core.doglist.DogRepositoryContract
 import kotlinx.coroutines.flow.Flow
 
 class FakeSuccessDogRepository : DogRepositoryContract {

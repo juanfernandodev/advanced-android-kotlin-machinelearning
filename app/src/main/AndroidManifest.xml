@@ -21,25 +21,25 @@
         android:theme="@style/Theme.AppPerrona"
         tools:targetApi="31">
         <activity
-            android:name=".auth.LoginActivity"
+            android:name=".core.auth.LoginActivity"
             android:exported="false"
             android:label="@string/title_activity_login_compose"
             android:theme="@style/Theme.AppPerrona" />
         <activity
-            android:name=".dogdetail.DogDetailActivity"
+            android:name=".core.dogdetail.DogDetailActivity"
             android:exported="false"
             android:label="@string/title_activity_dog_detail_compose"
             android:theme="@style/Theme.AppPerrona" />
         <activity
-            android:name=".settings.SettingsActivity"
+            android:name=".core.settings.SettingsActivity"
             android:exported="false"
-            android:parentActivityName=".main.MainActivity" />
+            android:parentActivityName=".camera.main.MainActivity" />
         <activity
-            android:name=".doglist.DogListActivity"
+            android:name=".core.doglist.DogListActivity"
             android:exported="false"
-            android:parentActivityName=".main.MainActivity" />
+            android:parentActivityName=".camera.main.MainActivity" />
         <activity
-            android:name=".main.MainActivity"
+            android:name=".camera.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -15,13 +15,14 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.GrantPermissionRule
-import com.juanferdev.appperrona.constants.SemanticConstants.SEMANTIC_DETAIL_DOG_BUTTON
-import com.juanferdev.appperrona.di.ClassifierRepositoryContractModule
-import com.juanferdev.appperrona.di.DogRepositoryModule
-import com.juanferdev.appperrona.doglist.DogRepositoryContract
-import com.juanferdev.appperrona.machinelearning.ClassifierRepositoryContract
-import com.juanferdev.appperrona.machinelearning.DogRecognition
-import com.juanferdev.appperrona.main.MainActivity
+import com.juanferdev.appperrona.camera.R
+import com.juanferdev.appperrona.camera.di.ClassifierRepositoryContractModule
+import com.juanferdev.appperrona.camera.machinelearning.DogRecognition
+import com.juanferdev.appperrona.camera.main.MainActivity
+import com.juanferdev.appperrona.core.EspressoIdlingResource
+import com.juanferdev.appperrona.core.constants.SemanticConstants.SEMANTIC_DETAIL_DOG_BUTTON
+import com.juanferdev.appperrona.core.di.DogRepositoryModule
+import com.juanferdev.appperrona.core.doglist.DogRepositoryContract
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -127,9 +128,15 @@ class MainActivityTest {
         }
     }
 
-    class FakeSuccessClassifierRepository @Inject constructor() : ClassifierRepositoryContract {
+    class FakeSuccessClassifierRepository @Inject constructor() :
+        com.juanferdev.appperrona.camera.machinelearning.ClassifierRepositoryContract {
         override suspend fun recognizedImage(imageProxy: ImageProxy): List<DogRecognition> =
-            listOf(DogRecognition(id = "1", confidence = 70.0F))
+            listOf(
+                com.juanferdev.appperrona.camera.machinelearning.DogRecognition(
+                    id = "1",
+                    confidence = 70.0F
+                )
+            )
     }
 
     @Module
@@ -147,6 +154,6 @@ class MainActivityTest {
     fun interface ClassifierRepositoryContractModule {
 
         @Binds
-        fun provideClassifierRepositoryContract(classifierRepository: FakeSuccessClassifierRepository): ClassifierRepositoryContract
+        fun provideClassifierRepositoryContract(classifierRepository: FakeSuccessClassifierRepository): com.juanferdev.appperrona.camera.machinelearning.ClassifierRepositoryContract
     }
 }
