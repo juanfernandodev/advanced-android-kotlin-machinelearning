@@ -1,16 +1,17 @@
 package com.juanferdev.appperrona.auth.auth
 
 import com.juanferdev.appperrona.core.api.ApiResponseStatus
+import com.juanferdev.appperrona.core.api.ApiService
 import com.juanferdev.appperrona.core.api.dto.SignUpDTO
 import com.juanferdev.appperrona.core.api.dto.UserDTOMapper
 import com.juanferdev.appperrona.core.api.makeNetworkCall
 import com.juanferdev.appperrona.core.models.User
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
+import javax.inject.Inject
 
 class AuthRepository @Inject constructor(
     private val dispatcherIO: CoroutineDispatcher,
-    private val apiService: com.juanferdev.appperrona.core.api.ApiService
+    private val apiService: ApiService
 ) : AuthRepositoryContract {
 
     override suspend fun signUp(

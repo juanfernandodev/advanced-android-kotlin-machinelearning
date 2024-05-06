@@ -11,8 +11,8 @@ import com.juanferdev.appperrona.core.api.ApiResponseStatus
 import com.juanferdev.appperrona.core.doglist.DogRepositoryContract
 import com.juanferdev.appperrona.core.models.Dog
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
@@ -22,7 +22,7 @@ class MainViewModel @Inject constructor(
 
     private val _status =
         MutableLiveData<ApiResponseStatus<Dog>>()
-    val status: LiveData<ApiResponseStatus<com.juanferdev.appperrona.core.models.Dog>>
+    val status: LiveData<ApiResponseStatus<Dog>>
         get() = _status
 
     private val _statusDogRecognized = MutableLiveData<DogRecognition>()

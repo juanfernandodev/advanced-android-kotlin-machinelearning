@@ -1,15 +1,18 @@
 package com.juanferdev.appperrona.auth.auth
 
+import com.juanferdev.appperrona.core.api.ApiResponseStatus
+import com.juanferdev.appperrona.core.models.User
+
 interface AuthRepositoryContract {
 
     suspend fun signUp(
         email: String,
         password: String,
         passwordConfirmation: String
-    ): com.juanferdev.appperrona.core.api.ApiResponseStatus<com.juanferdev.appperrona.core.models.User>
+    ): ApiResponseStatus<User>
 
     suspend fun login(
         email: String,
         password: String
-    ): com.juanferdev.appperrona.core.api.ApiResponseStatus<com.juanferdev.appperrona.core.models.User>
+    ): ApiResponseStatus<User>
 }
